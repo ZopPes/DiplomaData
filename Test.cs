@@ -30,6 +30,7 @@ namespace DiplomaData
     public class Test : peremlog
     {
         public static RoutedUICommand routed { get; } = new RoutedUICommand("текст", "сасать",typeof(string));
+        
 
 
         #region Topics
