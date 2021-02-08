@@ -50,7 +50,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WPFMVVMHelper">
-      <HintPath>..\Beta2.1ChatPTK\WPFMVVMHelper\bin\Debug\netstandard2.0\WPFMVVMHelper.dll</HintPath>
+      <HintPath>..\WPFMVVMHelper\bin\Debug\netstandard2.0\WPFMVVMHelper.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -60,13 +60,14 @@
     </ApplicationDefinition>
     <Compile Include="HelpObservableCollectionBase.cs" />
     <Compile Include="Test.cs" />
-    <Compile Include="Testprotocol.xaml.cs">
+    <Compile Include="Topic.cs" />
+    <Compile Include="UserControl\Testprotocol.xaml.cs">
       <DependentUpon>Testprotocol.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UCDiplomas.xaml.cs">
+    <Compile Include="UserControl\UCDiplomas.xaml.cs">
       <DependentUpon>UCDiplomas.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UCTopic.xaml.cs">
+    <Compile Include="UserControl\UCTopic.xaml.cs">
       <DependentUpon>UCTopic.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
@@ -81,15 +82,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Testprotocol.xaml">
+    <Page Include="UserControl\Testprotocol.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UCDiplomas.xaml">
+    <Page Include="UserControl\UCDiplomas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UCTopic.xaml">
+    <Page Include="UserControl\UCTopic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -120,5 +121,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

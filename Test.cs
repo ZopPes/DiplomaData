@@ -24,14 +24,14 @@ namespace DiplomaData
             LCRemove = new lamdaCommand<T>(r => base.Remove(r));
             
         }
+
+        
     }
 
 
     public class Test : peremlog
     {
         public static RoutedUICommand routed { get; } = new RoutedUICommand("текст", "сасать",typeof(string));
-         
-
 
         #region Topics
         private HelpObservableCollection<Topic> topics;
@@ -56,15 +56,15 @@ namespace DiplomaData
             Diplomas = new ObservableCollection<Diplomas>();
             Random r = new Random();
             Topics.Add(new Topic("полёт на луну", "нужно полететь на луну"));
-            Topics.Add(new Topic("танцы насмерь", "гравное не умереть"));
+            Topics.Add(new Topic("танцы насмерь", "гравное не умереть") { Used=true});
             Topics.Add(new Topic("телепорт", "разработать телепорт"));
             Topics.Add(new Topic("взлом реальность", "взломать матрицу"));
             Topics.Add(new Topic("доказательство математики", "токазать что матиматика существует"));
-            Topics.Add(new Topic("задание", "опиание задачи"));
+            Topics.Add(new Topic("задание", "опиание задачи") { Used = true });
             Topics.Add(new Topic("машина времени", "разработать и проверить машину времени"));
             Topics.Add(new Topic("трактор на радио упровлении", "трактор с упровлением с умных часов"));
             Topics.Add(new Topic("дизайн среднивекового приложения", "создать приложение которым могли бы пользоваться луди из средневикоаья"));
-            Topics.Add(new Topic("уничтожить мир", "необходимо уничтожеть весь мир, при этом оставшись в живих"));
+            Topics.Add(new Topic("уничтожить мир", "необходимо уничтожеть весь мир, при этом оставшись в живих") { Used = true });
             Topics.Add(new Topic("танец для инволидов", "техника танца которую смогут иполнить извалиды колясочники"));
             
 
@@ -117,50 +117,6 @@ namespace DiplomaData
         public DateTime Date { get => date; set => date = value; }
 
         public int countST { get ; set ; }
-
-
-    }
-
-    public class Topic : peremlog
-    {
-
-        #region Title
-        private string title;
-        /// <summary>Заголовок</summary>
-        public string Title { get => title; set => Set(ref title ,value); }
-        #endregion
-
-
-        #region Description
-        private string description;
-        /// <summary>описание</summary>
-        public string Description { get => description; set => Set(ref description ,value); }
-        #endregion
-
-        #region Approved
-        private bool approved;
-        /// <summary>описание</summary>
-        public bool Approved { get => approved; set => Set(ref approved ,value); }
-        #endregion
-
-
-        #region Used
-        private bool used;
-        /// <summary>испльзуется</summary>
-        public bool Used { get => used; set =>Set(ref used ,value); }
-        #endregion
-
-        public Topic(string title, string description)
-        {
-            Title = title;
-            Description = description;
-        }
-        public Topic()
-        {
-            Title = string.Empty;
-            Description = string.Empty;
-        }
-
 
 
     }
