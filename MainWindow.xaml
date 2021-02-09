@@ -11,13 +11,16 @@
         <local:Test/>
     </Window.DataContext>
     <Window.Resources>
-        <local:Topic x:Key="NewTopic"/>
+        
 
     </Window.Resources>
+    
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Menu IsMainMenu="True">
             <MenuItem Header="главная"/>
@@ -50,42 +53,11 @@
                         <VirtualizingStackPanel Orientation="Vertical" />
                     </ItemsPanelTemplate>
                 </Menu.ItemsPanel>
-                <Expander Header="Добавить">
-                    <StackPanel>
-                        <TextBox Text="{Binding Title, Source={StaticResource NewTopic}}"/>
-                        <TextBox Text="{Binding Description, Source={StaticResource NewTopic}}"/>
-                        <CheckBox IsChecked="{Binding Used, Source={StaticResource NewTopic}}"/>
-                        <Button Content="ок" Command="{ Binding Topics.LCAdd}"
-                                CommandParameter="{Binding Source={StaticResource NewTopic}}"/>
-                    </StackPanel>
-                </Expander>
                 <CheckBox Content="занятые"/>
                 <StackPanel Width="75">
                     <Label Content="поиск"/>
                     <TextBox/>
                 </StackPanel>
-                <MenuItem Command="New"/>
-                <MenuItem Command="Copy"/>
-                <MenuItem Command="Help"/>
-                <MenuItem Command="Cut"/>
-                <MenuItem Command="Undo"/>
-                <MenuItem Command="SelectAll"/>
-                <MenuItem Command="CancelPrint"/>
-                <MenuItem Command="Close"/>
-                <MenuItem Command="ContextMenu"/>
-                <MenuItem Command="CorrectionList"/>
-                <MenuItem Command="Delete"/>
-                <MenuItem Command="Find"/>
-                <MenuItem Command="Open"/>
-                <MenuItem Command="Paste"/>
-                <MenuItem Command="Print"/>
-                <MenuItem Command="PrintPreview"/>
-                <MenuItem Command="Properties"/>
-                <MenuItem Command="Redo"/>
-                <MenuItem Command="Replace"/>
-                <MenuItem Command="Save"/>
-                <MenuItem Command="SaveAs"/>
-                <MenuItem Command="Undo"/>
 
             </Menu>
             <Grid Grid.Column="1">
@@ -108,15 +80,16 @@
                     <TabItem Header="учащиеся"/>
                     <TabItem Header="люди"/>
                 </TabControl>
-                <StatusBar Grid.Row="1">
-                    <StatusBarItem Content="ww" />
-                    <StatusBarItem Content="12312" />
-                    <StatusBarItem Content="12312" />
-                </StatusBar>
+              
 
             </Grid>
             <GridSplitter ShowsPreview="False" Width="3" Grid.Column="1"/>
             <Rectangle Grid.Column="3" Width="100"/>
         </Grid>
+        <StatusBar Grid.Row="2">
+            <StatusBarItem Content="ww" />
+            <StatusBarItem Content="" />
+            <StatusBarItem Content="12312" />
+        </StatusBar>
     </Grid>
 </Window>

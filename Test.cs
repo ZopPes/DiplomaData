@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -12,21 +13,7 @@ using WPFMVVMHelper;
 namespace DiplomaData
 {
 
-    public class HelpObservableCollection<T> : ObservableCollection<T>
-    {
-        public lamdaCommand<T> LCAdd { get; }
-
-        public lamdaCommand<T> LCRemove { get; }
-
-        public HelpObservableCollection():base()
-        {
-            LCAdd = new lamdaCommand<T>(base.Add);
-            LCRemove = new lamdaCommand<T>(r => base.Remove(r));
-            
-        }
-
-        
-    }
+   
 
 
     public class Test : peremlog
@@ -34,9 +21,9 @@ namespace DiplomaData
         public static RoutedUICommand routed { get; } = new RoutedUICommand("текст", "сасать",typeof(string));
 
         #region Topics
-        private HelpObservableCollection<Topic> topics;
+        private ObservableCollection<Topic> topics;
         /// <summary>темы</summary>
-        public HelpObservableCollection<Topic> Topics { get => topics; set => Set(ref topics,value); }
+        public ObservableCollection<Topic> Topics { get => topics; set => Set(ref topics,value); }
         #endregion
 
         public lamdaCommand<Topic> AddTopic { get; }
@@ -52,7 +39,7 @@ namespace DiplomaData
 
         public Test()
         {
-            Topics = new HelpObservableCollection<Topic>();
+            Topics = new ObservableCollection<Topic>();
             Diplomas = new ObservableCollection<Diplomas>();
             Random r = new Random();
             Topics.Add(new Topic("полёт на луну", "нужно полететь на луну"));
@@ -66,19 +53,26 @@ namespace DiplomaData
             Topics.Add(new Topic("дизайн среднивекового приложения", "создать приложение которым могли бы пользоваться луди из средневикоаья"));
             Topics.Add(new Topic("уничтожить мир", "необходимо уничтожеть весь мир, при этом оставшись в живих") { Used = true });
             Topics.Add(new Topic("танец для инволидов", "техника танца которую смогут иполнить извалиды колясочники"));
-            
 
 
 
-            AddTopic = new lamdaCommand<Topic>(Topics.Add);
-            DeleteTopic = new lamdaCommand<Topic>(del);
-            //var rr = ApplicationCommands.Undo.;            
+            AddTopic = new lamdaCommand<Topic>(AddTopics);
+            DeleteTopic = new lamdaCommand<Topic>(RemoveTopics);
+
+            //ApplicationCommands.Undo.;            
+            //System.Windows.Input.ComponentCommands;
+            //System.Windows.Input.NavigationCommands;
+            //System.Windows.Input.MediaCommands;
 
 
-            
         }
 
-        private void del(Topic obj)
+        public void AddTopics(Topic obj)
+        {
+            Topics.Add((Topic)obj.Clone());
+        }
+
+        private void RemoveTopics(Topic obj)
         {
                 Topics.Remove(obj);
         }
