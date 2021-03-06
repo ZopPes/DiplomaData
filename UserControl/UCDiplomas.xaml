@@ -1,99 +1,92 @@
 ﻿<UserControl x:Class="DiplomaData.UCDiplomas"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:DiplomaData"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" FontSize="24">
-    <UserControl.DataContext>
-        <local:Test/>
-    </UserControl.DataContext>
-    <ListBox >
+    <ListBox>
         <ListBoxItem>
             <StackPanel>
-                <TextBlock Text="Лось Лосев"/>
-                <Label Content="20/02/2015"/>
-                <TextBlock Text="рука Водитель"/>
+                <TextBlock Text="Лось Лосев" />
+                <Label Content="20/02/2015" />
+                <TextBlock Text="рука Водитель" />
                 <TabControl>
                     <TabItem Header="проверяющие">
                         <StackPanel>
-                            <TextBlock Text="такой"/>
-                            <TextBlock Text="секой"/>
-                            <TextBlock Text="туды"/>
-                            <TextBlock Text="сюды"/>
+                            <TextBlock Text="такой" />
+                            <TextBlock Text="секой" />
+                            <TextBlock Text="туды" />
+                            <TextBlock Text="сюды" />
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="тема диплома">
-                        <TextBlock Text="делай диплом"/>
+                        <TextBlock Text="делай диплом" />
                     </TabItem>
                 </TabControl>
-
-
             </StackPanel>
         </ListBoxItem>
         <ListBoxItem>
             <StackPanel>
-                <TextBlock Text="Лось Лосев"/>
-                <Label Content="20/02/2015"/>
-                <TextBlock Text="рука Водитель"/>
+                <TextBlock Text="Лось Лосев" />
+                <Label Content="20/02/2015" />
+                <TextBlock Text="рука Водитель" />
                 <Expander Header="проверяющие">
                     <StackPanel>
-                        <TextBlock Text="такой"/>
-                        <TextBlock Text="секой"/>
-                        <TextBlock Text="туды"/>
-                        <TextBlock Text="сюды"/>
+                        <TextBlock Text="такой" />
+                        <TextBlock Text="секой" />
+                        <TextBlock Text="туды" />
+                        <TextBlock Text="сюды" />
                     </StackPanel>
                 </Expander>
                 <Expander Header="иходники">
                     <StackPanel>
-                        <TextBlock Text="ссылка на сайт"/>
-                        <TextBlock Text="установщик"/>
-                        <TextBlock Text="презентация"/>
+                        <TextBlock Text="ссылка на сайт" />
+                        <TextBlock Text="установщик" />
+                        <TextBlock Text="презентация" />
                     </StackPanel>
                 </Expander>
                 <Expander Header="отсутствуют">
                     <StackPanel>
-                        <TextBlock Text="математическая бодель"/>
-                        <TextBlock Text="что  то ещё"/>
+                        <TextBlock Text="математическая бодель" />
+                        <TextBlock Text="что  то ещё" />
                     </StackPanel>
                 </Expander>
-                <TextBlock Text="тема диплома"/>
+                <TextBlock Text="тема диплома" />
             </StackPanel>
         </ListBoxItem>
         <ListBoxItem>
             <StackPanel>
-                <TextBlock Text="Лось Лосев"/>
-                <Label Content="20/02/2015"/>
-                <TextBlock Text="рука Водитель"/>
+                <TextBlock Text="Лось Лосев" />
+                <Label Content="20/02/2015" />
+                <TextBlock Text="рука Водитель" />
                 <TabControl>
                     <TabItem Header="проверяющие">
                         <StackPanel>
-                            <TextBlock Text="такой"/>
-                            <TextBlock Text="секой"/>
-                            <TextBlock Text="туды"/>
-                            <TextBlock Text="сюды"/>
+                            <TextBlock Text="такой" />
+                            <TextBlock Text="секой" />
+                            <TextBlock Text="туды" />
+                            <TextBlock Text="сюды" />
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="иходники">
                         <StackPanel>
-                            <TextBlock Text="ссылка на сайт"/>
-                            <TextBlock Text="установщик"/>
-                            <TextBlock Text="презентация"/>
+                            <TextBlock Text="ссылка на сайт" />
+                            <TextBlock Text="установщик" />
+                            <TextBlock Text="презентация" />
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="тема диплома">
-                            <TextBlock Text="делай диплом"/>
+                            <TextBlock Text="делай диплом" />
                     </TabItem>
                     <TabItem Header="отсутствуют">
                         <StackPanel>
-                            <TextBlock Text="математическая бодель"/>
-                            <TextBlock Text="что  то ещё"/>
+                            <TextBlock Text="математическая бодель" />
+                            <TextBlock Text="что  то ещё" />
                         </StackPanel>
                     </TabItem>
                 </TabControl>
-                
-            
             </StackPanel>
         </ListBoxItem>
     </ListBox>

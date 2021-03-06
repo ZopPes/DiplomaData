@@ -58,9 +58,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="HelpData.cs" />
     <Compile Include="HelpObservableCollectionBase.cs" />
-    <Compile Include="Test.cs" />
-    <Compile Include="Topic.cs" />
     <Compile Include="UserControl\Testprotocol.xaml.cs">
       <DependentUpon>Testprotocol.xaml</DependentUpon>
     </Compile>
