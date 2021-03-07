@@ -1,21 +1,76 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using Microsoft.Office.Interop.Word;
+using Microsoft.Win32;
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Xps.Packaging;
 
 namespace DiplomaData
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : System.Windows.Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
-        private void UCTopic_GotFocus(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
+            //// Create OpenFileDialog
+            //OpenFileDialog dlg = new OpenFileDialog();
+            
+            //// Set filter for file extension and default file extension
+            //dlg.DefaultExt = ".doc";
+            //dlg.Filter = "Word documents (.doc)|*.doc";
+            //// Display OpenFileDialog by calling ShowDialog method
+
+            //bool? result = dlg.ShowDialog();
+            
+            //// Get the selected file name and display in a TextBox
+            //if (result == true)
+            //{
+            //    if (dlg.FileName.Length > 0)
+            //    {
+            //        string newXPSDocumentName = String.Concat(System.IO.Path.GetDirectoryName(dlg.FileName), "\\",
+            //                       System.IO.Path.GetFileNameWithoutExtension(dlg.FileName), ".xps");
+
+            //        // Set DocumentViewer.Document to XPS document
+            //        ggg.Document =
+
+            //            ConvertWordDocToXPSDoc(dlg.FileName, newXPSDocumentName);
+
+            //    }
+
+            //}
         }
+
+
+
+        //private IDocumentPaginatorSource ConvertWordDocToXPSDoc(string wordDocName, string xpsDocName)
+        //{
+        //    Microsoft.Office.Interop.Word.Application
+        //        wordApplication = new Microsoft.Office.Interop.Word.Application();
+
+        //    Document doc = wordApplication.Documents.Add(wordDocName);
+        //    try
+        //    {
+
+        //        doc.SaveAs(xpsDocName, WdSaveFormat.wdFormatXPS);
+
+        //        wordApplication.Quit();
+        //        XpsDocument xpsDoc = new XpsDocument(xpsDocName, System.IO.FileAccess.Read);
+
+        //        return xpsDoc.GetFixedDocumentSequence();
+        //    }
+        //    catch (Exception exp)
+        //    {
+        //        string str = exp.Message;
+        //    }
+        //    return null;
+        //}
     }
 }

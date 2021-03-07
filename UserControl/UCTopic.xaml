@@ -7,14 +7,14 @@
              mc:Ignorable="d" FontSize="24" Focusable="True" IsTabStop="True" GotFocus="userControl_GotFocus_1">
     <UserControl.CommandBindings>
         <CommandBinding Command="Cut"
-                        Executed="CommandBinding_Executed"/>
+                        Executed="CommandBinding_Executed" />
     </UserControl.CommandBindings>
     <Border Focusable="True">
         <Border.Resources>
             <Style TargetType="Border">
                 <Style.Triggers>
                     <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                        <Setter Property="Background" Value="Red"/>
+                        <Setter Property="Background" Value="Red" />
                     </Trigger>
 
                     <DataTrigger Binding="{Binding Topic.Used, ElementName=userControl}" Value="true">
@@ -38,7 +38,7 @@
                 </Style.Triggers>
             </Style>
         </Border.Resources>
-        <Grid  Focusable="True" x:Name="grid" >
+        <Grid  Focusable="True" x:Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="auto" />
