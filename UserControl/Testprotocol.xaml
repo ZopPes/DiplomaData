@@ -3,19 +3,13 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:DiplomaData"
+      xmlns:local="clr-namespace:DiplomaData" 
+      xmlns:wpf="http://schemas.microsoft.com/office/2006/xmlPackage"
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Testprotocol" Background="AliceBlue">
 
-    <Grid>
-        <StackPanel Background="AliceBlue" Orientation="Horizontal" Margin="350,10,345,410">
-            <Label Content="Протокол №" />
-            <TextBox Width="24" />
-        </StackPanel>
-        <Label Content="Заседания государственной экзаменационной комисси" Margin="245,55,235,370" />
-        <DatePicker Margin="120,85,540,335" />
-        <TextBox Margin="460,85,195,330" />
-        <Button Content="создать" Height="20" VerticalAlignment="Bottom" />
-    </Grid>
+    <StackPanel>
+        
+    </StackPanel>
 </Page>

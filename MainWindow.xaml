@@ -5,10 +5,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:DiplomaData" x:Name="window"
     x:Class="DiplomaData.MainWindow"
-        mc:Ignorable="d"
+    xmlns:dxpdf="http://schemas.devexpress.com/winfx/2008/xaml/pdf"   
+    mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
     </Window.Resources>
+    <Window.DataContext>
+        <local:MainVM/>
+    </Window.DataContext>
 
     <Grid>
 
@@ -17,8 +21,7 @@
             <RowDefinition />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Menu >
-            
+        <Menu>
         </Menu>
 
         <Grid Grid.Row="1">
@@ -27,9 +30,8 @@
                 <ColumnDefinition />
                 <ColumnDefinition MaxWidth="300" Width="auto" />
             </Grid.ColumnDefinitions>
-            <Menu x:Name="toolM"  Width="100" >
-
-
+            <Menu x:Name="toolM"  Width="100">
+                <Button Content="открыть" Click="Button_Click"/>
             </Menu>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -37,101 +39,14 @@
                     <RowDefinition Height="AUTO" />
                 </Grid.RowDefinitions>
                 <TabControl>
-                    <TabItem   Header="темы">
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition Height="aUTO" />
-                                <RowDefinition Height="aUTO" />
-                            </Grid.RowDefinitions>
-                            <ListBox ItemsSource="{Binding Topics}" x:Name="listBox" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                                <ListBox.Resources>
-                                    <Style TargetType="ListBoxItem">
-                                        <Setter Property="MaxWidth" Value="{Binding ActualWidth, ElementName=listBox, Mode=OneWay}" />
-
-                                    </Style>
-                                    <Style TargetType="local:UCTopic">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
-
-                                            </Trigger>
-
-                                        </Style.Triggers>
-
-                                    </Style>
-                                </ListBox.Resources>
-                            </ListBox>
-                            <Expander Grid.Row="1">
-                                <StackPanel>
-                                    <TextBox />
-                                    <TextBox />
-                                    <CheckBox />
-                                    <Button Content="ок" />
-                                </StackPanel>
-                            </Expander>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="дипломоы">
-                    </TabItem>
+                   
                     <TabItem Header="отчёты">
-                        
-                    </TabItem>
-                    <TabItem Header="учащиеся">
-                        <ListBox HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                            <ListBox.Resources>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="MaxWidth" Value="{Binding ActualWidth, ElementName=listBox, Mode=OneWay}" />
-                                </Style>
-                            </ListBox.Resources>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition Height="auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="ФИО" />
-                            </Grid>
-                        </ListBox>
-                    </TabItem>
-
-                    <TabItem Header="проверяющие">
-                        <ListBox HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                            <ListBox.Resources>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="MaxWidth" Value="{Binding ActualWidth, ElementName=listBox, Mode=OneWay}" />
-                                </Style>
-                            </ListBox.Resources>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition Height="auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="ФИО" />
-                            </Grid>
-                        </ListBox>
-                    </TabItem>
-                    <TabItem Header="направления">
-                        <ListBox HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-
-                            <StackPanel>
-
-                                <TextBlock Text="название" />
-                                <TextBlock Text="описание" />
-                            </StackPanel>
-                        </ListBox>
-                    </TabItem>
-                    <TabItem Header="файлы">
-                        <ListBox HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                            <StackPanel>
-
-                                <TextBlock Text="название" />
-                                <TextBlock Text="описание" />
-                            </StackPanel>
-                        </ListBox>
+                        <Button Command="{Binding OpenWordTemplate}" Content="Открыть шаблон"/>
                     </TabItem>
                 </TabControl>
             </Grid>
             <GridSplitter ShowsPreview="False" Width="3" Grid.Column="1" />
-            <TextBlock Grid.Column="3"  Width="100"  />
+            <TextBlock Grid.Column="3"  Width="100" />
         </Grid>
         <StatusBar Grid.Row="2">
             <StatusBarItem Content="ww" />

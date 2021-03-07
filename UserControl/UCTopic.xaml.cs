@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -34,15 +33,12 @@ namespace DiplomaData
         public UCTopic()
         {
             InitializeComponent();
-
-
         }
 
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             MessageBox.Show("Test");
         }
-
 
         private void userControl_GotFocus_1(object sender, RoutedEventArgs e)
         {
