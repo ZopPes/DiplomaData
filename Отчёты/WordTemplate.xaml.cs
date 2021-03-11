@@ -24,16 +24,7 @@ namespace DiplomaData.Отчёты
         {
             InitializeComponent();
             
-            DataContextChanged += WordTemplate_DataContextChanged;
         }
 
-        private void WordTemplate_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            
-            foreach (Microsoft.Office.Interop.Word.ContentControl item in e.NewValue as ContentControls)
-            {
-                sp.Children.Add(new Label() { Content = item.Range.Text });
-            }
-        }
     }
 }

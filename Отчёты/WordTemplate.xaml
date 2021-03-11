@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:DiplomaData.Отчёты"
         mc:Ignorable="d"
         Title="WordTemplate" Height="450" Width="800">
-    <StackPanel x:Name="sp">
-        <DataGrid ItemsSource="{Binding DataContext, ElementName=window}"/>
-    </StackPanel>
+    <ListBox ItemsSource="{Binding}">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <TextBox Text="{Binding Text}"/>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
 </Window>
