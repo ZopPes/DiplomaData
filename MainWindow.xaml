@@ -5,7 +5,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:DiplomaData" x:Name="window"
     x:Class="DiplomaData.MainWindow"
-    xmlns:dxpdf="http://schemas.devexpress.com/winfx/2008/xaml/pdf"   
+    xmlns:dxpdf="http://schemas.devexpress.com/winfx/2008/xaml/pdf"
+    xmlns:im ="clr-namespace:DiplomaData.импорт"
     mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
@@ -32,6 +33,7 @@
             </Grid.ColumnDefinitions>
             <Menu x:Name="toolM"  Width="100">
                 <Button Content="открыть" Click="Button_Click"/>
+                <MenuItem Command="ApplicationCommands.Paste" CommandParameter="{Binding}"/>
             </Menu>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -42,6 +44,11 @@
                    
                     <TabItem Header="отчёты">
                         <Button Command="{Binding OpenWordTemplate}" Content="Открыть шаблон"/>
+                    </TabItem>
+                    <TabItem Header="импорт">
+                        <Grid>
+                            <im:UCImport/>
+                        </Grid>
                     </TabItem>
                 </TabControl>
             </Grid>

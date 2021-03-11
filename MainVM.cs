@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WPFMVVMHelper;
 using Microsoft.Office.Interop.Word;
+using System.Collections.ObjectModel;
+using DiplomaData.Отчёты;
+using System.Windows.Input;
 
 namespace DiplomaData
 {
@@ -13,9 +16,11 @@ namespace DiplomaData
     {
         public lamdaCommand OpenWordTemplate { get; }
 
+
         public MainVM()
         {
             OpenWordTemplate = new lamdaCommand(OnOpenWordTemplate);
+            
         }
 
         private void OnOpenWordTemplate()
@@ -24,13 +29,14 @@ namespace DiplomaData
             if (openFile.ShowDialog() == true)
             {
                 var app = new Application();
-                Document word = app.Documents.Add(openFile.FileName);
-                var wt = new Отчёты.WordTemplate()
+                Document word = app.Documents.Add(Template: openFile.FileName, Visible: true);
+                
+                var wt = new WordTemplate()
                 {
-                    DataContext = word.Range().ContentControls
+                    DataContext = ContentControls(word.Range().ContentControls)
                 };
                 wt.ShowDialog();
-
+               
                 try
                 {
                     word.Close();
@@ -41,7 +47,11 @@ namespace DiplomaData
             }
         }
 
-        
+        private IEnumerable<object> ContentControls(ContentControls contentControls)
+        {
+            foreach (ContentControl item in contentControls)
+                yield return new UContentControl(item);
+        }
     }
 
 }

@@ -66,6 +66,7 @@
     <Compile Include="HelpData.cs" />
     <Compile Include="HelpObservableCollectionBase.cs" />
     <Compile Include="MainVM.cs" />
+    <Compile Include="UContentControl.cs" />
     <Compile Include="UserControl\Testprotocol.xaml.cs">
       <DependentUpon>Testprotocol.xaml</DependentUpon>
     </Compile>
@@ -75,6 +76,11 @@
     <Compile Include="UserControl\UCTopic.xaml.cs">
       <DependentUpon>UCTopic.xaml</DependentUpon>
     </Compile>
+    <Compile Include="импорт\ImportVM.cs" />
+    <Compile Include="импорт\UCImport.xaml.cs">
+      <DependentUpon>UCImport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Отчёты\Control.cs" />
     <Compile Include="Отчёты\PrintWord.cs" />
     <Compile Include="Отчёты\WordTemplate.xaml.cs">
       <DependentUpon>WordTemplate.xaml</DependentUpon>
@@ -100,6 +106,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\UCTopic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="импорт\UCImport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -135,5 +145,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
