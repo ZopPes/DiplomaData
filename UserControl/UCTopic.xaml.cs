@@ -18,17 +18,7 @@ namespace DiplomaData
         //    typeof(UCTopic)
         //        );
 
-        public static readonly DependencyProperty TestFocusProperty = DependencyProperty.Register
-               (
-           "TestFocus"
-           ,
-           typeof(HelpData)
-           ,
-           typeof(UCTopic)
-               );
-
         //public Topic Topic { get => GetValue(TopicProperty) as Topic; set => SetValue(TopicProperty, value); }
-        public HelpData TestFocus { get => GetValue(TestFocusProperty) as HelpData; set => SetValue(TestFocusProperty, value); }
 
         public UCTopic()
         {

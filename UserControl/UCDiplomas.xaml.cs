@@ -5,9 +5,9 @@ namespace DiplomaData
     /// <summary>
     /// Логика взаимодействия для UCDiplomas.xaml
     /// </summary>
-    public partial class UCDiplomas : UserControl
+    public partial class Diploma : UserControl
     {
-        public UCDiplomas()
+        public Diploma()
         {
             InitializeComponent();
         }
