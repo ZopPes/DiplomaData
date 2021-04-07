@@ -1,10 +1,8 @@
-﻿using Microsoft.Office.Interop.Word;
-using Microsoft.Win32;
+﻿using DiplomaData.Model;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Xps.Packaging;
+using System.Windows.Input;
 
 namespace DiplomaData
 {
@@ -22,14 +20,14 @@ namespace DiplomaData
         {
             //// Create OpenFileDialog
             //OpenFileDialog dlg = new OpenFileDialog();
-            
+
             //// Set filter for file extension and default file extension
             //dlg.DefaultExt = ".doc";
             //dlg.Filter = "Word documents (.doc)|*.doc";
             //// Display OpenFileDialog by calling ShowDialog method
 
             //bool? result = dlg.ShowDialog();
-            
+
             //// Get the selected file name and display in a TextBox
             //if (result == true)
             //{
@@ -48,9 +46,15 @@ namespace DiplomaData
             //}
         }
 
-       
+        private void DatePicker_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F5)
+            {
+                (sender as DatePicker).SelectedDate = DateTime.Now;
+            }
+        }
 
-
+        
         //private IDocumentPaginatorSource ConvertWordDocToXPSDoc(string wordDocName, string xpsDocName)
         //{
         //    Microsoft.Office.Interop.Word.Application
@@ -59,7 +63,6 @@ namespace DiplomaData
         //    Document doc = wordApplication.Documents.Add(wordDocName);
         //    try
         //    {
-
         //        doc.SaveAs(xpsDocName, WdSaveFormat.wdFormatXPS);
 
         //        wordApplication.Quit();

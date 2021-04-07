@@ -3,151 +3,166 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:DiplomaData" x:Name="window"
+    xmlns:local="clr-namespace:DiplomaData"
+    xmlns:Tabs="clr-namespace:DiplomaData.Tabs"
+    xmlns:TabsUC="clr-namespace:DiplomaData.Tabs.TabsControls"
+    xmlns:TabsTable="clr-namespace:DiplomaData.Tabs.TabTable"
+    x:Name="window"
     x:Class="DiplomaData.MainWindow"
-    xmlns:dxpdf="http://schemas.devexpress.com/winfx/2008/xaml/pdf"
-    xmlns:im ="clr-namespace:DiplomaData.импорт"
     mc:Ignorable="d"
-        Title="MainWindow" >
+        Title="MainWindow">
     <Window.Resources>
-        <CollectionViewSource x:Key="tabs" Source="{Binding Tabs}"/>
-        <SolidColorBrush x:Key="TabItem.Selected.Background" Color="#FFFFFF"/>
-        <SolidColorBrush x:Key="TabItem.Selected.Border" Color="#ACACAC"/>
-        <Style x:Key="TabControlStyleAddButton" TargetType="{x:Type TabControl}">
-            <Setter Property="Padding" Value="2"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Background" Value="{StaticResource TabItem.Selected.Background}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource TabItem.Selected.Border}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabControl}">
-                        <Grid x:Name="templateRoot" ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition x:Name="ColumnDefinition0"/>
-                                <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
-                                <RowDefinition x:Name="RowDefinition1" Height="*"/>
-                            </Grid.RowDefinitions>
-                            <StackPanel Grid.Column="0"
-                            Grid.Row="0"
-                            Orientation="Horizontal"
-                            x:Name="HeaderPanel">
-                                <ComboBox>
-                                    <Button Content="темы" Command="{Binding AddTabThesis}"/>
-                                </ComboBox>
-                                
-                                <TabPanel x:Name="headerPanel" Background="Transparent" Grid.Column="0" IsItemsHost="true" Margin="2,2,2,0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
-                               
-                            </StackPanel>
-                            <Border x:Name="contentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
-                                <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="TabStripPlacement" Value="Bottom">
-                                <Setter Property="Grid.Row" TargetName="headerPanel" Value="1"/>
-                                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
-                                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
-                                <Setter Property="Height" TargetName="RowDefinition1" Value="Auto"/>
-                                <Setter Property="Margin" TargetName="headerPanel" Value="2,0,2,2"/>
-                            </Trigger>
-                            <Trigger Property="TabStripPlacement" Value="Left">
-                                <Setter Property="Grid.Row" TargetName="headerPanel" Value="0"/>
-                                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
-                                <Setter Property="Grid.Column" TargetName="headerPanel" Value="0"/>
-                                <Setter Property="Grid.Column" TargetName="contentPanel" Value="1"/>
-                                <Setter Property="Width" TargetName="ColumnDefinition0" Value="Auto"/>
-                                <Setter Property="Width" TargetName="ColumnDefinition1" Value="*"/>
-                                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
-                                <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
-                                <Setter Property="Margin" TargetName="headerPanel" Value="2,2,0,2"/>
-                            </Trigger>
-                            <Trigger Property="TabStripPlacement" Value="Right">
-                                <Setter Property="Grid.Row" TargetName="headerPanel" Value="0"/>
-                                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
-                                <Setter Property="Grid.Column" TargetName="headerPanel" Value="1"/>
-                                <Setter Property="Grid.Column" TargetName="contentPanel" Value="0"/>
-                                <Setter Property="Width" TargetName="ColumnDefinition0" Value="*"/>
-                                <Setter Property="Width" TargetName="ColumnDefinition1" Value="Auto"/>
-                                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
-                                <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
-                                <Setter Property="Margin" TargetName="headerPanel" Value="0,2,2,2"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <CollectionViewSource x:Key="tabs" Source="{Binding Tabs}" />
+
     </Window.Resources>
     <Window.DataContext>
-        <local:MainVM/>
+        <local:MainVM />
     </Window.DataContext>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Menu>
-            <MenuItem Header="данные"/>
+            <MenuItem Header="данные" Command="{Binding UpdateData}" />
         </Menu>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width=".4*" />
+                <ColumnDefinition />
+                <ColumnDefinition Width=".4*" />
             </Grid.ColumnDefinitions>
+            <TreeView>
 
-            <TabControl SelectedIndex="0" >
-                
+                <TreeViewItem IsExpanded="True" ItemsSource="{Binding Tabs.CommandCollection}" Header="Таблицы">
+                    <TreeViewItem.ItemTemplate>
+                        <DataTemplate DataType="{x:Type local:AddCommand}">
+                            <Button Content="{Binding Name}" Command="{Binding}" />
+                        </DataTemplate>
+                    </TreeViewItem.ItemTemplate>
+                </TreeViewItem>
+            </TreeView>
+            <TabControl Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Tabs.SelectedItem}">
+
                 <TabControl.ItemsSource>
                     <CompositeCollection>
-                        <CollectionContainer  Collection="{Binding Source={StaticResource tabs}}"/>
+                        <CollectionContainer  Collection="{Binding Source={StaticResource tabs}}" />
                     </CompositeCollection>
                 </TabControl.ItemsSource>
                 <TabControl.Resources>
-                    <DataTemplate  DataType="{x:Type local:Tab}">
-                        <StackPanel>
-                            <Image Source="{Binding Text, ElementName=textBox}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                    
-                </TabControl.Resources>
-                <TabControl.Style>
-                    <Binding Mode="OneWay" Source="{StaticResource TabControlStyleAddButton}"/>
-                </TabControl.Style>
 
+                    <DataTemplate DataType="{x:Type TabsTable:TabDiploma}">
+                        <TabsUC:UCDiploma Table="{Binding}" Data="{Binding DataContext.DiplomaData, ElementName=window}" />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type Tabs:TabCommission}">
+                        <TabsUC:UCTabCommission />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type TabsTable:TabFormOfEducation}">
+                        <TabsUC:UCTabFormOfEducation />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type TabsTable:TabGroup}">
+                        <TabsUC:UCTabGroup Table="{Binding}" Data="{Binding DataContext.DiplomaData, ElementName=window}" />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type TabsTable:TabLecturer}">
+                        <TabsUC:UCTabLecturer />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type TabsTable:TabReviewer}">
+                        <TabsUC:UCTabReviewer />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type TabsTable:TabSpecialty}">
+                        <TabsUC:UCTabSpecialty />
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type TabsTable:TabThesis}">
+                        <TabsUC:UCTabThesis Thesis="{Binding}" />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type TabsTable:TabStudent}">
+                        <TabsUC:UCTabStudent Data="{Binding DataContext.DiplomaData, ElementName=window}" />
+                    </DataTemplate>
+                </TabControl.Resources>
 
                 <TabControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type local:Tab}">
                         <TextBlock>
-                        <Run Text="{Binding Name}"/>
+                        <Run Text="{Binding Name}" />
                         <Hyperlink Command="{Binding Close}">X</Hyperlink>
                         </TextBlock>
                     </DataTemplate>
                 </TabControl.ItemTemplate>
-
-
-
             </TabControl>
 
-            <StackPanel Grid.Column="1">
-                <StackPanel Orientation="Horizontal">
-                    <TextBox x:Name="textBox" Text="поиск" Margin="0,0,19,0"/>
-                    <Rectangle Width="20" Height="20" Fill="#FFB9B9B9"/>
-                </StackPanel>
+            <StackPanel Grid.Column="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="textBox" />
+                    <Rectangle Grid.Column="1" Width="20" Height="20" Fill="#FFB9B9B9" />
+                </Grid>
+
+                <TextBlock Text="{Binding Tabs.SelectedItem.Specialties.name}"/>
+                <ListBox x:Name="listBox" ItemsSource="{Binding Tabs.SelectedItem.Specialties}" 
+                         >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Specialty1}"/>
+                                <Button Content="X" Grid.Column="1" 
+                                        Command="{Binding ItemsSource.RemoveCommand, ElementName=listBox}" CommandParameter="{Binding}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="comboBox" ItemsSource="{Binding DiplomaData.Specialty}" />
+                    <Button Grid.Column="1" Content="+" 
+                            Command="{Binding ItemsSource.AddCommand, ElementName=listBox}" 
+                            CommandParameter="{Binding SelectedItem, ElementName=comboBox}"
+                            />
+
+                </Grid>
             </StackPanel>
         </Grid>
-        <StatusBar Grid.Row="2">
-            <StatusBarItem Content="123"/>
+        <StatusBar Grid.Row="2" ItemsSource="{Binding Tabs.SelectedItem.Properties}">
+            <StatusBar.ItemContainerStyle>
+                <Style TargetType="StatusBarItem" BasedOn="{StaticResource {x:Type StatusBarItem}}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="StatusBarItem">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="5" />
+                                    </Grid.ColumnDefinitions>
+                                    <ContentPresenter>
+                                        <ContentPresenter.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontSize="18" Margin="10,0">
+                                                    <Run Text="{Binding Name, StringFormat={}{0}:}" />
+                                                    <Run Text="{Binding Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </ContentPresenter.Content>
+                                    </ContentPresenter>
+                                    <Separator Grid.Column="1"  Style="{StaticResource {x:Static StatusBar.SeparatorStyleKey}}" />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </StatusBar.ItemContainerStyle>
         </StatusBar>
     </Grid>
 </Window>

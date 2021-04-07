@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DiplomaData.импорт
 {
@@ -20,9 +9,6 @@ namespace DiplomaData.импорт
     /// </summary>
     public partial class UCImport : UserControl
     {
-
-       
-
         public UCImport()
         {
             InitializeComponent();
@@ -31,7 +17,6 @@ namespace DiplomaData.импорт
         private void import_Drop(object sender, DragEventArgs e)
         {
             DropCsv(e.Data, null);
-
         }
 
         private void DropCsv(IDataObject data, ItemCollection items)
@@ -56,7 +41,6 @@ namespace DiplomaData.импорт
 
         private void import_Click(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }
