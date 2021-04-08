@@ -1,7 +1,7 @@
 ﻿using System;
 using WPFMVVMHelper;
 
-namespace DiplomaData
+namespace DiplomaData.Tabs.CommandColection
 {
     public class AddCommand : lamdaCommand
     {
@@ -12,4 +12,6 @@ namespace DiplomaData
             Name = name;
         }
     }
+
+    
 }

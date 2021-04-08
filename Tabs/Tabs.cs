@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DiplomaData.Tabs.CommandColection;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -34,11 +35,6 @@ namespace DiplomaData.Tabs
         public Tabs(IEnumerable<AddCommand> commands) : base()
         {
             CommandCollection = new ObservableCollection<ICommand>(commands);
-        }
-
-        public void AddCommand(Tab item)
-        {
-            CommandCollection.Add(new AddCommand(() => this.Add(item), item.Name));
         }
 
         public new void Add(Tab tab)

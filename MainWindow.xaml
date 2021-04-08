@@ -7,10 +7,11 @@
     xmlns:Tabs="clr-namespace:DiplomaData.Tabs"
     xmlns:TabsUC="clr-namespace:DiplomaData.Tabs.TabsControls"
     xmlns:TabsTable="clr-namespace:DiplomaData.Tabs.TabTable"
+    xmlns:CommandColection="clr-namespace:DiplomaData.Tabs.CommandColection"
     x:Name="window"
     x:Class="DiplomaData.MainWindow"
     mc:Ignorable="d"
-        Title="MainWindow">
+        Title="Хранилище дипломных работ">
     <Window.Resources>
         <CollectionViewSource x:Key="tabs" Source="{Binding Tabs}" />
 
@@ -36,9 +37,21 @@
             </Grid.ColumnDefinitions>
             <TreeView>
 
-                <TreeViewItem IsExpanded="True" ItemsSource="{Binding Tabs.CommandCollection}" Header="Таблицы">
+                <TreeViewItem IsExpanded="True" ItemsSource="{Binding TableCommand}" Header="Таблицы">
                     <TreeViewItem.ItemTemplate>
-                        <DataTemplate DataType="{x:Type local:AddCommand}">
+                        <DataTemplate DataType="{x:Type CommandColection:AddCommand}">
+                            <Button Content="{Binding Name}" Command="{Binding}" />
+                        </DataTemplate>
+                    </TreeViewItem.ItemTemplate>
+                </TreeViewItem>
+                <TreeViewItem Header="Отчёты" ItemsSource="{Binding ReportCommands}">
+                    <TreeViewItem.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Обновить" Command="{Binding UpdateReports}"/>
+                        </ContextMenu>
+                    </TreeViewItem.ContextMenu>
+                    <TreeViewItem.ItemTemplate>
+                        <DataTemplate DataType="{x:Type CommandColection:AddCommand}">
                             <Button Content="{Binding Name}" Command="{Binding}" />
                         </DataTemplate>
                     </TreeViewItem.ItemTemplate>
