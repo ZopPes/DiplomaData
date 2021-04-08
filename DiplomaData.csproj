@@ -81,7 +81,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddCommand.cs" />
+    <Compile Include="Tabs\CommandColection\AddCommand.cs" />
     <Compile Include="MainVM.cs" />
     <Compile Include="Model\DiplomaData.cs">
       <DependentUpon>DiplomaData.dbml</DependentUpon>
@@ -91,6 +91,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DiplomaData.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Tabs\CommandColection\CommandCollection.cs" />
+    <Compile Include="Tabs\TabReport\TabReport.cs" />
     <Compile Include="Tabs\TabsControls\UCTabGroup.xaml.cs">
       <DependentUpon>UCTabGroup.xaml</DependentUpon>
     </Compile>
@@ -256,6 +258,5 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
