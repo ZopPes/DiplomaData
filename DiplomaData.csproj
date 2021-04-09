@@ -81,6 +81,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\MultiConverterFio.cs" />
     <Compile Include="Tabs\CommandColection\AddCommand.cs" />
     <Compile Include="MainVM.cs" />
     <Compile Include="Model\DiplomaData.cs">
@@ -133,13 +134,14 @@
     <Compile Include="Tabs\TabTable\TabStudent.cs" />
     <Compile Include="Tabs\TabTable\TabTable.cs" />
     <Compile Include="Tabs\TabTable\TabThesis.cs" />
-    <Compile Include="UserControl\Testprotocol.xaml.cs">
+    <Compile Include="UserControls\DataGridFIOColumn.cs" />
+    <Compile Include="UserControls\Testprotocol.xaml.cs">
       <DependentUpon>Testprotocol.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\UCDiplomas.xaml.cs">
+    <Compile Include="UserControls\UCDiplomas.xaml.cs">
       <DependentUpon>UCDiplomas.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\UCTopic.xaml.cs">
+    <Compile Include="UserControls\UCTopic.xaml.cs">
       <DependentUpon>UCTopic.xaml</DependentUpon>
     </Compile>
     <Compile Include="импорт\ImportVM.cs" />
@@ -199,15 +201,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\Testprotocol.xaml">
+    <Page Include="UserControls\Testprotocol.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\UCDiplomas.xaml">
+    <Page Include="UserControls\UCDiplomas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\UCTopic.xaml">
+    <Page Include="UserControls\UCTopic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

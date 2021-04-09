@@ -1,16 +1,11 @@
 ﻿using DiplomaData.Model;
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Linq;
 using System.Linq;
-using System.Text;
-using System.Windows.Data;
-using System.Collections.Generic;
-using WPFMVVMHelper;
 using System.Windows.Input;
-using System.Collections;
-using System.Collections.Specialized;
-using System.ComponentModel;
+using WPFMVVMHelper;
 
 namespace DiplomaData.Tabs.TabTable
 {
@@ -32,11 +27,10 @@ namespace DiplomaData.Tabs.TabTable
                     {
                         propertie.ValueOnPropertyChanged();
                     }
-                    
-                    Specialties =new Con1<Specialty_Thesis>(value.Specialty_Thesis);
+
+                    Specialties = new Con1<Specialty_Thesis>(value.Specialty_Thesis);
                     OnPropertyChanged(nameof(Specialties));
                 }
-
             }
         }
 
@@ -46,18 +40,14 @@ namespace DiplomaData.Tabs.TabTable
 
         public TabThesis(Table<Thesis> theses) : base(theses, name: "Темы")
         {
-            Properties.Add(new Propertie("Количество занятых тем", () => Table.Where(t => t.used).Count()));
-            Properties.Add(new Propertie("Количество свободных тем", () => Table.Where(t => !t.used).Count()));
-            
+            Properties.Add(new Property("Количество занятых тем", () => Table.Where(t => t.used).Count()));
+            Properties.Add(new Property("Количество свободных тем", () => Table.Where(t => !t.used).Count()));
         }
-
-       
-        
     }
 
-    public class Con<T> : IList<T> where T:class
+    public class Con<T> : IList<T> where T : class
     {
-        public string name { get; }
+        public string Name { get;}
 
         public EntitySet<T> ts { get; set; }
 
@@ -75,10 +65,9 @@ namespace DiplomaData.Tabs.TabTable
         {
             this.ts = ts;
             AddCommand = new lamdaCommand<T>(Add);
-            RemoveCommand = new lamdaCommand<T>(t=>Remove(t));
-            name = "Специальность";
+            RemoveCommand = new lamdaCommand<T>(t => Remove(t));
+            Name = "Специальность";
         }
-
 
         public int IndexOf(T item)
         {
@@ -135,20 +124,15 @@ namespace DiplomaData.Tabs.TabTable
     {
         public string name { get; }
 
-
         public ICommand AddCommand { get; }
 
         public ICommand RemoveCommand { get; }
 
-
-
-        public Con1(EntitySet<T> ts):base(ts)
+        public Con1(EntitySet<T> ts) : base(ts)
         {
             AddCommand = new lamdaCommand<T>(Add);
             RemoveCommand = new lamdaCommand<T>(t => Remove(t));
             name = "Специальность";
         }
-
-
     }
 }

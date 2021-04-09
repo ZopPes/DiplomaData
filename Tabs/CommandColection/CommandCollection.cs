@@ -1,24 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace DiplomaData.Tabs.CommandColection
 {
-    class CommandCollection : ObservableCollection<AddCommand>
+    /// <summary>
+    /// Список команд для добавления новой вкладки
+    /// </summary>
+    public class CommandCollection : ObservableCollection<AddCommand>
     {
+        /// <summary>
+        /// Изменяемый список вкладок
+        /// </summary>
         private Tabs Tabs { get; }
 
-        public CommandCollection(Tabs tabs)
-        {
-            Tabs = tabs;
-        }
+        /// <summary>
+        /// Список команд для добавления новой вкладки
+        /// </summary>
+        /// <param name="tabs">Список вкладок</param>
+        public CommandCollection(Tabs tabs) => Tabs = tabs;
 
-        public void Add(Tab item)
-        {
-            Add(new AddCommand(() => Tabs.Add(item), item.Name));
-        }
+        /// <summary>
+        /// Создаёт команду для добавления вкладки
+        /// </summary>
+        /// <param name="item">Вкладка</param>
+        public void Add(Tab item) => Add(new AddCommand(() => Tabs.Add(item), item.Name));
     }
 }

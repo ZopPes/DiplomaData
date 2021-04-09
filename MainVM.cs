@@ -8,13 +8,18 @@ using Microsoft.Office.Interop.Word;
 using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
+using System.Data.Linq;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 using WPFMVVMHelper;
 using Application = Microsoft.Office.Interop.Word.Application;
 
 namespace DiplomaData
 {
+    /// <summary>
+    /// Сахар
+    /// </summary>
     public static class Extension
     {
         public static bool SetAdd<T>(this ObservableCollection<T> ts, T item)
@@ -24,71 +29,107 @@ namespace DiplomaData
             return true;
         }
 
+        public static CommandCollection CreateCommands(this Tabs.Tabs tabs) => new CommandCollection(tabs);
+
+        public static CommandCollection AddTable<T>(this CommandCollection tabs,TabTable<T> ts) where T:class
+        {
+            tabs.Add(ts);
+            return tabs;
+        }
+
         
     }
 
+    /// <summary>
+    /// главный VM класс
+    /// </summary>
     internal class MainVM : peremlog, IDisposable
     {
-        public lamdaCommand OpenWordTemplate { get; }
-
+        /// <summary>
+        /// имя папки с отчётами
+        /// </summary>
         private const string reportPath = "Отчёты";
 
         #region DiplomaData
-
-        private DiplomaDataDataContext Data;
-
         /// <summary>Подключение к базе данных</summary>
-        public DiplomaDataDataContext DiplomaData { get => Data; set => Set(ref Data, value); }
+        public DiplomaDataDataContext DiplomaData { get; }
 
         #endregion DiplomaData
 
         #region Tabs
-
-        private Tabs.Tabs tabs;
-
         /// <summary>Вкладки</summary>
-        public Tabs.Tabs Tabs { get => tabs; set => Set(ref tabs, value); }
+        public Tabs.Tabs Tabs { get;}
 
         #endregion Tabs
 
-
         #region TableCommand
-        private CommandCollection tableCollection;
-        /// <summary>Список команд для добавления вкладок</summary>
-        public CommandCollection TableCommand { get => tableCollection; set =>Set(ref tableCollection ,value); }
-        #endregion
+        /// <summary>команды для добавления вкладок с таблицами</summary>
+        public CommandCollection TableCommand { get; }
 
+        #endregion TableCommand
 
         #region ReportCommands
         /// <summary>Команды для добавления вкладок отчёта</summary>
-        public CommandCollection ReportCommands { get; set; }
-        #endregion
+        public CommandCollection ReportCommands { get; }
+
+        #endregion ReportCommands
 
         #region Report
+
         private ObservableCollection<string> reports;
+
         /// <summary>Список отчётов</summary>
-        public ObservableCollection<string> Reports { get => reports; set =>Set(ref reports ,value); }
+        public ObservableCollection<string> Reports { get => reports; set => Set(ref reports, value); }
+
+        #endregion Report
+
+        #region ICommands
+        /// <summary>
+        /// Загружает все данные в базу
+        /// </summary>
+        public ICommand UpdateData { get; }
+        /// <summary>
+        /// открытие отчёты
+        /// </summary>
+        public ICommand OpenWordTemplate { get; }
+        /// <summary>
+        /// обновляет список отчётов
+        /// </summary>
+        public ICommand UpdateReports { get; }
         #endregion
 
-        public lamdaCommand UpdateData { get; }
-        public lamdaCommand DateNow { get; }
-
-        public lamdaCommand UpdateReports { get; }
-
+        /// <summary>
+        /// главный VM класс
+        /// </summary>
         public MainVM()
         {
             if (!Directory.Exists(reportPath))
                 Directory.CreateDirectory(reportPath);
 
-            UpdateReports = new lamdaCommand(OnUpdateReports);
-           
             OnUpdateReports();
-
-            OpenWordTemplate = new lamdaCommand(OnOpenWordTemplate);
-
+            
             DiplomaData = new DiplomaDataDataContext();
+            Tabs = new Tabs.Tabs();
 
-            UpdateData = new lamdaCommand(()=>
+            #region AddTabsTable
+            TableCommand =  Tabs.CreateCommands()
+                                .AddTable(new TabCommission(DiplomaData.Commission))
+                                .AddTable(new TabDataFile(DiplomaData.DataFile))
+                                .AddTable(new TabDiploma(DiplomaData.Diploma))
+                                .AddTable(new TabFormOfEducation(DiplomaData.Form_of_education))
+                                .AddTable(new TabGroup(DiplomaData.Group))
+                                .AddTable(new TabLecturer(DiplomaData.Lecturer))
+                                .AddTable(new TabReviewer(DiplomaData.Reviewer))
+                                .AddTable(new TabSpecialty(DiplomaData.Specialty))
+                                .AddTable(new TabStudent(DiplomaData.Student))
+                                .AddTable(new TabThesis(DiplomaData.Thesis));
+            #endregion AddTabsTable
+
+            ReportCommands = Tabs.CreateCommands();
+            ReportCommands.Add(new TabReport("Отчёт"));
+
+            #region InitCommand
+            UpdateData = new lamdaCommand(() =>
             {
                 try
                 {
@@ -96,33 +137,23 @@ namespace DiplomaData
                 }
                 catch (Exception e)
                 {
-                    
                     MessageBox.Show(e.Message, "Ошибка");
                 }
-            }
-            );
-            Tabs = new Tabs.Tabs();
-            #region AddTabsTable
-            TableCommand = new CommandCollection(Tabs);
-            TableCommand.Add(new TabCommission(DiplomaData.Commission));
-            TableCommand.Add(new TabDataFile(DiplomaData.DataFile));
-            TableCommand.Add(new TabDiploma(DiplomaData.Diploma));
-            TableCommand.Add(new TabFormOfEducation(DiplomaData.Form_of_education));
-            TableCommand.Add(new TabGroup(DiplomaData.Group));
-            TableCommand.Add(new TabLecturer(DiplomaData.Lecturer));
-            TableCommand.Add(new TabReviewer(DiplomaData.Reviewer));
-            TableCommand.Add(new TabSpecialty(DiplomaData.Specialty));
-            TableCommand.Add(new TabStudent(DiplomaData.Student));
-            TableCommand.Add(new TabThesis(DiplomaData.Thesis));
+            });
+            OpenWordTemplate = new lamdaCommand(OnOpenWordTemplate);
+            UpdateReports = new lamdaCommand(OnUpdateReports);
             #endregion
-
-            ReportCommands = new CommandCollection(Tabs);
-            ReportCommands.Add(new TabReport("Отчёт"));
         }
 
-        private void OnUpdateReports() => 
+        /// <summary>
+        /// Обновляет список дипломов
+        /// </summary>
+        private void OnUpdateReports() =>
             Reports = new ObservableCollection<string>(Directory.EnumerateFiles(reportPath, "*.docx"));
 
+        /// <summary>
+        /// открывает фаил ворд
+        /// </summary>
         private void OnOpenWordTemplate()
         {
             OpenFileDialog openFile = new OpenFileDialog();
@@ -146,10 +177,15 @@ namespace DiplomaData
             }
         }
 
+        
         public void Dispose()
         {
             DiplomaData.Dispose();
             Tabs.Clear();
+
+            TableCommand.Clear();
+            ReportCommands.Clear();
+         
         }
     }
 }

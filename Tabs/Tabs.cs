@@ -1,12 +1,12 @@
-﻿using DiplomaData.Tabs.CommandColection;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Input;
 
 namespace DiplomaData.Tabs
 {
-    public class Tabs : ObservableCollection<Tab>, INotifyPropertyChanged
+    /// <summary>
+    /// Список вкладок
+    /// </summary>
+    public class Tabs : ObservableCollection<Tab>
     {
         #region SelectedItem
 
@@ -24,19 +24,17 @@ namespace DiplomaData.Tabs
 
         #endregion SelectedItem
 
-        /// <summary>Список команд</summary>
-        public ObservableCollection<ICommand> CommandCollection { get; set; }
-
+        /// <summary>
+        /// Список вкладок
+        /// </summary>
         public Tabs() : base()
         {
-            CommandCollection = new ObservableCollection<ICommand>();
         }
 
-        public Tabs(IEnumerable<AddCommand> commands) : base()
-        {
-            CommandCollection = new ObservableCollection<ICommand>(commands);
-        }
-
+        /// <summary>
+        /// добавляет новую вкладку
+        /// </summary>
+        /// <param name="tab">Вкладка</param>
         public new void Add(Tab tab)
         {
             if (!Contains(tab))
@@ -46,5 +44,6 @@ namespace DiplomaData.Tabs
             }
             SelectedItem = tab;
         }
+        
     }
 }
