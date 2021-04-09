@@ -1,7 +1,6 @@
 ﻿using DiplomaData.Tabs.TabTable;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 
 namespace DiplomaData.Tabs.TabsControls
 {
@@ -24,7 +23,6 @@ namespace DiplomaData.Tabs.TabsControls
         public UCTabThesis()
         {
             InitializeComponent();
-            
         }
     }
 }

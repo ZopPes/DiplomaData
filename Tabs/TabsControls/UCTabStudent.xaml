@@ -5,11 +5,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
     <DataGrid ItemsSource="{Binding Table}" AutoGenerateColumns="False">
         <DataGrid.Columns>
-            <DataGridTextColumn Header="Фамилия" Binding="{Binding surname}" />
-            <DataGridTextColumn Header="Имя" Binding="{Binding name}" />
-            <DataGridTextColumn Header="Отчество" Binding="{Binding patronymic}" />
+            <DataGridTextColumn Header="ФИО">
+                <DataGridTextColumn.Binding>
+                    <MultiBinding Converter="{StaticResource Fio}">
+                        <Binding Path="surname"/>
+                        <Binding Path="name"/>
+                        <Binding Path="patronymic"/>
+                    </MultiBinding>
+                </DataGridTextColumn.Binding>
+            </DataGridTextColumn>
             <DataGridTemplateColumn Header="группа">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
@@ -18,7 +27,7 @@
                 </DataGridTemplateColumn.CellTemplate>
                 <DataGridTemplateColumn.CellEditingTemplate>
                     <DataTemplate>
-                        <ComboBox 
+                        <ComboBox
                                   SelectedItem="{Binding Group}" ItemsSource="{Binding Data.Group, ElementName=userControl}" />
                     </DataTemplate>
                 </DataGridTemplateColumn.CellEditingTemplate>

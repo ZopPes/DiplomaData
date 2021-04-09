@@ -5,7 +5,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d">
     <UserControl.Resources>
-       
     </UserControl.Resources>
     <StackPanel>
         <DataGrid SelectedItem="{Binding Thesis.SelectedTable, ElementName=userControl}" ItemsSource="{Binding Thesis.Table, ElementName=userControl}" AutoGenerateColumns="False">
@@ -27,7 +26,5 @@
             <DataGridCheckBoxColumn IsReadOnly="True" Header="используется" Binding="{Binding used, Mode=OneWay}" />
         </DataGrid.Columns>
     </DataGrid>
-        
     </StackPanel>
-    
 </UserControl>

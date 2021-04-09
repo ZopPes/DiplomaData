@@ -1,5 +1,4 @@
-﻿using DiplomaData.Model;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -54,7 +53,6 @@ namespace DiplomaData
             }
         }
 
-        
         //private IDocumentPaginatorSource ConvertWordDocToXPSDoc(string wordDocName, string xpsDocName)
         //{
         //    Microsoft.Office.Interop.Word.Application

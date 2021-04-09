@@ -7,9 +7,15 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <DataGrid ItemsSource="{Binding Table}" AutoGenerateColumns="False">
         <DataGrid.Columns>
-            <DataGridTextColumn Header="Фамилия" Binding="{Binding surname}" />
-            <DataGridTextColumn Header="Имя" Binding="{Binding name}" />
-            <DataGridTextColumn Header="Отчиство" Binding="{Binding patronymic}" />
+            <DataGridTextColumn Header="ФИО">
+                <DataGridTextColumn.Binding>
+                    <MultiBinding Converter="{StaticResource Fio}">
+                        <Binding Path="surname"/>
+                        <Binding Path="name"/>
+                        <Binding Path="patronymic"/>
+                    </MultiBinding>
+                </DataGridTextColumn.Binding>
+            </DataGridTextColumn>
         </DataGrid.Columns>
     </DataGrid>
 </UserControl>

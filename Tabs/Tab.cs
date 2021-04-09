@@ -5,64 +5,66 @@ using WPFMVVMHelper;
 
 namespace DiplomaData
 {
+    /// <summary>
+    /// вкладка
+    /// </summary>
     public class Tab : peremlog
     {
         /// <summary>
         /// Класс имя значения
         /// для списка свойств
         /// </summary>
-        public class Propertie : peremlog
+        public class Property : peremlog
         {
             /// <summary>имя</summary>
-            public string Name { get; set; }
+            public string Name { get;}
 
+            /// <summary>
+            /// значение
+            /// </summary>
+            public object Value { get => Func?.Invoke(); }
 
-            public object Value { get => Func?.Invoke();}
-
+            /// <summary>
+            /// Функция для получения значения
+            /// </summary>
             public Func<object> Func { get; }
 
-            public Propertie(string name,Func<object> value)
+            /// <summary>
+            /// свойство вкладки
+            /// </summary>
+            /// <param name="name">имя свойства</param>
+            /// <param name="value">функция для получения значения</param>
+            public Property(string name, Func<object> value)
             {
                 Name = name;
                 Func = value;
             }
 
-            public void ValueOnPropertyChanged()
+            /// <summary>
+            /// свойство вкладки
+            /// </summary>
+            /// <param name="name">имя свойства</param>
+            /// <param name="value">значение</param>
+            public Property(string name, object value)
             {
-                OnPropertyChanged(nameof(Value));
+                Name = name;
+                Func =()=> value;
             }
+            /// <summary>
+            /// обновление значения
+            /// </summary>
+            public void ValueOnPropertyChanged() => OnPropertyChanged(nameof(Value));
         }
 
         #region Properties
-
-        private ObservableCollection<Propertie> properties;
-
-        /// <summary>Войства объекта</summary>
-        public ObservableCollection<Propertie> Properties
-        {
-            get => properties;
-            set => Set(ref properties, value);
-        }
-
+        /// <summary>Свойства Вкладки</summary>
+        public ObservableCollection<Property> Properties { get; }
         #endregion Properties
-
-        /// <summary>
-        /// класс для кправления вкладками приложения
-        /// </summary>
-        public Tab(string name = "")
-        {
-            Close = new lamdaCommand(() => AClose?.Invoke(this));
-            Name = name;
-            Properties = new ObservableCollection<Propertie>();
-        }
-
-
-       
 
         /// <summary>
         /// название вкладки
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get;}
 
         /// <summary>
         /// комманда для закрытия вкладки
@@ -70,5 +72,18 @@ namespace DiplomaData
         public ICommand Close { get; }
 
         public Action<Tab> AClose;
+
+        /// <summary>
+        /// Вкладка
+        /// </summary>
+        /// <param name="name">Имя Вкладки</param>
+        public Tab(string name = "")
+        {
+            Close = new lamdaCommand(() => AClose?.Invoke(this));
+            Name = name;
+            Properties = new ObservableCollection<Property>();
+        }
+
+      
     }
 }
