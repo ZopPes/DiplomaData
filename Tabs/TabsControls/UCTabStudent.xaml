@@ -8,7 +8,7 @@
     <UserControl.Resources>
         
     </UserControl.Resources>
-    <DataGrid ItemsSource="{Binding Table}" AutoGenerateColumns="False">
+    <DataGrid  ItemsSource="{Binding Table}" AutoGenerateColumns="False">
         <DataGrid.Columns>
             <DataGridTextColumn Header="ФИО">
                 <DataGridTextColumn.Binding>
@@ -27,8 +27,7 @@
                 </DataGridTemplateColumn.CellTemplate>
                 <DataGridTemplateColumn.CellEditingTemplate>
                     <DataTemplate>
-                        <ComboBox
-                                  SelectedItem="{Binding Group}" ItemsSource="{Binding Data.Group, ElementName=userControl}" />
+                        <ComboBox SelectedItem="{Binding Group}" ItemsSource="{Binding Data.Group, ElementName=userControl}" />
                     </DataTemplate>
                 </DataGridTemplateColumn.CellEditingTemplate>
             </DataGridTemplateColumn>
