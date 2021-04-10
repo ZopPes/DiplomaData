@@ -6,8 +6,10 @@
     xmlns:local="clr-namespace:DiplomaData"
     xmlns:Tabs="clr-namespace:DiplomaData.Tabs"
     xmlns:TabsUC="clr-namespace:DiplomaData.Tabs.TabsControls"
+    xmlns:TestUC="clr-namespace:DiplomaData.Tabs.TabsNotGridControls"
     xmlns:TabsTable="clr-namespace:DiplomaData.Tabs.TabTable"
     xmlns:CommandColection="clr-namespace:DiplomaData.Tabs.CommandColection"
+    xmlns:model="clr-namespace:DiplomaData.Model"
     x:Name="window"
     x:Class="DiplomaData.MainWindow"
     mc:Ignorable="d"
@@ -26,7 +28,7 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Menu>
-            <MenuItem Header="данные" Command="{Binding UpdateData}" />
+            <MenuItem Header="данные" Command="{Binding UpdateData, IsAsync=True}" />
         </Menu>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -91,7 +93,7 @@
                         <TabsUC:UCTabThesis Thesis="{Binding}" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type TabsTable:TabStudent}">
-                        <TabsUC:UCTabStudent Data="{Binding DataContext.DiplomaData, ElementName=window}" />
+                        <TestUC:UCStudents Data="{Binding DataContext.DiplomaData, ElementName=window}" />
                     </DataTemplate>
                 </TabControl.Resources>
 

@@ -100,6 +100,9 @@
     <Compile Include="Tabs\TabsControls\UCTabLecturer.xaml.cs">
       <DependentUpon>UCTabLecturer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tabs\TabsNotGridControls\UCStudents.xaml.cs">
+      <DependentUpon>UCStudents.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tabs\TabTable\TabDiploma.cs" />
     <Compile Include="Tabs\Tab.cs" />
     <Compile Include="Tabs\TabsControls\UCTabCommission.xaml.cs">
@@ -198,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tabs\TabsControls\UCTabThesis.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tabs\TabsNotGridControls\UCStudents.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
