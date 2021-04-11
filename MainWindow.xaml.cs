@@ -53,6 +53,11 @@ namespace DiplomaData
             }
         }
 
+        private void list_Loaded(object sender, RoutedEventArgs e)
+        {
+            var qwe = sender;
+        }
+
         //private IDocumentPaginatorSource ConvertWordDocToXPSDoc(string wordDocName, string xpsDocName)
         //{
         //    Microsoft.Office.Interop.Word.Application

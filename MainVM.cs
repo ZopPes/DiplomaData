@@ -30,8 +30,9 @@ namespace DiplomaData
         }
 
         public static CommandCollection CreateCommands(this Tabs.Tabs tabs) => new CommandCollection(tabs);
+        public static TabTable<T> CreateTabtable<T>(this Table<T> table, string name) where T : class, ICloneable, new() => new TabTable<T>(table, name);
 
-        public static CommandCollection AddTable<T>(this CommandCollection tabs,TabTable<T> ts) where T:class
+        public static CommandCollection AddTable<T>(this CommandCollection tabs,TabTable<T> ts) where T:class, ICloneable, new()
         {
             tabs.Add(ts);
             return tabs;
@@ -112,17 +113,8 @@ namespace DiplomaData
             Tabs = new Tabs.Tabs();
 
             #region AddTabsTable
-            TableCommand =  Tabs.CreateCommands()
-                                .AddTable(new TabCommission(DiplomaData.Commission))
-                                .AddTable(new TabDataFile(DiplomaData.DataFile))
-                                .AddTable(new TabDiploma(DiplomaData.Diploma))
-                                .AddTable(new TabFormOfEducation(DiplomaData.Form_of_education))
-                                .AddTable(new TabGroup(DiplomaData.Group))
-                                .AddTable(new TabLecturer(DiplomaData.Lecturer))
-                                .AddTable(new TabReviewer(DiplomaData.Reviewer))
-                                .AddTable(new TabSpecialty(DiplomaData.Specialty))
-                                .AddTable(new TabStudent(DiplomaData.Student))
-                                .AddTable(new TabThesis(DiplomaData.Thesis));
+            TableCommand = Tabs.CreateCommands()
+                                .AddTable(DiplomaData.Student.CreateTabtable("Студент"));
             #endregion AddTabsTable
 
             ReportCommands = Tabs.CreateCommands();

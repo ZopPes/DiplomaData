@@ -94,49 +94,13 @@
     </Compile>
     <Compile Include="Tabs\CommandColection\CommandCollection.cs" />
     <Compile Include="Tabs\TabReport\TabReport.cs" />
-    <Compile Include="Tabs\TabsControls\UCTabGroup.xaml.cs">
-      <DependentUpon>UCTabGroup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Tabs\TabsControls\UCTabLecturer.xaml.cs">
-      <DependentUpon>UCTabLecturer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Tabs\TabsNotGridControls\UCStudents.xaml.cs">
       <DependentUpon>UCStudents.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tabs\TabTable\TabDiploma.cs" />
     <Compile Include="Tabs\Tab.cs" />
-    <Compile Include="Tabs\TabsControls\UCTabCommission.xaml.cs">
-      <DependentUpon>UCTabCommission.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Tabs\TabsControls\UCTabFormOfEducation.xaml.cs">
-      <DependentUpon>UCTabFormOfEducation.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Tabs\TabsControls\UCTabReviewer.xaml.cs">
-      <DependentUpon>UCTabReviewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Tabs\TabsControls\UCTabSpecialty.xaml.cs">
-      <DependentUpon>UCTabSpecialty.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Tabs\TabsControls\UCTabStudent.xaml.cs">
-      <DependentUpon>UCTabStudent.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Tabs\TabTable\TabCommission.cs" />
-    <Compile Include="Tabs\TabTable\TabDataFile.cs" />
     <Compile Include="Tabs\Tabs.cs" />
-    <Compile Include="Tabs\TabsControls\UCDiploma.xaml.cs">
-      <DependentUpon>UCDiploma.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Tabs\TabsControls\UCTabThesis.xaml.cs">
-      <DependentUpon>UCTabThesis.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Tabs\TabTable\TabFormOfEducation.cs" />
-    <Compile Include="Tabs\TabTable\TabGroup.cs" />
-    <Compile Include="Tabs\TabTable\TabLecturer.cs" />
-    <Compile Include="Tabs\TabTable\TabReviewer.cs" />
-    <Compile Include="Tabs\TabTable\TabSpecialty.cs" />
     <Compile Include="Tabs\TabTable\TabStudent.cs" />
     <Compile Include="Tabs\TabTable\TabTable.cs" />
-    <Compile Include="Tabs\TabTable\TabThesis.cs" />
     <Compile Include="UserControls\DataGridFIOColumn.cs" />
     <Compile Include="UserControls\Testprotocol.xaml.cs">
       <DependentUpon>Testprotocol.xaml</DependentUpon>
@@ -168,42 +132,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Tabs\TabsControls\UCDiploma.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Tabs\TabsControls\UCTabCommission.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Tabs\TabsControls\UCTabFormOfEducation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Tabs\TabsControls\UCTabGroup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Tabs\TabsControls\UCTabLecturer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Tabs\TabsControls\UCTabReviewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Tabs\TabsControls\UCTabSpecialty.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Tabs\TabsControls\UCTabStudent.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Tabs\TabsControls\UCTabThesis.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Tabs\TabsNotGridControls\UCStudents.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

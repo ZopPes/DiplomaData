@@ -5,7 +5,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:DiplomaData"
     xmlns:Tabs="clr-namespace:DiplomaData.Tabs"
-    xmlns:TabsUC="clr-namespace:DiplomaData.Tabs.TabsControls"
     xmlns:TestUC="clr-namespace:DiplomaData.Tabs.TabsNotGridControls"
     xmlns:TabsTable="clr-namespace:DiplomaData.Tabs.TabTable"
     xmlns:CommandColection="clr-namespace:DiplomaData.Tabs.CommandColection"
@@ -58,14 +57,14 @@
                     </TreeViewItem.ItemTemplate>
                 </TreeViewItem>
             </TreeView>
-            <TabControl Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Tabs.SelectedItem}">
+            <TabControl x:Name="tabControl" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Tabs.SelectedItem}">
 
                 <TabControl.ItemsSource>
                     <CompositeCollection>
                         <CollectionContainer  Collection="{Binding Source={StaticResource tabs}}" />
                     </CompositeCollection>
                 </TabControl.ItemsSource>
-                <TabControl.Resources>
+                <!--<TabControl.Resources>
 
                     <DataTemplate DataType="{x:Type TabsTable:TabDiploma}">
                         <TabsUC:UCDiploma Table="{Binding}" Data="{Binding DataContext.DiplomaData, ElementName=window}" />
@@ -95,7 +94,7 @@
                     <DataTemplate DataType="{x:Type TabsTable:TabStudent}">
                         <TestUC:UCStudents Data="{Binding DataContext.DiplomaData, ElementName=window}" />
                     </DataTemplate>
-                </TabControl.Resources>
+                </TabControl.Resources>-->
 
                 <TabControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type local:Tab}">
@@ -105,6 +104,47 @@
                         </TextBlock>
                     </DataTemplate>
                 </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <Grid x:Name="list">
+                            <Grid.Resources>
+                                <DataTemplate DataType="{x:Type model:Student}">
+                                    <Expander Header="Добавить" Grid.Row="1" >
+                                    <StackPanel>
+                                        <TextBox Text="{Binding surname}"/>
+                                        <TextBox Text="{Binding name}"/>
+                                        <TextBox Text="{Binding patronymic}"/>
+                                        <ComboBox SelectedItem="{Binding Group}" 
+                                                      ItemsSource="{Binding DataContext.DiplomaData.Group, ElementName=window}" />
+                                        <Button Content="Добавить" 
+                                                    Command="{Binding DataContext.InsertTable, ElementName=list}"/>
+                                    </StackPanel>
+                                    </Expander>
+                                </DataTemplate>
+
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <ListView ItemsSource="{Binding}">
+                                <ListView.Resources>
+                                    <DataTemplate   DataType="{x:Type model:Student}">
+                                        <StackPanel Background="Aqua">
+                                            <TextBox Text="{Binding surname}"/>
+                                            <TextBox Text="{Binding name}"/>
+                                            <TextBox Text="{Binding patronymic}"/>
+                                            <ComboBox SelectedItem="{Binding Group}" ItemsSource="{Binding DataContext.DiplomaData.Group, ElementName=window}" />
+                                            <Button Content="удалить" Command="{Binding DataContext.RemoveTable, ElementName=list}"
+                                                    CommandParameter="{Binding}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.Resources>
+                            </ListView>
+                            <ContentControl Content="{Binding InsertItem}" Grid.Row="1" />
+                        </Grid>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
             </TabControl>
 
             <StackPanel Grid.Column="2">

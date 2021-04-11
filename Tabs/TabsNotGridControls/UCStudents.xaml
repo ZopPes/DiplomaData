@@ -6,16 +6,10 @@
              xmlns:local="clr-namespace:DiplomaData.Tabs.TabsNotGridControls"
              mc:Ignorable="d" 
              >
-    <ListView ItemsSource="{Binding Table}">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <StackPanel Background="Aqua">
-                    <TextBox Text="{Binding surname}"/>
-                    <TextBox Text="{Binding name}"/>
-                    <TextBox Text="{Binding patronymic}"/>
-                    <ComboBox SelectedItem="{Binding Group}" ItemsSource="{Binding Data.Group, ElementName=userControl}" />
-                </StackPanel>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+    <StackPanel Background="Aqua">
+        <TextBox Text="{Binding surname}"/>
+        <TextBox Text="{Binding name}"/>
+        <TextBox Text="{Binding patronymic}"/>
+        <ComboBox SelectedItem="{Binding Group}" ItemsSource="{Binding Data.Group, ElementName=userControl}" />
+    </StackPanel>
 </UserControl>
