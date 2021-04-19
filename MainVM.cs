@@ -30,15 +30,27 @@ namespace DiplomaData
         }
 
         public static CommandCollection CreateCommands(this Tabs.Tabs tabs) => new CommandCollection(tabs);
-        public static TabTable<T> CreateTabtable<T>(this Table<T> table, string name) where T : class, ICloneable, new() => new TabTable<T>(table, name);
+        public static TabTable<T> CreateTabTable<T>(this Table<T> table, string name) where T : class, new() => new TabTable<T>(table, name);
 
-        public static CommandCollection AddTable<T>(this CommandCollection tabs,TabTable<T> ts) where T:class, ICloneable, new()
+        public static CommandCollection AddTable<T>(this CommandCollection tabs,TabTable<T> ts) where T:class, new()
         {
             tabs.Add(ts);
             return tabs;
         }
 
-        
+        public static CommandCollection AddTable<T>(this CommandCollection tabs, Table<T> ts,string name) where T : class, new()
+        {
+            tabs.Add(new TabTable<T>(ts,name));
+            return tabs;
+        }
+
+        public static CommandCollection AddTestTable<T>(this CommandCollection tabs, Table<T> ts, string name) where T : class, new()
+        {
+            tabs.Add(new TestTabTable<T>(ts, name));
+            return tabs;
+        }
+
+
     }
 
     /// <summary>
@@ -114,7 +126,13 @@ namespace DiplomaData
 
             #region AddTabsTable
             TableCommand = Tabs.CreateCommands()
-                                .AddTable(DiplomaData.Student.CreateTabtable("Студент"));
+                                .AddTestTable(DiplomaData.Student,"Студент")
+                                .AddTable(DiplomaData.Group,"Группы")
+                                .AddTable(DiplomaData.Specialty,"Специальность")
+                                .AddTable(DiplomaData.Lecturer,"Преподователь")
+                                .AddTable(DiplomaData.Thesis,"темы диплома")
+                                .AddTable(DiplomaData.Form_of_education,"форма обучения");
+            
             #endregion AddTabsTable
 
             ReportCommands = Tabs.CreateCommands();

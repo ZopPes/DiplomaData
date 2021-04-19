@@ -64,38 +64,6 @@
                         <CollectionContainer  Collection="{Binding Source={StaticResource tabs}}" />
                     </CompositeCollection>
                 </TabControl.ItemsSource>
-                <!--<TabControl.Resources>
-
-                    <DataTemplate DataType="{x:Type TabsTable:TabDiploma}">
-                        <TabsUC:UCDiploma Table="{Binding}" Data="{Binding DataContext.DiplomaData, ElementName=window}" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type Tabs:TabCommission}">
-                        <TabsUC:UCTabCommission />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type TabsTable:TabFormOfEducation}">
-                        <TabsUC:UCTabFormOfEducation />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type TabsTable:TabGroup}">
-                        <TabsUC:UCTabGroup Table="{Binding}" Data="{Binding DataContext.DiplomaData, ElementName=window}" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type TabsTable:TabLecturer}">
-                        <TabsUC:UCTabLecturer />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type TabsTable:TabReviewer}">
-                        <TabsUC:UCTabReviewer />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type TabsTable:TabSpecialty}">
-                        <TabsUC:UCTabSpecialty />
-                    </DataTemplate>
-
-                    <DataTemplate DataType="{x:Type TabsTable:TabThesis}">
-                        <TabsUC:UCTabThesis Thesis="{Binding}" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type TabsTable:TabStudent}">
-                        <TestUC:UCStudents Data="{Binding DataContext.DiplomaData, ElementName=window}" />
-                    </DataTemplate>
-                </TabControl.Resources>-->
-
                 <TabControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type local:Tab}">
                         <TextBlock>
@@ -121,7 +89,18 @@
                                     </StackPanel>
                                     </Expander>
                                 </DataTemplate>
-
+                                <DataTemplate DataType="{x:Type model:Group}">
+                                    <Expander Header="Добавить" Grid.Row="1" >
+                                        <StackPanel>
+                                            <TextBox Text="{Binding number}"/>
+                                            <ComboBox SelectedItem="{Binding Lecturer}" ItemsSource="{Binding DataContext.DiplomaData.Lecturer, ElementName=window}" />
+                                            <ComboBox SelectedItem="{Binding Form_of_education1}" ItemsSource="{Binding DataContext.DiplomaData.Form_of_education, ElementName=window}" />
+                                            <ComboBox SelectedItem="{Binding Specialty1}" ItemsSource="{Binding DataContext.DiplomaData.Specialty, ElementName=window}" />
+                                            <Button Content="Добавить" 
+                                                    Command="{Binding DataContext.InsertTable, ElementName=list}"/>
+                                        </StackPanel>
+                                    </Expander>
+                                </DataTemplate>
                             </Grid.Resources>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -134,11 +113,27 @@
                                             <TextBox Text="{Binding surname}"/>
                                             <TextBox Text="{Binding name}"/>
                                             <TextBox Text="{Binding patronymic}"/>
-                                            <ComboBox SelectedItem="{Binding Group}" ItemsSource="{Binding DataContext.DiplomaData.Group, ElementName=window}" />
+                                            <ComboBox SelectedItem="{Binding Group}" 
+                                                      ItemsSource="{Binding DataContext.DiplomaData.Group, ElementName=window}"
+                                                      DisplayMemberPath="number">
+                                            </ComboBox>
+                                                      
                                             <Button Content="удалить" Command="{Binding DataContext.RemoveTable, ElementName=list}"
                                                     CommandParameter="{Binding}"/>
                                         </StackPanel>
                                     </DataTemplate>
+
+                                    <DataTemplate   DataType="{x:Type model:Group}">
+                                        <StackPanel Background="Aqua">
+                                            <TextBox Text="{Binding number}"/>
+                                            <ComboBox SelectedItem="{Binding Lecturer}" ItemsSource="{Binding DataContext.DiplomaData.Lecturer, ElementName=window}" />
+                                            <ComboBox SelectedItem="{Binding Form_of_education1}" ItemsSource="{Binding DataContext.DiplomaData.Form_of_education, ElementName=window}" />
+                                            <ComboBox SelectedItem="{Binding Specialty1}" ItemsSource="{Binding DataContext.DiplomaData.Specialty, ElementName=window}" />
+                                            <Button Content="удалить" Command="{Binding DataContext.RemoveTable, ElementName=list}"
+                                                    CommandParameter="{Binding}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    
                                 </ListView.Resources>
                             </ListView>
                             <ContentControl Content="{Binding InsertItem}" Grid.Row="1" />
