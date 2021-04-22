@@ -71,6 +71,23 @@ namespace DiplomaData
         /// </summary>
         public ICommand Close { get; }
 
+
+        #region Filter
+        private string filter;
+        /// <summary>Фильтер</summary>
+        public string Filter 
+        {
+            get => filter; 
+            set 
+            {
+                if (Set(ref filter, value))
+                    FilterChanged?.Invoke(this,value);
+            } 
+        }
+        #endregion
+
+        public event EventHandler<string> FilterChanged;
+
         public Action<Tab> AClose;
 
         /// <summary>
@@ -84,6 +101,10 @@ namespace DiplomaData
             Properties = new ObservableCollection<Property>();
         }
 
-      
+        public void OnProperties()
+        {
+            foreach (Property property in Properties)
+                property.ValueOnPropertyChanged();
+        }
     }
 }

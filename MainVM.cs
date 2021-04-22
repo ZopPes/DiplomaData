@@ -10,7 +10,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data.Linq;
 using System.IO;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using WPFMVVMHelper;
 using Application = Microsoft.Office.Interop.Word.Application;
@@ -32,22 +34,26 @@ namespace DiplomaData
         public static CommandCollection CreateCommands(this Tabs.Tabs tabs) => new CommandCollection(tabs);
         public static TabTable<T> CreateTabTable<T>(this Table<T> table, string name) where T : class, new() => new TabTable<T>(table, name);
 
-        public static CommandCollection AddTable<T>(this CommandCollection tabs,TabTable<T> ts) where T:class, new()
+        public static CommandCollection AddTable<T>(this CommandCollection tabs, TabTable<T> ts) where T : class, new()
         {
             tabs.Add(ts);
             return tabs;
         }
 
-        public static CommandCollection AddTable<T>(this CommandCollection tabs, Table<T> ts,string name) where T : class, new()
+        public static CommandCollection AddTable<T>(this CommandCollection tabs, Table<T> ts, string name) where T : class, new()
         {
-            tabs.Add(new TabTable<T>(ts,name));
+            tabs.Add(new TabTable<T>(ts, name));
             return tabs;
         }
 
-        public static CommandCollection AddTestTable<T>(this CommandCollection tabs, Table<T> ts, string name) where T : class, new()
+        public static CommandCollection CreateCommands(this Tabs.Tabs tabs, params Tab[] tab)
         {
-            tabs.Add(new TestTabTable<T>(ts, name));
-            return tabs;
+            var r = new CommandCollection(tabs);
+            foreach (var item in tab)
+            {
+                r.Add(item);
+            }
+            return r;
         }
 
 
@@ -71,7 +77,7 @@ namespace DiplomaData
 
         #region Tabs
         /// <summary>Вкладки</summary>
-        public Tabs.Tabs Tabs { get;}
+        public Tabs.Tabs Tabs { get; }
 
         #endregion Tabs
 
@@ -120,20 +126,24 @@ namespace DiplomaData
                 Directory.CreateDirectory(reportPath);
 
             OnUpdateReports();
-            
+
             DiplomaData = new DiplomaDataDataContext();
             Tabs = new Tabs.Tabs();
 
             #region AddTabsTable
-            TableCommand = Tabs.CreateCommands()
-                                .AddTestTable(DiplomaData.Student,"Студент")
-                                .AddTable(DiplomaData.Group,"Группы")
-                                .AddTable(DiplomaData.Specialty,"Специальность")
-                                .AddTable(DiplomaData.Lecturer,"Преподователь")
-                                .AddTable(DiplomaData.Thesis,"темы диплома")
-                                .AddTable(DiplomaData.Form_of_education,"форма обучения");
-            
+
+            var s = DiplomaData.Student.CreateTabTable("Студент");
+            s.FilterChanged += S_FilterChanged;
+            TableCommand = Tabs.CreateCommands
+                (
+                 s 
+                , DiplomaData.Group.CreateTabTable("Группа")
+                , DiplomaData.Specialty.CreateTabTable("Специальность")
+                , DiplomaData.Lecturer.CreateTabTable("Преподователь")
+                , DiplomaData.Thesis.CreateTabTable("Темы дипломов")
+                );
             #endregion AddTabsTable
+
 
             ReportCommands = Tabs.CreateCommands();
             ReportCommands.Add(new TabReport("Отчёт"));
@@ -153,6 +163,14 @@ namespace DiplomaData
             OpenWordTemplate = new lamdaCommand(OnOpenWordTemplate);
             UpdateReports = new lamdaCommand(OnUpdateReports);
             #endregion
+        }
+
+        private void S_FilterChanged(object sender, string e)
+        {
+            var r = (sender as TabTable<Student>);
+            r.SelectData = r.test.Where(w =>
+                (w.name + w.surname+ w.patronymic+w.Group.number).Contains(e)
+            );
         }
 
         /// <summary>
@@ -187,7 +205,6 @@ namespace DiplomaData
             }
         }
 
-        
         public void Dispose()
         {
             DiplomaData.Dispose();
@@ -195,7 +212,6 @@ namespace DiplomaData
 
             TableCommand.Clear();
             ReportCommands.Clear();
-         
         }
     }
 }

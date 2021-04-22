@@ -17,15 +17,8 @@ namespace DiplomaData.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var r = "";
-            foreach (var item in values)
-            {
-                if (item is string s)
-                {
-                    r+=s.ToString()+" ";
-                }
-            }
-            return r.Trim();
+            
+            return string.Join(" ",values);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

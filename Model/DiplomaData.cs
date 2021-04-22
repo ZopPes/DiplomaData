@@ -94,10 +94,6 @@ namespace DiplomaData.Model
 
     partial class Thesis 
     {
-       
-
-        public override int GetHashCode()
-        => id;
 
         public override string ToString()
         => name;

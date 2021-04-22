@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data.Linq;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Windows;
 using System.Windows.Input;
 using WPFMVVMHelper;
 
@@ -122,6 +124,13 @@ namespace DiplomaData.Tabs.TabTable
         public T InsertItem { get => insertItem; set => Set(ref insertItem, value); }
         #endregion
 
+
+        #region SelectData
+        private IQueryable<T> selectData;
+        /// <summary>данные для вывода</summary>
+        public IQueryable<T> SelectData { get => selectData; set => Set(ref selectData, value); }
+        #endregion
+
         public ICommand InsertTable { get; }
         public ICommand RemoveTable { get; }
 
@@ -155,6 +164,8 @@ namespace DiplomaData.Tabs.TabTable
 
         public object this[int index] { get => Table[index]; set => Table[index] = value; }
 
+        public Table<T> test;
+
         /// <summary>
         /// Вкладка с таблицей
         /// </summary>
@@ -162,14 +173,22 @@ namespace DiplomaData.Tabs.TabTable
         /// <param name="name">название вкладки</param>
         public TabTable(Table<T> table, string name = "") : base(name)
         {
+            test = table;
             Table = table.GetNewBindingList();
+            SelectData = test;
             Context = table.Context;
             InsertTable = new lamdaCommand(NewMethod);
             RemoveTable = new lamdaCommand<T>(Remove);
-            Properties.Add(new Property("Количество строк", () => Table.Count));
+            Properties.Add(new Property("Количество строк", () => SelectData));
             InsertItem = new T();
-            
+            ListChanged += PropertisChenged;
+
         }
+
+        
+
+        private void PropertisChenged(object sender, ListChangedEventArgs e)
+            => OnProperties();
 
         public event ListChangedEventHandler ListChanged
         {
@@ -187,86 +206,58 @@ namespace DiplomaData.Tabs.TabTable
 
         private void NewMethod()
         {
-            var nel=Add(InsertItem);
-            Context.SubmitChanges();
+            Add(InsertItem);
+            try
+            {
+                Context.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Ошибка");
+            }
             InsertItem = new T();
         }
 
-        public object AddNew()
-        {
-            return Table.AddNew();
-        }
+        public object AddNew() => Table.AddNew();
 
-        public void AddIndex(PropertyDescriptor property)
-        {
-            Table.AddIndex(property);
-        }
+        public void AddIndex(PropertyDescriptor property) => Table.AddIndex(property);
 
-        public void ApplySort(PropertyDescriptor property, ListSortDirection direction)
-        {
-            Table.ApplySort(property, direction);
-        }
+        public void ApplySort(PropertyDescriptor property, ListSortDirection direction) => Table.ApplySort(property, direction);
 
-        public int Find(PropertyDescriptor property, object key)
-        {
-            return Table.Find(property, key);
-        }
+        public int Find(PropertyDescriptor property, object key) => Table.Find(property, key);
 
-        public void RemoveIndex(PropertyDescriptor property)
-        {
-            Table.RemoveIndex(property);
-        }
+        public void RemoveIndex(PropertyDescriptor property) => Table.RemoveIndex(property);
 
-        public void RemoveSort()
-        {
-            Table.RemoveSort();
-        }
+        public void RemoveSort() => Table.RemoveSort();
 
-        public int Add(object value)
-        {
-            return Table.Add(value);
-        }
+        public int Add(object value) => Table.Add(value);
 
-        public bool Contains(object value)
-        {
-            return Table.Contains(value);
-        }
+        public bool Contains(object value) => Table.Contains(value);
 
-        public void Clear()
-        {
-            Table.Clear();
-        }
+        public void Clear() => Table.Clear();
 
-        public int IndexOf(object value)
-        {
-            return Table.IndexOf(value);
-        }
+        public int IndexOf(object value)=> Table.IndexOf(value);
 
-        public void Insert(int index, object value)
-        {
-            Table.Insert(index, value);
-        }
+        public void Insert(int index, object value) => Table.Insert(index, value);
 
         public void Remove(object value)
         {
             var r = this.IndexOf(value);
             Table.RemoveAt(r);
-            Context.SubmitChanges();
+            try
+            {
+                Context.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Ошибка");
+            }
         }
 
-        public void RemoveAt(int index)
-        {
-            Table.RemoveAt(index);
-        }
+        public void RemoveAt(int index) => Table.RemoveAt(index);
 
-        public void CopyTo(Array array, int index)
-        {
-            Table.CopyTo(array, index);
-        }
+        public void CopyTo(Array array, int index) => Table.CopyTo(array, index);
 
-        public IEnumerator GetEnumerator()
-        {
-            return Table.GetEnumerator();
-        }
+        public IEnumerator GetEnumerator() => Table.GetEnumerator();
     }
 }

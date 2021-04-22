@@ -4,15 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:DiplomaData"
-    xmlns:Tabs="clr-namespace:DiplomaData.Tabs"
-    xmlns:TestUC="clr-namespace:DiplomaData.Tabs.TabsNotGridControls"
-    xmlns:TabsTable="clr-namespace:DiplomaData.Tabs.TabTable"
     xmlns:CommandColection="clr-namespace:DiplomaData.Tabs.CommandColection"
     xmlns:model="clr-namespace:DiplomaData.Model"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     x:Name="window"
     x:Class="DiplomaData.MainWindow"
     mc:Ignorable="d"
-        Title="Хранилище дипломных работ">
+        Title="Хранилище дипломных работ"
+    FontSize="18">
     <Window.Resources>
         <CollectionViewSource x:Key="tabs" Source="{Binding Tabs}" />
     </Window.Resources>
@@ -73,82 +72,272 @@
                     </DataTemplate>
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
-                    <DataTemplate>
+                    <DataTemplate DataType="{x:Type local:Tab}">
                         <Grid x:Name="list">
                             <Grid.Resources>
-                                <DataTemplate DataType="{x:Type model:Student}">
-                                    <Expander Header="Добавить" Grid.Row="1" >
-                                    <StackPanel>
-                                        <TextBox Text="{Binding surname}"/>
-                                        <TextBox Text="{Binding name}"/>
-                                        <TextBox Text="{Binding patronymic}"/>
-                                        <ComboBox SelectedItem="{Binding Group}" 
-                                                      ItemsSource="{Binding DataContext.DiplomaData.Group, ElementName=window}" />
-                                        <Button Content="Добавить" 
-                                                    Command="{Binding DataContext.InsertTable, ElementName=list}"/>
-                                    </StackPanel>
-                                    </Expander>
-                                </DataTemplate>
-                                <DataTemplate DataType="{x:Type model:Group}">
-                                    <Expander Header="Добавить" Grid.Row="1" >
-                                        <StackPanel>
-                                            <TextBox Text="{Binding number}"/>
-                                            <ComboBox SelectedItem="{Binding Lecturer}" ItemsSource="{Binding DataContext.DiplomaData.Lecturer, ElementName=window}" />
-                                            <ComboBox SelectedItem="{Binding Form_of_education1}" ItemsSource="{Binding DataContext.DiplomaData.Form_of_education, ElementName=window}" />
-                                            <ComboBox SelectedItem="{Binding Specialty1}" ItemsSource="{Binding DataContext.DiplomaData.Specialty, ElementName=window}" />
-                                            <Button Content="Добавить" 
-                                                    Command="{Binding DataContext.InsertTable, ElementName=list}"/>
-                                        </StackPanel>
-                                    </Expander>
-                                </DataTemplate>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="ItemTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}"/>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
                             </Grid.Resources>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <ListView ItemsSource="{Binding}">
-                                <ListView.Resources>
+                            <ScrollViewer VerticalScrollBarVisibility="Visible" CanContentScroll="True">
+                                <ItemsControl Margin="5" ItemsSource="{Binding SelectData}">
+                                <ItemsControl.Resources>
                                     <DataTemplate   DataType="{x:Type model:Student}">
-                                        <StackPanel Background="Aqua">
-                                            <TextBox Text="{Binding surname}"/>
-                                            <TextBox Text="{Binding name}"/>
-                                            <TextBox Text="{Binding patronymic}"/>
-                                            <ComboBox SelectedItem="{Binding Group}" 
+                                            <Border Margin="5" Padding="10" BorderBrush="Black" BorderThickness="1">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="AUTO"/>
+                                                        <ColumnDefinition Width=".5*"/>
+                                                </Grid.ColumnDefinitions>
+                                            <TextBox PreviewTextInput="TextBox_PreviewTextInput">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource Fio}">
+                                                        <Binding Path="surname"/>
+                                                        <Binding Path="name"/>
+                                                        <Binding Path="patronymic"/>
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                            <ComboBox Grid.Column="1" SelectedItem="{Binding Group}" 
                                                       ItemsSource="{Binding DataContext.DiplomaData.Group, ElementName=window}"
-                                                      DisplayMemberPath="number">
+                                                      >
                                             </ComboBox>
-                                                      
-                                            <Button Content="удалить" Command="{Binding DataContext.RemoveTable, ElementName=list}"
-                                                    CommandParameter="{Binding}"/>
-                                        </StackPanel>
+                                            <Button Grid.Column="2" Background="Transparent" BorderBrush="Transparent"
+                                                    Content="Ⅹ" Command="{Binding DataContext.RemoveTable, ElementName=list}"
+                                                    CommandParameter="{Binding}"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Top"/>
+                                            
+                                        </Grid>
+                                            </Border>
                                     </DataTemplate>
 
                                     <DataTemplate   DataType="{x:Type model:Group}">
-                                        <StackPanel Background="Aqua">
-                                            <TextBox Text="{Binding number}"/>
-                                            <ComboBox SelectedItem="{Binding Lecturer}" ItemsSource="{Binding DataContext.DiplomaData.Lecturer, ElementName=window}" />
-                                            <ComboBox SelectedItem="{Binding Form_of_education1}" ItemsSource="{Binding DataContext.DiplomaData.Form_of_education, ElementName=window}" />
-                                            <ComboBox SelectedItem="{Binding Specialty1}" ItemsSource="{Binding DataContext.DiplomaData.Specialty, ElementName=window}" />
-                                            <Button Content="удалить" Command="{Binding DataContext.RemoveTable, ElementName=list}"
+                                            <Border Padding="10" BorderBrush="Black" BorderThickness="1" Margin="10">
+                                        <Grid >
+                                            
+                                            <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition  Width="auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Label Content="Номер:" />
+                                                <Label Content="Куратор:" Grid.Row="1"/>
+                                                <Label Content="форма обучения:" Grid.Row="2"/>
+                                                <Label Content="Специальность:" Grid.Row="3"/>
+                                            
+                                                <TextBox MaxLength="4" Grid.Column="1" Text="{Binding number}"/>
+                                                <ComboBox Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Lecturer}" ItemsSource="{Binding DataContext.DiplomaData.Lecturer, ElementName=window}" />
+                                                <ComboBox Grid.Column="1" Grid.Row="2" SelectedItem="{Binding Form_of_education1}" ItemsSource="{Binding DataContext.DiplomaData.Form_of_education, ElementName=window}" />
+                                                <ComboBox Grid.Column="1" Grid.Row="3" SelectedItem="{Binding Specialty1}" ItemsSource="{Binding DataContext.DiplomaData.Specialty, ElementName=window}" />
+                                            
+                                            <Button HorizontalAlignment="Right" Grid.Column="3" VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent" Content="Ⅹ" Command="{Binding DataContext.RemoveTable, ElementName=list}"
                                                     CommandParameter="{Binding}"/>
-                                        </StackPanel>
+                                        </Grid>
+                                            </Border>
                                     </DataTemplate>
-                                    
-                                </ListView.Resources>
-                            </ListView>
-                            <ContentControl Content="{Binding InsertItem}" Grid.Row="1" />
+
+                                    <DataTemplate   DataType="{x:Type model:Specialty}">
+                                            <Border BorderBrush="Black" BorderThickness="1" Margin="10" Padding="5">
+                                                <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="3*"/>
+                                                    <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Label Content="номер:"/>
+                                                <Label VerticalAlignment="Center" Content="Название:" Grid.Row="1"/>
+                                                <TextBox Grid.Column="1" MaxLength="6" Text="{Binding cipher}"/>
+                                                <TextBox TextWrapping="Wrap" Grid.Row="1" Grid.Column="1" Text="{Binding name}"/>
+                                            
+                                            <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent" Content="Ⅹ" Command="{Binding DataContext.RemoveTable, ElementName=list}"
+                                                    CommandParameter="{Binding}"/>
+                                        </Grid>
+                                            </Border>
+                                    </DataTemplate>
+
+                                    <DataTemplate   DataType="{x:Type model:Thesis}">
+                                            <Border BorderBrush="Black" BorderThickness="1" Padding="5" Margin="10">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="3*"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                    </Grid.RowDefinitions>
+                                                    <Label >
+                                                        <Label.Resources>
+                                                            <Style TargetType="Label">
+                                                                <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding used}" Value="true">
+                                                                        <Setter Property="Content" Value="уже используется"/>
+                                                                    </DataTrigger>
+                                                                    
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Label.Resources>
+                                                    </Label>
+                                                    <Label Grid.Row="1" Content="название:" VerticalAlignment="Center"/>
+                                                    <Label Content="описание:" Grid.Row="2" VerticalAlignment="Center"/>
+                                                    <TextBox Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="{Binding name}"/>
+                                                <TextBox Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Text="{Binding description}"/>
+                                            <TextBlock Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Text="{Binding date, StringFormat={}{0:dd.MM.yyyy}}"/>
+                                                    <Button Grid.Column="2" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent" Content="Ⅹ" Command="{Binding DataContext.RemoveTable, ElementName=list}"
+                                                    CommandParameter="{Binding}"/>
+                                                </Grid>
+                                            </Border>
+                                    </DataTemplate>
+                                    <DataTemplate  DataType="{x:Type model:Lecturer}">
+                                            <Border Margin="5" Padding="10" BorderBrush="Black" BorderThickness="1">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width=".2*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox PreviewTextInput="TextBox_PreviewTextInput">
+                                                        <TextBox.Text>
+                                                            <MultiBinding Converter="{StaticResource Fio}">
+                                                                <Binding Path="surname"/>
+                                                                <Binding Path="name"/>
+                                                                <Binding Path="patronymic"/>
+                                                            </MultiBinding>
+                                                        </TextBox.Text>
+                                                    </TextBox>
+                                                    <Button Grid.Column="1" Background="Transparent" BorderBrush="Transparent"
+                                                    Content="Ⅹ" Command="{Binding DataContext.RemoveTable, ElementName=list}"
+                                                    CommandParameter="{Binding}"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Top"/>
+
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+
+                                </ItemsControl.Resources>
+                            </ItemsControl>
+                            </ScrollViewer>
+                            <ContentControl Content="{Binding InsertItem}" Grid.Row="1">
+                                <ContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type model:Student}">
+                                        <Expander Header="Добавить" Grid.Row="1" >
+                                            <StackPanel>
+                                                <TextBox PreviewTextInput="TextBox_PreviewTextInput">
+                                                    <TextBox.Text>
+                                                        <MultiBinding Converter="{StaticResource Fio}">
+                                                            <Binding Path="surname"/>
+                                                            <Binding Path="name"/>
+                                                            <Binding Path="patronymic"/>
+                                                        </MultiBinding>
+                                                    </TextBox.Text>
+                                                </TextBox>
+                                                <ComboBox SelectedItem="{Binding Group}"
+                                                      ItemsSource="{Binding DataContext.DiplomaData.Group, ElementName=window}" />
+                                                <Button Content="Добавить" 
+                                                    Command="{Binding DataContext.InsertTable, ElementName=list}"/>
+                                            </StackPanel>
+                                        </Expander>
+                                    </DataTemplate>
+                                   
+                                    <DataTemplate DataType="{x:Type model:Group}">
+                                        <Expander Header="Добавить" Grid.Row="1" >
+                                            <StackPanel>
+                                                <TextBox Text="{Binding number}"/>
+                                                <ComboBox 
+                                                    SelectedItem="{Binding Lecturer}" 
+                                                    ItemsSource="{Binding DataContext.DiplomaData.Lecturer, ElementName=window}" />
+                                                <ComboBox SelectedItem="{Binding Form_of_education1}" ItemsSource="{Binding DataContext.DiplomaData.Form_of_education, ElementName=window}"/>
+                                                <ComboBox SelectedItem="{Binding Specialty1}" ItemsSource="{Binding DataContext.DiplomaData.Specialty, ElementName=window}" />
+                                                <Button Content="Добавить" 
+                                                    Command="{Binding DataContext.InsertTable, ElementName=list}"/>
+                                            </StackPanel>
+                                        </Expander>
+                                    </DataTemplate>
+
+                                    <DataTemplate DataType="{x:Type model:Lecturer}">
+                                        <Expander Header="Добавить" Grid.Row="1" >
+                                            <StackPanel>
+                                                <TextBox PreviewTextInput="TextBox_PreviewTextInput">
+                                                    <TextBox.Text>
+                                                        <MultiBinding Converter="{StaticResource Fio}">
+                                                            <Binding Path="surname"/>
+                                                            <Binding Path="name"/>
+                                                            <Binding Path="patronymic"/>
+                                                        </MultiBinding>
+                                                    </TextBox.Text>
+                                                </TextBox>
+                                                <Button Content="Добавить" 
+                                                    Command="{Binding DataContext.InsertTable, ElementName=list}"/>
+                                            </StackPanel>
+                                        </Expander>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type model:Thesis}">
+                                        <Expander Header="Добавить" Grid.Row="1" >
+                                            <StackPanel>
+                                                <TextBox Text="{Binding name}"/>
+                                                <TextBox Text="{Binding description}"/>
+                                                <DatePicker IsDropDownOpen="True"
+                                                            DisplayDateStart="1/1/1999" 
+                                                            DisplayDateEnd="{x:Static sys:DateTime.Now}"
+                                                            SelectedDate="{Binding date}"
+                                                            IsTodayHighlighted="True"
+                                                            SelectedDateFormat="Long"
+                                                            KeyUp="DatePicker_KeyUp"/>
+                                                <CheckBox IsChecked="{Binding used}" IsEnabled="False"/>
+                                                <Button Content="Добавить" 
+                                                    Command="{Binding DataContext.InsertTable, ElementName=list}"/>
+                                            </StackPanel>
+                                        </Expander>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type model:Specialty}">
+                                        <Expander Header="Добавить" Grid.Row="1" >
+                                            <StackPanel>
+                                                <TextBox Text="{Binding cipher}"/>
+                                                <TextBox Text="{Binding name}"/>
+                                                <Button Content="Добавить" 
+                                                    Command="{Binding DataContext.InsertTable, ElementName=list}"/>
+                                            </StackPanel>
+                                        </Expander>
+                                    </DataTemplate>
+
+                                </ContentControl.Resources>
+                            </ContentControl>
                         </Grid>
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>
 
-            <StackPanel Grid.Column="2">
+            <StackPanel  Grid.Column="2">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="textBox" />
+                    <TextBox x:Name="textBox" Text="{Binding Tabs.SelectedItem.Filter}"/>
                     <Rectangle Grid.Column="1" Width="20" Height="20" Fill="#FFB9B9B9" />
                 </Grid>
 
