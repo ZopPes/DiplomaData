@@ -82,6 +82,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\MultiConverterFio.cs" />
+    <Compile Include="Model\Diplomas.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Diplomas.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Tabs\CommandColection\AddCommand.cs" />
     <Compile Include="MainVM.cs" />
     <Compile Include="Model\DiplomaData.cs">
@@ -182,6 +187,14 @@
     </None>
     <None Include="Model\DiplomaData.dbml.layout">
       <DependentUpon>DiplomaData.dbml</DependentUpon>
+    </None>
+    <None Include="Model\Diplomas.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>Diplomas.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Model\Diplomas.dbml.layout">
+      <DependentUpon>Diplomas.dbml</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

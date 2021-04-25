@@ -80,11 +80,13 @@ namespace DiplomaData
             get => filter; 
             set 
             {
-                if (Set(ref filter, value))
+                Set(ref filter, value);
                     FilterChanged?.Invoke(this,value);
             } 
         }
         #endregion
+
+
 
         public event EventHandler<string> FilterChanged;
 
@@ -100,6 +102,8 @@ namespace DiplomaData
             Name = name;
             Properties = new ObservableCollection<Property>();
         }
+
+        
 
         public void OnProperties()
         {

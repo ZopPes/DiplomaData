@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Diplomas" Class="DiplomasDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Diplomas;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="DiplomaData.Properties.Settings" SettingsPropertyName="DiplomasConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Commission_rus" Member="Commission_rus">
+    <Type Name="Commission_rus">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Фамилия" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Имя" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Отчество" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Diplom_rus" Member="Diplom_rus">
+    <Type Name="Diplom_rus">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Тема" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Студент" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Дата сдачи]" Member="Дата_сдачи" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Руководитель" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Файлы" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Пояснительная записка]" Member="Пояснительная_записка" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Lecturer_rus_Diplom_rus" Member="Lecturer_rus" ThisKey="Руководитель" OtherKey="id" Type="Lecturer_rus" IsForeignKey="true" />
+      <Association Name="Thesis_rus_Diplom_rus" Member="Thesis_rus" ThisKey="Тема" OtherKey="id" Type="Thesis_rus" IsForeignKey="true" />
+      <Association Name="Student_rus_Diplom_rus" Member="Student_rus" ThisKey="Студент" OtherKey="id" Type="Student_rus" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Form_of_education_rus" Member="Form_of_education_rus">
+    <Type Name="Form_of_education_rus">
+      <Column Name="[Форма обучения]" Member="Форма_обучения" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Association Name="Form_of_education_rus_Group_rus" Member="Group_rus" ThisKey="id" OtherKey="Форма_обучения" Type="Group_rus" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Group_rus" Member="Group_rus">
+    <Type Name="Group_rus">
+      <Column Name="[Номер группы]" Member="Номер_группы" Type="System.String" DbType="Char(4) NOT NULL" CanBeNull="false" />
+      <Column Name="Специальность" Type="System.String" DbType="Char(6) NOT NULL" CanBeNull="false" />
+      <Column Name="Куратор" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Форма обучения]" Member="Форма_обучения" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Association Name="Group_rus_Student_rus" Member="Student_rus" ThisKey="Номер_группы" OtherKey="Номер_группы" Type="Student_rus" />
+      <Association Name="Lecturer_rus_Group_rus" Member="Lecturer_rus" ThisKey="Куратор" OtherKey="id" Type="Lecturer_rus" IsForeignKey="true" />
+      <Association Name="Form_of_education_rus_Group_rus" Member="Form_of_education_rus" ThisKey="Форма_обучения" OtherKey="id" Type="Form_of_education_rus" IsForeignKey="true" />
+      <Association Name="Specialty_rus_Group_rus" Member="Specialty_rus" ThisKey="Специальность" OtherKey="Шифр_специальности" Type="Specialty_rus" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Lecturer_rus" Member="Lecturer_rus">
+    <Type Name="Lecturer_rus">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Фамилия" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Имя" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Отчество" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Lecturer_rus_Group_rus" Member="Group_rus" ThisKey="id" OtherKey="Куратор" Type="Group_rus" />
+      <Association Name="Lecturer_rus_Diplom_rus" Member="Diplom_rus" ThisKey="id" OtherKey="Руководитель" Type="Diplom_rus" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Reviewer_rus" Member="Reviewer_rus">
+    <Type Name="Reviewer_rus">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Фамилия" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Имя" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Отчество" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Компания" Type="System.String" DbType="NVarChar(300) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Specialty_rus" Member="Specialty_rus">
+    <Type Name="Specialty_rus">
+      <Column Name="[Шифр специальности]" Member="Шифр_специальности" Type="System.String" DbType="Char(6) NOT NULL" CanBeNull="false" />
+      <Column Name="Специальность" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Association Name="Specialty_rus_Group_rus" Member="Group_rus" ThisKey="Шифр_специальности" OtherKey="Специальность" Type="Group_rus" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Thesis_rus" Member="Thesis_rus">
+    <Type Name="Thesis_rus">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="[Название темы]" Member="Название_темы" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Описание" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="[Дата выдачи]" Member="Дата_выдачи" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="[Занята/ не занята]" Member="Занята__не_занята" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Thesis_rus_Diplom_rus" Member="Diplom_rus" ThisKey="id" OtherKey="Тема" Type="Diplom_rus" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Student_rus" Member="Student_rus">
+    <Type Name="Student_rus">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Фамилия" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Имя" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Отчество" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Номер_группы" Type="System.String" DbType="Char(4) NOT NULL" CanBeNull="false" />
+      <Association Name="Student_rus_Diplom_rus" Member="Diplom_rus" ThisKey="id" OtherKey="Студент" Type="Diplom_rus" />
+      <Association Name="Group_rus_Student_rus" Member="Group_rus" ThisKey="Номер_группы" OtherKey="Номер_группы" Type="Group_rus" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

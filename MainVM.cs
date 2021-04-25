@@ -132,11 +132,29 @@ namespace DiplomaData
 
             #region AddTabsTable
 
-            var s = DiplomaData.Student.CreateTabTable("Студент");
-            s.FilterChanged += S_FilterChanged;
+            var student = DiplomaData.Student.CreateTabTable("Студент");
+            student.FilterChanged += (obj, e) =>
+            {
+                var r = (obj as TabTable<Student>);
+                r.SelectData = r.test.Where(w =>
+                    (w.name + " " + w.surname + " " + w.patronymic + " " + w.Group.number).Contains(e)
+                );
+            };
+
+            var group = DiplomaData.Group.CreateTabTable("Группа");
+            group.FilterChanged += (obj, e) =>
+            {
+                var r = (obj as TabTable<Group>);
+                r.SelectData = r.test.Where(w =>
+                    $"{w.number} {w.Lecturer.name}".Contains(e)
+                );
+               
+            };
+
+
             TableCommand = Tabs.CreateCommands
                 (
-                 s 
+                 student 
                 , DiplomaData.Group.CreateTabTable("Группа")
                 , DiplomaData.Specialty.CreateTabTable("Специальность")
                 , DiplomaData.Lecturer.CreateTabTable("Преподователь")
@@ -165,13 +183,7 @@ namespace DiplomaData
             #endregion
         }
 
-        private void S_FilterChanged(object sender, string e)
-        {
-            var r = (sender as TabTable<Student>);
-            r.SelectData = r.test.Where(w =>
-                (w.name + w.surname+ w.patronymic+w.Group.number).Contains(e)
-            );
-        }
+        
 
         /// <summary>
         /// Обновляет список дипломов

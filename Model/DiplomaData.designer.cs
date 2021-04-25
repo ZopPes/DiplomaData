@@ -36,9 +36,15 @@ namespace DiplomaData.Model
     partial void InsertCommission_Specialty(Commission_Specialty instance);
     partial void UpdateCommission_Specialty(Commission_Specialty instance);
     partial void DeleteCommission_Specialty(Commission_Specialty instance);
+    partial void InsertCriteria(Criteria instance);
+    partial void UpdateCriteria(Criteria instance);
+    partial void DeleteCriteria(Criteria instance);
     partial void InsertDataFile(DataFile instance);
     partial void UpdateDataFile(DataFile instance);
     partial void DeleteDataFile(DataFile instance);
+    partial void InsertDiploma(Diploma instance);
+    partial void UpdateDiploma(Diploma instance);
+    partial void DeleteDiploma(Diploma instance);
     partial void InsertDiploma_Reviewer(Diploma_Reviewer instance);
     partial void UpdateDiploma_Reviewer(Diploma_Reviewer instance);
     partial void DeleteDiploma_Reviewer(Diploma_Reviewer instance);
@@ -51,6 +57,12 @@ namespace DiplomaData.Model
     partial void InsertLecturer(Lecturer instance);
     partial void UpdateLecturer(Lecturer instance);
     partial void DeleteLecturer(Lecturer instance);
+    partial void InsertMark(Mark instance);
+    partial void UpdateMark(Mark instance);
+    partial void DeleteMark(Mark instance);
+    partial void InsertQuestions(Questions instance);
+    partial void UpdateQuestions(Questions instance);
+    partial void DeleteQuestions(Questions instance);
     partial void InsertReviewer(Reviewer instance);
     partial void UpdateReviewer(Reviewer instance);
     partial void DeleteReviewer(Reviewer instance);
@@ -66,9 +78,6 @@ namespace DiplomaData.Model
     partial void InsertThesis(Thesis instance);
     partial void UpdateThesis(Thesis instance);
     partial void DeleteThesis(Thesis instance);
-    partial void InsertDiploma(Diploma instance);
-    partial void UpdateDiploma(Diploma instance);
-    partial void DeleteDiploma(Diploma instance);
     #endregion
 		
 		public DiplomaDataDataContext() : 
@@ -117,11 +126,27 @@ namespace DiplomaData.Model
 			}
 		}
 		
+		public System.Data.Linq.Table<Criteria> Criteria
+		{
+			get
+			{
+				return this.GetTable<Criteria>();
+			}
+		}
+		
 		public System.Data.Linq.Table<DataFile> DataFile
 		{
 			get
 			{
 				return this.GetTable<DataFile>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Diploma> Diploma
+		{
+			get
+			{
+				return this.GetTable<Diploma>();
 			}
 		}
 		
@@ -154,6 +179,22 @@ namespace DiplomaData.Model
 			get
 			{
 				return this.GetTable<Lecturer>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Mark> Mark
+		{
+			get
+			{
+				return this.GetTable<Mark>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Questions> Questions
+		{
+			get
+			{
+				return this.GetTable<Questions>();
 			}
 		}
 		
@@ -196,14 +237,6 @@ namespace DiplomaData.Model
 				return this.GetTable<Thesis>();
 			}
 		}
-		
-		public System.Data.Linq.Table<Diploma> Diploma
-		{
-			get
-			{
-				return this.GetTable<Diploma>();
-			}
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Commission")]
@@ -220,6 +253,8 @@ namespace DiplomaData.Model
 		
 		private string _patronymic;
 		
+		private System.Nullable<bool> _remotely;
+		
 		private EntitySet<Commission_Specialty> _Commission_Specialty;
 		
     #region Определения метода расширяемости
@@ -234,6 +269,8 @@ namespace DiplomaData.Model
     partial void OnnameChanged();
     partial void OnpatronymicChanging(string value);
     partial void OnpatronymicChanged();
+    partial void OnremotelyChanging(System.Nullable<bool> value);
+    partial void OnremotelyChanged();
     #endregion
 		
 		public Commission()
@@ -318,6 +355,26 @@ namespace DiplomaData.Model
 					this._patronymic = value;
 					this.SendPropertyChanged("patronymic");
 					this.OnpatronymicChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remotely", DbType="Bit")]
+		public System.Nullable<bool> remotely
+		{
+			get
+			{
+				return this._remotely;
+			}
+			set
+			{
+				if ((this._remotely != value))
+				{
+					this.OnremotelyChanging(value);
+					this.SendPropertyChanging();
+					this._remotely = value;
+					this.SendPropertyChanged("remotely");
+					this.OnremotelyChanged();
 				}
 			}
 		}
@@ -560,6 +617,92 @@ namespace DiplomaData.Model
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Criteria")]
+	public partial class Criteria : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private short _id;
+		
+		private string _name;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(short value);
+    partial void OnidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    #endregion
+		
+		public Criteria()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="SmallInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public short id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(70)")]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DataFile")]
 	public partial class DataFile : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -569,6 +712,8 @@ namespace DiplomaData.Model
 		private int _id;
 		
 		private string _name;
+		
+		private System.Nullable<bool> _remotely;
 		
 		private EntitySet<Diploma> _Diploma;
 		
@@ -582,6 +727,8 @@ namespace DiplomaData.Model
     partial void OnidChanged();
     partial void OnnameChanging(string value);
     partial void OnnameChanged();
+    partial void OnremotelyChanging(System.Nullable<bool> value);
+    partial void OnremotelyChanged();
     #endregion
 		
 		public DataFile()
@@ -627,6 +774,26 @@ namespace DiplomaData.Model
 					this._name = value;
 					this.SendPropertyChanged("name");
 					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remotely", DbType="Bit")]
+		public System.Nullable<bool> remotely
+		{
+			get
+			{
+				return this._remotely;
+			}
+			set
+			{
+				if ((this._remotely != value))
+				{
+					this.OnremotelyChanging(value);
+					this.SendPropertyChanging();
+					this._remotely = value;
+					this.SendPropertyChanged("remotely");
+					this.OnremotelyChanged();
 				}
 			}
 		}
@@ -702,6 +869,469 @@ namespace DiplomaData.Model
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Diploma")]
+	public partial class Diploma : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _Thesis;
+		
+		private int _Student;
+		
+		private System.DateTime _date;
+		
+		private int _Lecturer;
+		
+		private int _Data;
+		
+		private int _Explanatory_note;
+		
+		private System.Nullable<bool> _remotely;
+		
+		private EntitySet<Diploma_Reviewer> _Diploma_Reviewer;
+		
+		private EntityRef<DataFile> _DataFile;
+		
+		private EntityRef<DataFile> _DataFile1;
+		
+		private EntityRef<Lecturer> _Lecturer1;
+		
+		private EntityRef<Student> _Student1;
+		
+		private EntityRef<Thesis> _Thesis1;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnThesisChanging(int value);
+    partial void OnThesisChanged();
+    partial void OnStudentChanging(int value);
+    partial void OnStudentChanged();
+    partial void OndateChanging(System.DateTime value);
+    partial void OndateChanged();
+    partial void OnLecturerChanging(int value);
+    partial void OnLecturerChanged();
+    partial void OnDataChanging(int value);
+    partial void OnDataChanged();
+    partial void OnExplanatory_noteChanging(int value);
+    partial void OnExplanatory_noteChanged();
+    partial void OnremotelyChanging(System.Nullable<bool> value);
+    partial void OnremotelyChanged();
+    #endregion
+		
+		public Diploma()
+		{
+			this._Diploma_Reviewer = new EntitySet<Diploma_Reviewer>(new Action<Diploma_Reviewer>(this.attach_Diploma_Reviewer), new Action<Diploma_Reviewer>(this.detach_Diploma_Reviewer));
+			this._DataFile = default(EntityRef<DataFile>);
+			this._DataFile1 = default(EntityRef<DataFile>);
+			this._Lecturer1 = default(EntityRef<Lecturer>);
+			this._Student1 = default(EntityRef<Student>);
+			this._Thesis1 = default(EntityRef<Thesis>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Thesis", DbType="Int NOT NULL")]
+		public int Thesis
+		{
+			get
+			{
+				return this._Thesis;
+			}
+			set
+			{
+				if ((this._Thesis != value))
+				{
+					if (this._Thesis1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnThesisChanging(value);
+					this.SendPropertyChanging();
+					this._Thesis = value;
+					this.SendPropertyChanged("Thesis");
+					this.OnThesisChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Student", DbType="Int NOT NULL")]
+		public int Student
+		{
+			get
+			{
+				return this._Student;
+			}
+			set
+			{
+				if ((this._Student != value))
+				{
+					if (this._Student1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnStudentChanging(value);
+					this.SendPropertyChanging();
+					this._Student = value;
+					this.SendPropertyChanged("Student");
+					this.OnStudentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="Date NOT NULL")]
+		public System.DateTime date
+		{
+			get
+			{
+				return this._date;
+			}
+			set
+			{
+				if ((this._date != value))
+				{
+					this.OndateChanging(value);
+					this.SendPropertyChanging();
+					this._date = value;
+					this.SendPropertyChanged("date");
+					this.OndateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lecturer", DbType="Int NOT NULL")]
+		public int Lecturer
+		{
+			get
+			{
+				return this._Lecturer;
+			}
+			set
+			{
+				if ((this._Lecturer != value))
+				{
+					if (this._Lecturer1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnLecturerChanging(value);
+					this.SendPropertyChanging();
+					this._Lecturer = value;
+					this.SendPropertyChanged("Lecturer");
+					this.OnLecturerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data", DbType="Int NOT NULL")]
+		public int Data
+		{
+			get
+			{
+				return this._Data;
+			}
+			set
+			{
+				if ((this._Data != value))
+				{
+					if (this._DataFile.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnDataChanging(value);
+					this.SendPropertyChanging();
+					this._Data = value;
+					this.SendPropertyChanged("Data");
+					this.OnDataChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Explanatory_note", DbType="Int NOT NULL")]
+		public int Explanatory_note
+		{
+			get
+			{
+				return this._Explanatory_note;
+			}
+			set
+			{
+				if ((this._Explanatory_note != value))
+				{
+					if (this._DataFile1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnExplanatory_noteChanging(value);
+					this.SendPropertyChanging();
+					this._Explanatory_note = value;
+					this.SendPropertyChanged("Explanatory_note");
+					this.OnExplanatory_noteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remotely", DbType="Bit")]
+		public System.Nullable<bool> remotely
+		{
+			get
+			{
+				return this._remotely;
+			}
+			set
+			{
+				if ((this._remotely != value))
+				{
+					this.OnremotelyChanging(value);
+					this.SendPropertyChanging();
+					this._remotely = value;
+					this.SendPropertyChanged("remotely");
+					this.OnremotelyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Diploma_Diploma_Reviewer", Storage="_Diploma_Reviewer", ThisKey="id", OtherKey="Diploma")]
+		public EntitySet<Diploma_Reviewer> Diploma_Reviewer
+		{
+			get
+			{
+				return this._Diploma_Reviewer;
+			}
+			set
+			{
+				this._Diploma_Reviewer.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DataFile_Diploma", Storage="_DataFile", ThisKey="Data", OtherKey="id", IsForeignKey=true)]
+		public DataFile DataFile
+		{
+			get
+			{
+				return this._DataFile.Entity;
+			}
+			set
+			{
+				DataFile previousValue = this._DataFile.Entity;
+				if (((previousValue != value) 
+							|| (this._DataFile.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DataFile.Entity = null;
+						previousValue.Diploma.Remove(this);
+					}
+					this._DataFile.Entity = value;
+					if ((value != null))
+					{
+						value.Diploma.Add(this);
+						this._Data = value.id;
+					}
+					else
+					{
+						this._Data = default(int);
+					}
+					this.SendPropertyChanged("DataFile");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DataFile_Diploma1", Storage="_DataFile1", ThisKey="Explanatory_note", OtherKey="id", IsForeignKey=true)]
+		public DataFile DataFile1
+		{
+			get
+			{
+				return this._DataFile1.Entity;
+			}
+			set
+			{
+				DataFile previousValue = this._DataFile1.Entity;
+				if (((previousValue != value) 
+							|| (this._DataFile1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DataFile1.Entity = null;
+						previousValue.Diploma1.Remove(this);
+					}
+					this._DataFile1.Entity = value;
+					if ((value != null))
+					{
+						value.Diploma1.Add(this);
+						this._Explanatory_note = value.id;
+					}
+					else
+					{
+						this._Explanatory_note = default(int);
+					}
+					this.SendPropertyChanged("DataFile1");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Lecturer_Diploma", Storage="_Lecturer1", ThisKey="Lecturer", OtherKey="id", IsForeignKey=true)]
+		public Lecturer Lecturer1
+		{
+			get
+			{
+				return this._Lecturer1.Entity;
+			}
+			set
+			{
+				Lecturer previousValue = this._Lecturer1.Entity;
+				if (((previousValue != value) 
+							|| (this._Lecturer1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Lecturer1.Entity = null;
+						previousValue.Diploma.Remove(this);
+					}
+					this._Lecturer1.Entity = value;
+					if ((value != null))
+					{
+						value.Diploma.Add(this);
+						this._Lecturer = value.id;
+					}
+					else
+					{
+						this._Lecturer = default(int);
+					}
+					this.SendPropertyChanged("Lecturer1");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_Diploma", Storage="_Student1", ThisKey="Student", OtherKey="id", IsForeignKey=true)]
+		public Student Student1
+		{
+			get
+			{
+				return this._Student1.Entity;
+			}
+			set
+			{
+				Student previousValue = this._Student1.Entity;
+				if (((previousValue != value) 
+							|| (this._Student1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Student1.Entity = null;
+						previousValue.Diploma.Remove(this);
+					}
+					this._Student1.Entity = value;
+					if ((value != null))
+					{
+						value.Diploma.Add(this);
+						this._Student = value.id;
+					}
+					else
+					{
+						this._Student = default(int);
+					}
+					this.SendPropertyChanged("Student1");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Thesis_Diploma", Storage="_Thesis1", ThisKey="Thesis", OtherKey="id", IsForeignKey=true)]
+		public Thesis Thesis1
+		{
+			get
+			{
+				return this._Thesis1.Entity;
+			}
+			set
+			{
+				Thesis previousValue = this._Thesis1.Entity;
+				if (((previousValue != value) 
+							|| (this._Thesis1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Thesis1.Entity = null;
+						previousValue.Diploma.Remove(this);
+					}
+					this._Thesis1.Entity = value;
+					if ((value != null))
+					{
+						value.Diploma.Add(this);
+						this._Thesis = value.id;
+					}
+					else
+					{
+						this._Thesis = default(int);
+					}
+					this.SendPropertyChanged("Thesis1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Diploma_Reviewer(Diploma_Reviewer entity)
+		{
+			this.SendPropertyChanging();
+			entity.Diploma1 = this;
+		}
+		
+		private void detach_Diploma_Reviewer(Diploma_Reviewer entity)
+		{
+			this.SendPropertyChanging();
+			entity.Diploma1 = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Diploma_Reviewer")]
 	public partial class Diploma_Reviewer : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -714,9 +1344,9 @@ namespace DiplomaData.Model
 		
 		private int _Diploma;
 		
-		private EntityRef<Reviewer> _Reviewer1;
-		
 		private EntityRef<Diploma> _Diploma1;
+		
+		private EntityRef<Reviewer> _Reviewer1;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -732,8 +1362,8 @@ namespace DiplomaData.Model
 		
 		public Diploma_Reviewer()
 		{
-			this._Reviewer1 = default(EntityRef<Reviewer>);
 			this._Diploma1 = default(EntityRef<Diploma>);
+			this._Reviewer1 = default(EntityRef<Reviewer>);
 			OnCreated();
 		}
 		
@@ -805,40 +1435,6 @@ namespace DiplomaData.Model
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Reviewer_Diploma_Reviewer", Storage="_Reviewer1", ThisKey="Reviewer", OtherKey="id", IsForeignKey=true)]
-		public Reviewer Reviewer1
-		{
-			get
-			{
-				return this._Reviewer1.Entity;
-			}
-			set
-			{
-				Reviewer previousValue = this._Reviewer1.Entity;
-				if (((previousValue != value) 
-							|| (this._Reviewer1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Reviewer1.Entity = null;
-						previousValue.Diploma_Reviewer.Remove(this);
-					}
-					this._Reviewer1.Entity = value;
-					if ((value != null))
-					{
-						value.Diploma_Reviewer.Add(this);
-						this._Reviewer = value.id;
-					}
-					else
-					{
-						this._Reviewer = default(int);
-					}
-					this.SendPropertyChanged("Reviewer1");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Diploma_Diploma_Reviewer", Storage="_Diploma1", ThisKey="Diploma", OtherKey="id", IsForeignKey=true)]
 		public Diploma Diploma1
 		{
@@ -873,6 +1469,40 @@ namespace DiplomaData.Model
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Reviewer_Diploma_Reviewer", Storage="_Reviewer1", ThisKey="Reviewer", OtherKey="id", IsForeignKey=true)]
+		public Reviewer Reviewer1
+		{
+			get
+			{
+				return this._Reviewer1.Entity;
+			}
+			set
+			{
+				Reviewer previousValue = this._Reviewer1.Entity;
+				if (((previousValue != value) 
+							|| (this._Reviewer1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Reviewer1.Entity = null;
+						previousValue.Diploma_Reviewer.Remove(this);
+					}
+					this._Reviewer1.Entity = value;
+					if ((value != null))
+					{
+						value.Diploma_Reviewer.Add(this);
+						this._Reviewer = value.id;
+					}
+					else
+					{
+						this._Reviewer = default(int);
+					}
+					this.SendPropertyChanged("Reviewer1");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -894,7 +1524,7 @@ namespace DiplomaData.Model
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Form_of_education")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Form of education]")]
 	public partial class Form_of_education : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -962,7 +1592,7 @@ namespace DiplomaData.Model
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Form_of_education_Group", Storage="_Group", ThisKey="id", OtherKey="Form_of_education")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Form_of_education_Group", Storage="_Group", ThisKey="id", OtherKey="form_of_education")]
 		public EntitySet<Group> Group
 		{
 			get
@@ -1020,7 +1650,9 @@ namespace DiplomaData.Model
 		
 		private int _Curator;
 		
-		private System.Nullable<short> _Form_of_education;
+		private System.Nullable<short> _form_of_education;
+		
+		private System.Nullable<bool> _remotely;
 		
 		private EntitySet<Student> _Student;
 		
@@ -1040,8 +1672,10 @@ namespace DiplomaData.Model
     partial void OnSpecialtyChanged();
     partial void OnCuratorChanging(int value);
     partial void OnCuratorChanged();
-    partial void OnForm_of_educationChanging(System.Nullable<short> value);
-    partial void OnForm_of_educationChanged();
+    partial void Onform_of_educationChanging(System.Nullable<short> value);
+    partial void Onform_of_educationChanged();
+    partial void OnremotelyChanging(System.Nullable<bool> value);
+    partial void OnremotelyChanged();
     #endregion
 		
 		public Group()
@@ -1121,26 +1755,42 @@ namespace DiplomaData.Model
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Form_of_education", DbType="SmallInt")]
-		public System.Nullable<short> Form_of_education
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[form of education]", Storage="_form_of_education", DbType="SmallInt")]
+		public System.Nullable<short> form_of_education
 		{
 			get
 			{
-				return this._Form_of_education;
+				return this._form_of_education;
 			}
 			set
 			{
-				if ((this._Form_of_education != value))
+				if ((this._form_of_education != value))
 				{
-					if (this._Form_of_education1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnForm_of_educationChanging(value);
+					this.Onform_of_educationChanging(value);
 					this.SendPropertyChanging();
-					this._Form_of_education = value;
-					this.SendPropertyChanged("Form_of_education");
-					this.OnForm_of_educationChanged();
+					this._form_of_education = value;
+					this.SendPropertyChanged("form_of_education");
+					this.Onform_of_educationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remotely", DbType="Bit")]
+		public System.Nullable<bool> remotely
+		{
+			get
+			{
+				return this._remotely;
+			}
+			set
+			{
+				if ((this._remotely != value))
+				{
+					this.OnremotelyChanging(value);
+					this.SendPropertyChanging();
+					this._remotely = value;
+					this.SendPropertyChanged("remotely");
+					this.OnremotelyChanged();
 				}
 			}
 		}
@@ -1158,7 +1808,7 @@ namespace DiplomaData.Model
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Form_of_education_Group", Storage="_Form_of_education1", ThisKey="Form_of_education", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Form_of_education_Group", Storage="_Form_of_education1", ThisKey="form_of_education", OtherKey="id", IsForeignKey=true)]
 		public Form_of_education Form_of_education1
 		{
 			get
@@ -1181,11 +1831,11 @@ namespace DiplomaData.Model
 					if ((value != null))
 					{
 						value.Group.Add(this);
-						this._Form_of_education = value.id;
+						this._form_of_education = value.id;
 					}
 					else
 					{
-						this._Form_of_education = default(Nullable<short>);
+						this._form_of_education = default(Nullable<short>);
 					}
 					this.SendPropertyChanged("Form_of_education1");
 				}
@@ -1307,9 +1957,11 @@ namespace DiplomaData.Model
 		
 		private string _patronymic;
 		
-		private EntitySet<Group> _Group;
+		private System.Nullable<bool> _remotely;
 		
 		private EntitySet<Diploma> _Diploma;
+		
+		private EntitySet<Group> _Group;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -1323,12 +1975,14 @@ namespace DiplomaData.Model
     partial void OnnameChanged();
     partial void OnpatronymicChanging(string value);
     partial void OnpatronymicChanged();
+    partial void OnremotelyChanging(System.Nullable<bool> value);
+    partial void OnremotelyChanged();
     #endregion
 		
 		public Lecturer()
 		{
-			this._Group = new EntitySet<Group>(new Action<Group>(this.attach_Group), new Action<Group>(this.detach_Group));
 			this._Diploma = new EntitySet<Diploma>(new Action<Diploma>(this.attach_Diploma), new Action<Diploma>(this.detach_Diploma));
+			this._Group = new EntitySet<Group>(new Action<Group>(this.attach_Group), new Action<Group>(this.detach_Group));
 			OnCreated();
 		}
 		
@@ -1412,16 +2066,23 @@ namespace DiplomaData.Model
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Lecturer_Group", Storage="_Group", ThisKey="id", OtherKey="Curator")]
-		public EntitySet<Group> Group
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remotely", DbType="Bit")]
+		public System.Nullable<bool> remotely
 		{
 			get
 			{
-				return this._Group;
+				return this._remotely;
 			}
 			set
 			{
-				this._Group.Assign(value);
+				if ((this._remotely != value))
+				{
+					this.OnremotelyChanging(value);
+					this.SendPropertyChanging();
+					this._remotely = value;
+					this.SendPropertyChanged("remotely");
+					this.OnremotelyChanged();
+				}
 			}
 		}
 		
@@ -1435,6 +2096,19 @@ namespace DiplomaData.Model
 			set
 			{
 				this._Diploma.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Lecturer_Group", Storage="_Group", ThisKey="id", OtherKey="Curator")]
+		public EntitySet<Group> Group
+		{
+			get
+			{
+				return this._Group;
+			}
+			set
+			{
+				this._Group.Assign(value);
 			}
 		}
 		
@@ -1458,6 +2132,18 @@ namespace DiplomaData.Model
 			}
 		}
 		
+		private void attach_Diploma(Diploma entity)
+		{
+			this.SendPropertyChanging();
+			entity.Lecturer1 = this;
+		}
+		
+		private void detach_Diploma(Diploma entity)
+		{
+			this.SendPropertyChanging();
+			entity.Lecturer1 = null;
+		}
+		
 		private void attach_Group(Group entity)
 		{
 			this.SendPropertyChanging();
@@ -1469,17 +2155,177 @@ namespace DiplomaData.Model
 			this.SendPropertyChanging();
 			entity.Lecturer = null;
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Mark")]
+	public partial class Mark : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		private void attach_Diploma(Diploma entity)
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private System.Nullable<char> _mark1;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void Onmark1Changing(System.Nullable<char> value);
+    partial void Onmark1Changed();
+    #endregion
+		
+		public Mark()
 		{
-			this.SendPropertyChanging();
-			entity.Lecturer1 = this;
+			OnCreated();
 		}
 		
-		private void detach_Diploma(Diploma entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
 		{
-			this.SendPropertyChanging();
-			entity.Lecturer1 = null;
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="mark", Storage="_mark1", DbType="Char(1)")]
+		public System.Nullable<char> mark1
+		{
+			get
+			{
+				return this._mark1;
+			}
+			set
+			{
+				if ((this._mark1 != value))
+				{
+					this.Onmark1Changing(value);
+					this.SendPropertyChanging();
+					this._mark1 = value;
+					this.SendPropertyChanged("mark1");
+					this.Onmark1Changed();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Questions")]
+	public partial class Questions : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private short _id;
+		
+		private string _name;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(short value);
+    partial void OnidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    #endregion
+		
+		public Questions()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="SmallInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public short id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(300)")]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -1499,6 +2345,8 @@ namespace DiplomaData.Model
 		
 		private string _company;
 		
+		private System.Nullable<bool> _remotely;
+		
 		private EntitySet<Diploma_Reviewer> _Diploma_Reviewer;
 		
     #region Определения метода расширяемости
@@ -1515,6 +2363,8 @@ namespace DiplomaData.Model
     partial void OnpatronymicChanged();
     partial void OncompanyChanging(string value);
     partial void OncompanyChanged();
+    partial void OnremotelyChanging(System.Nullable<bool> value);
+    partial void OnremotelyChanged();
     #endregion
 		
 		public Reviewer()
@@ -1603,7 +2453,7 @@ namespace DiplomaData.Model
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_company", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_company", DbType="NVarChar(300) NOT NULL", CanBeNull=false)]
 		public string company
 		{
 			get
@@ -1619,6 +2469,26 @@ namespace DiplomaData.Model
 					this._company = value;
 					this.SendPropertyChanged("company");
 					this.OncompanyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remotely", DbType="Bit")]
+		public System.Nullable<bool> remotely
+		{
+			get
+			{
+				return this._remotely;
+			}
+			set
+			{
+				if ((this._remotely != value))
+				{
+					this.OnremotelyChanging(value);
+					this.SendPropertyChanging();
+					this._remotely = value;
+					this.SendPropertyChanged("remotely");
+					this.OnremotelyChanged();
 				}
 			}
 		}
@@ -1679,6 +2549,8 @@ namespace DiplomaData.Model
 		
 		private string _name;
 		
+		private System.Nullable<bool> _remotely;
+		
 		private EntitySet<Commission_Specialty> _Commission_Specialty;
 		
 		private EntitySet<Group> _Group;
@@ -1693,6 +2565,8 @@ namespace DiplomaData.Model
     partial void OncipherChanged();
     partial void OnnameChanging(string value);
     partial void OnnameChanged();
+    partial void OnremotelyChanging(System.Nullable<bool> value);
+    partial void OnremotelyChanged();
     #endregion
 		
 		public Specialty()
@@ -1723,7 +2597,7 @@ namespace DiplomaData.Model
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(150) NOT NULL", CanBeNull=false)]
 		public string name
 		{
 			get
@@ -1739,6 +2613,26 @@ namespace DiplomaData.Model
 					this._name = value;
 					this.SendPropertyChanged("name");
 					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remotely", DbType="Bit")]
+		public System.Nullable<bool> remotely
+		{
+			get
+			{
+				return this._remotely;
+			}
+			set
+			{
+				if ((this._remotely != value))
+				{
+					this.OnremotelyChanging(value);
+					this.SendPropertyChanging();
+					this._remotely = value;
+					this.SendPropertyChanged("remotely");
+					this.OnremotelyChanged();
 				}
 			}
 		}
@@ -2037,7 +2931,7 @@ namespace DiplomaData.Model
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _id = default(int);
+		private int _id;
 		
 		private string _surname;
 		
@@ -2047,6 +2941,8 @@ namespace DiplomaData.Model
 		
 		private string _Group_number;
 		
+		private System.Nullable<bool> _remotely;
+		
 		private EntitySet<Diploma> _Diploma;
 		
 		private EntityRef<Group> _Group;
@@ -2055,6 +2951,8 @@ namespace DiplomaData.Model
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
     partial void OnsurnameChanging(string value);
     partial void OnsurnameChanged();
     partial void OnnameChanging(string value);
@@ -2063,6 +2961,8 @@ namespace DiplomaData.Model
     partial void OnpatronymicChanged();
     partial void OnGroup_numberChanging(string value);
     partial void OnGroup_numberChanged();
+    partial void OnremotelyChanging(System.Nullable<bool> value);
+    partial void OnremotelyChanged();
     #endregion
 		
 		public Student()
@@ -2072,12 +2972,23 @@ namespace DiplomaData.Model
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int id
 		{
 			get
 			{
 				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
 			}
 		}
 		
@@ -2161,6 +3072,26 @@ namespace DiplomaData.Model
 					this._Group_number = value;
 					this.SendPropertyChanged("Group_number");
 					this.OnGroup_numberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remotely", DbType="Bit")]
+		public System.Nullable<bool> remotely
+		{
+			get
+			{
+				return this._remotely;
+			}
+			set
+			{
+				if ((this._remotely != value))
+				{
+					this.OnremotelyChanging(value);
+					this.SendPropertyChanging();
+					this._remotely = value;
+					this.SendPropertyChanged("remotely");
+					this.OnremotelyChanged();
 				}
 			}
 		}
@@ -2261,9 +3192,11 @@ namespace DiplomaData.Model
 		
 		private bool _used;
 		
-		private EntitySet<Specialty_Thesis> _Specialty_Thesis;
+		private System.Nullable<bool> _remotely;
 		
 		private EntitySet<Diploma> _Diploma;
+		
+		private EntitySet<Specialty_Thesis> _Specialty_Thesis;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -2279,12 +3212,14 @@ namespace DiplomaData.Model
     partial void OndateChanged();
     partial void OnusedChanging(bool value);
     partial void OnusedChanged();
+    partial void OnremotelyChanging(System.Nullable<bool> value);
+    partial void OnremotelyChanged();
     #endregion
 		
 		public Thesis()
 		{
-			this._Specialty_Thesis = new EntitySet<Specialty_Thesis>(new Action<Specialty_Thesis>(this.attach_Specialty_Thesis), new Action<Specialty_Thesis>(this.detach_Specialty_Thesis));
 			this._Diploma = new EntitySet<Diploma>(new Action<Diploma>(this.attach_Diploma), new Action<Diploma>(this.detach_Diploma));
+			this._Specialty_Thesis = new EntitySet<Specialty_Thesis>(new Action<Specialty_Thesis>(this.attach_Specialty_Thesis), new Action<Specialty_Thesis>(this.detach_Specialty_Thesis));
 			OnCreated();
 		}
 		
@@ -2388,16 +3323,23 @@ namespace DiplomaData.Model
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Thesis_Specialty_Thesis", Storage="_Specialty_Thesis", ThisKey="id", OtherKey="Thesis")]
-		public EntitySet<Specialty_Thesis> Specialty_Thesis
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remotely", DbType="Bit")]
+		public System.Nullable<bool> remotely
 		{
 			get
 			{
-				return this._Specialty_Thesis;
+				return this._remotely;
 			}
 			set
 			{
-				this._Specialty_Thesis.Assign(value);
+				if ((this._remotely != value))
+				{
+					this.OnremotelyChanging(value);
+					this.SendPropertyChanging();
+					this._remotely = value;
+					this.SendPropertyChanged("remotely");
+					this.OnremotelyChanged();
+				}
 			}
 		}
 		
@@ -2414,6 +3356,19 @@ namespace DiplomaData.Model
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Thesis_Specialty_Thesis", Storage="_Specialty_Thesis", ThisKey="id", OtherKey="Thesis")]
+		public EntitySet<Specialty_Thesis> Specialty_Thesis
+		{
+			get
+			{
+				return this._Specialty_Thesis;
+			}
+			set
+			{
+				this._Specialty_Thesis.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2432,18 +3387,6 @@ namespace DiplomaData.Model
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Specialty_Thesis(Specialty_Thesis entity)
-		{
-			this.SendPropertyChanging();
-			entity.Thesis1 = this;
-		}
-		
-		private void detach_Specialty_Thesis(Specialty_Thesis entity)
-		{
-			this.SendPropertyChanging();
-			entity.Thesis1 = null;
 		}
 		
 		private void attach_Diploma(Diploma entity)
@@ -2457,444 +3400,17 @@ namespace DiplomaData.Model
 			this.SendPropertyChanging();
 			entity.Thesis1 = null;
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Diploma")]
-	public partial class Diploma : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private int _Thesis;
-		
-		private int _Student;
-		
-		private System.DateTime _date;
-		
-		private int _Lecturer;
-		
-		private System.Nullable<int> _Data;
-		
-		private System.Nullable<int> _Explanatory_note;
-		
-		private EntitySet<Diploma_Reviewer> _Diploma_Reviewer;
-		
-		private EntityRef<DataFile> _DataFile;
-		
-		private EntityRef<DataFile> _DataFile1;
-		
-		private EntityRef<Lecturer> _Lecturer1;
-		
-		private EntityRef<Student> _Student1;
-		
-		private EntityRef<Thesis> _Thesis1;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnThesisChanging(int value);
-    partial void OnThesisChanged();
-    partial void OnStudentChanging(int value);
-    partial void OnStudentChanged();
-    partial void OndateChanging(System.DateTime value);
-    partial void OndateChanged();
-    partial void OnLecturerChanging(int value);
-    partial void OnLecturerChanged();
-    partial void OnDataChanging(System.Nullable<int> value);
-    partial void OnDataChanged();
-    partial void OnExplanatory_noteChanging(System.Nullable<int> value);
-    partial void OnExplanatory_noteChanged();
-    #endregion
-		
-		public Diploma()
-		{
-			this._Diploma_Reviewer = new EntitySet<Diploma_Reviewer>(new Action<Diploma_Reviewer>(this.attach_Diploma_Reviewer), new Action<Diploma_Reviewer>(this.detach_Diploma_Reviewer));
-			this._DataFile = default(EntityRef<DataFile>);
-			this._DataFile1 = default(EntityRef<DataFile>);
-			this._Lecturer1 = default(EntityRef<Lecturer>);
-			this._Student1 = default(EntityRef<Student>);
-			this._Thesis1 = default(EntityRef<Thesis>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Thesis", DbType="Int NOT NULL")]
-		public int Thesis
-		{
-			get
-			{
-				return this._Thesis;
-			}
-			set
-			{
-				if ((this._Thesis != value))
-				{
-					if (this._Thesis1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnThesisChanging(value);
-					this.SendPropertyChanging();
-					this._Thesis = value;
-					this.SendPropertyChanged("Thesis");
-					this.OnThesisChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Student", DbType="Int NOT NULL")]
-		public int Student
-		{
-			get
-			{
-				return this._Student;
-			}
-			set
-			{
-				if ((this._Student != value))
-				{
-					if (this._Student1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnStudentChanging(value);
-					this.SendPropertyChanging();
-					this._Student = value;
-					this.SendPropertyChanged("Student");
-					this.OnStudentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="Date NOT NULL")]
-		public System.DateTime date
-		{
-			get
-			{
-				return this._date;
-			}
-			set
-			{
-				if ((this._date != value))
-				{
-					this.OndateChanging(value);
-					this.SendPropertyChanging();
-					this._date = value;
-					this.SendPropertyChanged("date");
-					this.OndateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lecturer", DbType="Int NOT NULL")]
-		public int Lecturer
-		{
-			get
-			{
-				return this._Lecturer;
-			}
-			set
-			{
-				if ((this._Lecturer != value))
-				{
-					if (this._Lecturer1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnLecturerChanging(value);
-					this.SendPropertyChanging();
-					this._Lecturer = value;
-					this.SendPropertyChanged("Lecturer");
-					this.OnLecturerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data", DbType="Int")]
-		public System.Nullable<int> Data
-		{
-			get
-			{
-				return this._Data;
-			}
-			set
-			{
-				if ((this._Data != value))
-				{
-					if (this._DataFile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnDataChanging(value);
-					this.SendPropertyChanging();
-					this._Data = value;
-					this.SendPropertyChanged("Data");
-					this.OnDataChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Explanatory_note", DbType="Int")]
-		public System.Nullable<int> Explanatory_note
-		{
-			get
-			{
-				return this._Explanatory_note;
-			}
-			set
-			{
-				if ((this._Explanatory_note != value))
-				{
-					if (this._DataFile1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnExplanatory_noteChanging(value);
-					this.SendPropertyChanging();
-					this._Explanatory_note = value;
-					this.SendPropertyChanged("Explanatory_note");
-					this.OnExplanatory_noteChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Diploma_Diploma_Reviewer", Storage="_Diploma_Reviewer", ThisKey="id", OtherKey="Diploma")]
-		public EntitySet<Diploma_Reviewer> Diploma_Reviewer
-		{
-			get
-			{
-				return this._Diploma_Reviewer;
-			}
-			set
-			{
-				this._Diploma_Reviewer.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DataFile_Diploma", Storage="_DataFile", ThisKey="Data", OtherKey="id", IsForeignKey=true)]
-		public DataFile DataFile
-		{
-			get
-			{
-				return this._DataFile.Entity;
-			}
-			set
-			{
-				DataFile previousValue = this._DataFile.Entity;
-				if (((previousValue != value) 
-							|| (this._DataFile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._DataFile.Entity = null;
-						previousValue.Diploma.Remove(this);
-					}
-					this._DataFile.Entity = value;
-					if ((value != null))
-					{
-						value.Diploma.Add(this);
-						this._Data = value.id;
-					}
-					else
-					{
-						this._Data = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("DataFile");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DataFile_Diploma1", Storage="_DataFile1", ThisKey="Explanatory_note", OtherKey="id", IsForeignKey=true)]
-		public DataFile DataFile1
-		{
-			get
-			{
-				return this._DataFile1.Entity;
-			}
-			set
-			{
-				DataFile previousValue = this._DataFile1.Entity;
-				if (((previousValue != value) 
-							|| (this._DataFile1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._DataFile1.Entity = null;
-						previousValue.Diploma1.Remove(this);
-					}
-					this._DataFile1.Entity = value;
-					if ((value != null))
-					{
-						value.Diploma1.Add(this);
-						this._Explanatory_note = value.id;
-					}
-					else
-					{
-						this._Explanatory_note = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("DataFile1");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Lecturer_Diploma", Storage="_Lecturer1", ThisKey="Lecturer", OtherKey="id", IsForeignKey=true)]
-		public Lecturer Lecturer1
-		{
-			get
-			{
-				return this._Lecturer1.Entity;
-			}
-			set
-			{
-				Lecturer previousValue = this._Lecturer1.Entity;
-				if (((previousValue != value) 
-							|| (this._Lecturer1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Lecturer1.Entity = null;
-						previousValue.Diploma.Remove(this);
-					}
-					this._Lecturer1.Entity = value;
-					if ((value != null))
-					{
-						value.Diploma.Add(this);
-						this._Lecturer = value.id;
-					}
-					else
-					{
-						this._Lecturer = default(int);
-					}
-					this.SendPropertyChanged("Lecturer1");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_Diploma", Storage="_Student1", ThisKey="Student", OtherKey="id", IsForeignKey=true)]
-		public Student Student1
-		{
-			get
-			{
-				return this._Student1.Entity;
-			}
-			set
-			{
-				Student previousValue = this._Student1.Entity;
-				if (((previousValue != value) 
-							|| (this._Student1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Student1.Entity = null;
-						previousValue.Diploma.Remove(this);
-					}
-					this._Student1.Entity = value;
-					if ((value != null))
-					{
-						value.Diploma.Add(this);
-						this._Student = value.id;
-					}
-					else
-					{
-						this._Student = default(int);
-					}
-					this.SendPropertyChanged("Student1");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Thesis_Diploma", Storage="_Thesis1", ThisKey="Thesis", OtherKey="id", IsForeignKey=true)]
-		public Thesis Thesis1
-		{
-			get
-			{
-				return this._Thesis1.Entity;
-			}
-			set
-			{
-				Thesis previousValue = this._Thesis1.Entity;
-				if (((previousValue != value) 
-							|| (this._Thesis1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Thesis1.Entity = null;
-						previousValue.Diploma.Remove(this);
-					}
-					this._Thesis1.Entity = value;
-					if ((value != null))
-					{
-						value.Diploma.Add(this);
-						this._Thesis = value.id;
-					}
-					else
-					{
-						this._Thesis = default(int);
-					}
-					this.SendPropertyChanged("Thesis1");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Diploma_Reviewer(Diploma_Reviewer entity)
+		private void attach_Specialty_Thesis(Specialty_Thesis entity)
 		{
 			this.SendPropertyChanging();
-			entity.Diploma1 = this;
+			entity.Thesis1 = this;
 		}
 		
-		private void detach_Diploma_Reviewer(Diploma_Reviewer entity)
+		private void detach_Specialty_Thesis(Specialty_Thesis entity)
 		{
 			this.SendPropertyChanging();
-			entity.Diploma1 = null;
+			entity.Thesis1 = null;
 		}
 	}
 }

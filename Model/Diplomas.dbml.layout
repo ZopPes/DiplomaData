@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.75" name="Diplomas">
+  <DataContextMoniker Name="/DiplomasDataContext" />
+  <nestedChildShapes>
+    <classShape Id="6de5d954-e441-4900-9936-eba3b1c5590d" absoluteBounds="0.75, 0.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DiplomasDataContext/Commission_rus" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4ea1c0d4-43eb-497b-b304-2bb2187f2b49" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d303e940-c0fd-4174-9d97-b5bdc32032d4" absoluteBounds="3.75, 0.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/DiplomasDataContext/Diplom_rus" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c4b375ee-844c-41ad-bef5-c0c8127b796e" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e40a102b-57c7-4c2f-b10a-15a1408c8ae9" absoluteBounds="0.75, 3.75, 2, 1.193992513020834">
+      <DataClassMoniker Name="/DiplomasDataContext/Form_of_education_rus" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2194b207-cffd-44ee-a471-c03b5e6bc135" absoluteBounds="0.765, 4.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8a075e6b-319b-42a1-932a-b638a7b3126c" absoluteBounds="3.75, 3.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DiplomasDataContext/Group_rus" />
+      <nestedChildShapes>
+        <elementListCompartment Id="60b3489b-f226-4ca3-9f76-a62fcd792d15" absoluteBounds="3.765, 4.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1bdb3efb-584f-4e7d-8ceb-27d87441f4cf" absoluteBounds="6.75, 0.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DiplomasDataContext/Lecturer_rus" />
+      <nestedChildShapes>
+        <elementListCompartment Id="19f00f6c-a425-4ab8-a2c9-2e5c55004045" absoluteBounds="6.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a47c21d9-1e68-4040-86a2-cbd43ceab92e" absoluteBounds="0.75, 6.75, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/DiplomasDataContext/Reviewer_rus" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ba717af5-c006-428a-a51a-c1708a1bc3e2" absoluteBounds="0.765, 7.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="858dbaef-b95a-42da-967f-dbea18e8986a" absoluteBounds="7.375, 3.25, 2, 1.193992513020834">
+      <DataClassMoniker Name="/DiplomasDataContext/Specialty_rus" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9176ae0f-de7b-4774-8a63-d85ccc732967" absoluteBounds="7.39, 3.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0b85c2b8-f040-4283-a9ae-ced1fcb0dfa1" absoluteBounds="3.75, 6.75, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/DiplomasDataContext/Thesis_rus" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6b8667a3-0ee5-4762-927b-4218dc0835cb" absoluteBounds="3.765, 7.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.03125 : 2.32859537760417); (7.03125 : 4.9175439453125); (6.67708333333333 : 4.9175439453125 : JumpStart); (6.51041666666667 : 4.9175439453125 : JumpEnd); (5.75 : 4.9175439453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DiplomasDataContext/Lecturer_rus/Lecturer_rus_Group_rus" />
+      <nodes>
+        <classShapeMoniker Id="1bdb3efb-584f-4e7d-8ceb-27d87441f4cf" />
+        <classShapeMoniker Id="8a075e6b-319b-42a1-932a-b638a7b3126c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.75 : 1.50804518880208); (5.75 : 1.50804518880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DiplomasDataContext/Lecturer_rus/Lecturer_rus_Diplom_rus" />
+      <nodes>
+        <classShapeMoniker Id="1bdb3efb-584f-4e7d-8ceb-27d87441f4cf" />
+        <classShapeMoniker Id="d303e940-c0fd-4174-9d97-b5bdc32032d4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 4.34699625651042); (3.29166666666667 : 4.34699625651042 : JumpStart); (3.45833333333333 : 4.34699625651042 : JumpEnd); (3.75 : 4.34699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DiplomasDataContext/Form_of_education_rus/Form_of_education_rus_Group_rus" />
+      <nodes>
+        <classShapeMoniker Id="e40a102b-57c7-4c2f-b10a-15a1408c8ae9" />
+        <classShapeMoniker Id="8a075e6b-319b-42a1-932a-b638a7b3126c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.75 : 6.75); (3.375 : 6.375); (3.375 : 3.28049967447917); (3.75 : 2.90549967447917)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DiplomasDataContext/Thesis_rus/Thesis_rus_Diplom_rus" />
+      <nodes>
+        <classShapeMoniker Id="0b85c2b8-f040-4283-a9ae-ced1fcb0dfa1" />
+        <classShapeMoniker Id="d303e940-c0fd-4174-9d97-b5bdc32032d4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.375 : 4.09699625651042); (7.11458333333333 : 4.09699625651042 : JumpStart); (6.94791666666667 : 4.09699625651042 : JumpEnd); (6.67708333333333 : 4.09699625651042 : JumpStart); (6.51041666666667 : 4.09699625651042 : JumpEnd); (5.75 : 4.09699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DiplomasDataContext/Specialty_rus/Specialty_rus_Group_rus" />
+      <nodes>
+        <classShapeMoniker Id="858dbaef-b95a-42da-967f-dbea18e8986a" />
+        <classShapeMoniker Id="8a075e6b-319b-42a1-932a-b638a7b3126c" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="32297cf9-031c-4a67-bfd6-7099b19c609e" absoluteBounds="6.5, 6.375, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/DiplomasDataContext/Student_rus" />
+      <nestedChildShapes>
+        <elementListCompartment Id="429ea0c6-d03e-4457-97d7-dd922abb1af8" absoluteBounds="6.5150000000000006, 6.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.59375 : 6.375); (6.59375 : 2.64829752604167); (5.75 : 2.64829752604167)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DiplomasDataContext/Student_rus/Student_rus_Diplom_rus" />
+      <nodes>
+        <classShapeMoniker Id="32297cf9-031c-4a67-bfd6-7099b19c609e" />
+        <classShapeMoniker Id="d303e940-c0fd-4174-9d97-b5bdc32032d4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 5.15432216145833); (6.51041666666667 : 5.15432216145833 : JumpStart); (6.67708333333333 : 5.15432216145833 : JumpEnd); (6.8437525 : 5.15432216145833); (6.8437525 : 6.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DiplomasDataContext/Group_rus/Group_rus_Student_rus" />
+      <nodes>
+        <classShapeMoniker Id="8a075e6b-319b-42a1-932a-b638a7b3126c" />
+        <classShapeMoniker Id="32297cf9-031c-4a67-bfd6-7099b19c609e" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

@@ -106,11 +106,11 @@ namespace DiplomaData.Tabs.TabTable
     //    }
     //}
 
-    public class TabTable<T> : Tab, IBindingList where T : class, new()
+    public class TabTable<T> : Tab where T : class, new()
     {
         #region Table
         /// <summary>Таблица данных</summary>
-        public IBindingList Table { get; }
+        //public IBindingList Table { get; }
         #endregion Table
 
         #region Context
@@ -134,35 +134,6 @@ namespace DiplomaData.Tabs.TabTable
         public ICommand InsertTable { get; }
         public ICommand RemoveTable { get; }
 
-        public bool AllowNew => Table.AllowNew;
-
-        public bool AllowEdit => Table.AllowEdit;
-
-        public bool AllowRemove => Table.AllowRemove;
-
-        public bool SupportsChangeNotification => Table.SupportsChangeNotification;
-
-        public bool SupportsSearching => Table.SupportsSearching;
-
-        public bool SupportsSorting => Table.SupportsSorting;
-
-        public bool IsSorted => Table.IsSorted;
-
-        public PropertyDescriptor SortProperty => Table.SortProperty;
-
-        public ListSortDirection SortDirection => Table.SortDirection;
-
-        public bool IsReadOnly => Table.IsReadOnly;
-
-        public bool IsFixedSize => Table.IsFixedSize;
-
-        public int Count => Table.Count;
-
-        public object SyncRoot => Table.SyncRoot;
-
-        public bool IsSynchronized => Table.IsSynchronized;
-
-        public object this[int index] { get => Table[index]; set => Table[index] = value; }
 
         public Table<T> test;
 
@@ -174,42 +145,22 @@ namespace DiplomaData.Tabs.TabTable
         public TabTable(Table<T> table, string name = "") : base(name)
         {
             test = table;
-            Table = table.GetNewBindingList();
             SelectData = test;
             Context = table.Context;
             InsertTable = new lamdaCommand(NewMethod);
             RemoveTable = new lamdaCommand<T>(Remove);
-            Properties.Add(new Property("Количество строк", () => SelectData));
+            Properties.Add(new Property("Количество строк", () => SelectData.ToString()));
             InsertItem = new T();
-            ListChanged += PropertisChenged;
-
+            
         }
-
-        
-
-        private void PropertisChenged(object sender, ListChangedEventArgs e)
-            => OnProperties();
-
-        public event ListChangedEventHandler ListChanged
-        {
-            add
-            {
-                Table.ListChanged += value;
-            }
-
-            remove
-            {
-                Table.ListChanged -= value;
-            }
-        }
-
 
         private void NewMethod()
         {
-            Add(InsertItem);
+            test.InsertOnSubmit(InsertItem);
             try
             {
                 Context.SubmitChanges();
+                Filter = "";
             }
             catch (Exception e)
             {
@@ -218,35 +169,14 @@ namespace DiplomaData.Tabs.TabTable
             InsertItem = new T();
         }
 
-        public object AddNew() => Table.AddNew();
-
-        public void AddIndex(PropertyDescriptor property) => Table.AddIndex(property);
-
-        public void ApplySort(PropertyDescriptor property, ListSortDirection direction) => Table.ApplySort(property, direction);
-
-        public int Find(PropertyDescriptor property, object key) => Table.Find(property, key);
-
-        public void RemoveIndex(PropertyDescriptor property) => Table.RemoveIndex(property);
-
-        public void RemoveSort() => Table.RemoveSort();
-
-        public int Add(object value) => Table.Add(value);
-
-        public bool Contains(object value) => Table.Contains(value);
-
-        public void Clear() => Table.Clear();
-
-        public int IndexOf(object value)=> Table.IndexOf(value);
-
-        public void Insert(int index, object value) => Table.Insert(index, value);
 
         public void Remove(object value)
         {
-            var r = this.IndexOf(value);
-            Table.RemoveAt(r);
+            test.DeleteOnSubmit((T)value);
             try
             {
                 Context.SubmitChanges();
+                Filter = "";
             }
             catch (Exception e)
             {
@@ -254,10 +184,7 @@ namespace DiplomaData.Tabs.TabTable
             }
         }
 
-        public void RemoveAt(int index) => Table.RemoveAt(index);
 
-        public void CopyTo(Array array, int index) => Table.CopyTo(array, index);
 
-        public IEnumerator GetEnumerator() => Table.GetEnumerator();
     }
 }
