@@ -1,229 +1,382 @@
 ﻿using DiplomaData.Model;
 using DiplomaData.Tabs;
-using DiplomaData.Tabs.CommandColection;
 using DiplomaData.Tabs.TabReport;
 using DiplomaData.Tabs.TabTable;
 using DiplomaData.Отчёты;
 using Microsoft.Office.Interop.Word;
 using Microsoft.Win32;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Linq;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using WPFMVVMHelper;
 using Application = Microsoft.Office.Interop.Word.Application;
 
 namespace DiplomaData
 {
-    /// <summary>
-    /// Сахар
-    /// </summary>
-    public static class Extension
-    {
-        public static bool SetAdd<T>(this ObservableCollection<T> ts, T item)
-        {
-            if (ts.Contains(item)) return false;
-            ts.Add(item);
-            return true;
-        }
+	/// <summary>
+	/// Сахар
+	/// </summary>
+	public static class Extension
+	{
+		public static bool SetAdd<T>(this ObservableCollection<T> ts, T item)
+		{
+			if (ts.Contains(item)) return false;
+			ts.Add(item);
+			return true;
+		}
 
-        public static CommandCollection CreateCommands(this Tabs.Tabs tabs) => new CommandCollection(tabs);
-        public static TabTable<T> CreateTabTable<T>(this Table<T> table, string name) where T : class, new() => new TabTable<T>(table, name);
+		public static TabTable<T> CreateTabTable<T>
+			(this Table<T> table, Func<IQueryable<T>,string, IQueryable<T>> func
+			,Action<T> action, Action<T> delete
+			,string name
+			,params IFilterParam[] f) where T : class, new() =>
+			new TabTable<T>(table, func, action, delete, name,f);
 
-        public static CommandCollection AddTable<T>(this CommandCollection tabs, TabTable<T> ts) where T : class, new()
-        {
-            tabs.Add(ts);
-            return tabs;
-        }
+	}
 
-        public static CommandCollection AddTable<T>(this CommandCollection tabs, Table<T> ts, string name) where T : class, new()
-        {
-            tabs.Add(new TabTable<T>(ts, name));
-            return tabs;
-        }
+	/// <summary>
+	/// главный VM класс
+	/// </summary>
+	internal class MainVM : peremlog, IDisposable
+	{
+		/// <summary>
+		/// имя папки с отчётами
+		/// </summary>
+		private const string reportPath = "Отчёты";
 
-        public static CommandCollection CreateCommands(this Tabs.Tabs tabs, params Tab[] tab)
-        {
-            var r = new CommandCollection(tabs);
-            foreach (var item in tab)
-            {
-                r.Add(item);
-            }
-            return r;
-        }
+		#region DiplomaData
+		/// <summary>Подключение к базе данных</summary>
+		public DiplomasDataContext DiplomaData { get; }
 
-
-    }
-
-    /// <summary>
-    /// главный VM класс
-    /// </summary>
-    internal class MainVM : peremlog, IDisposable
-    {
-        /// <summary>
-        /// имя папки с отчётами
-        /// </summary>
-        private const string reportPath = "Отчёты";
-
-        #region DiplomaData
-        /// <summary>Подключение к базе данных</summary>
-        public DiplomaDataDataContext DiplomaData { get; }
-
-        #endregion DiplomaData
-
-        #region Tabs
-        /// <summary>Вкладки</summary>
-        public Tabs.Tabs Tabs { get; }
-
-        #endregion Tabs
-
-        #region TableCommand
-        /// <summary>команды для добавления вкладок с таблицами</summary>
-        public CommandCollection TableCommand { get; }
-
-        #endregion TableCommand
-
-        #region ReportCommands
-        /// <summary>Команды для добавления вкладок отчёта</summary>
-        public CommandCollection ReportCommands { get; }
-
-        #endregion ReportCommands
-
-        #region Report
-
-        private ObservableCollection<string> reports;
-
-        /// <summary>Список отчётов</summary>
-        public ObservableCollection<string> Reports { get => reports; set => Set(ref reports, value); }
-
-        #endregion Report
-
-        #region ICommands
-        /// <summary>
-        /// Загружает все данные в базу
-        /// </summary>
-        public ICommand UpdateData { get; }
-        /// <summary>
-        /// открытие отчёты
-        /// </summary>
-        public ICommand OpenWordTemplate { get; }
-        /// <summary>
-        /// обновляет список отчётов
-        /// </summary>
-        public ICommand UpdateReports { get; }
-        #endregion
-
-        /// <summary>
-        /// главный VM класс
-        /// </summary>
-        public MainVM()
-        {
-            if (!Directory.Exists(reportPath))
-                Directory.CreateDirectory(reportPath);
-
-            OnUpdateReports();
-
-            DiplomaData = new DiplomaDataDataContext();
-            Tabs = new Tabs.Tabs();
-
-            #region AddTabsTable
-
-            var student = DiplomaData.Student.CreateTabTable("Студент");
-            student.FilterChanged += (obj, e) =>
-            {
-                var r = (obj as TabTable<Student>);
-                r.SelectData = r.test.Where(w =>
-                    (w.name + " " + w.surname + " " + w.patronymic + " " + w.Group.number).Contains(e)
-                );
-            };
-
-            var group = DiplomaData.Group.CreateTabTable("Группа");
-            group.FilterChanged += (obj, e) =>
-            {
-                var r = (obj as TabTable<Group>);
-                r.SelectData = r.test.Where(w =>
-                    $"{w.number} {w.Lecturer.name}".Contains(e)
-                );
-               
-            };
+		public IQueryable<Group_rus> Groups => from g in DiplomaData.Group_rus select g;
+		public IQueryable<Specialty_rus> Specialties => from s in DiplomaData.Specialty_rus select s;
+		public IQueryable<Lecturer_rus> Lecturers => from l in DiplomaData.Lecturer_rus select l;
+		public IQueryable<Thesis_rus> Theses => from t in DiplomaData.Thesis_rus select t;
+		public IQueryable<Thesis_rus> FreeTheses => from t in DiplomaData.Thesis_rus where !t.Занята__не_занята select t;
 
 
-            TableCommand = Tabs.CreateCommands
-                (
-                 student 
-                , DiplomaData.Group.CreateTabTable("Группа")
-                , DiplomaData.Specialty.CreateTabTable("Специальность")
-                , DiplomaData.Lecturer.CreateTabTable("Преподователь")
-                , DiplomaData.Thesis.CreateTabTable("Темы дипломов")
-                );
-            #endregion AddTabsTable
+		public IEnumerable RPG => DiplomaData.remotely_Group();
+		public IEnumerable RL => DiplomaData.remotely_Lecturer();
+
+		#endregion DiplomaData
+
+		#region Tabs
+		/// <summary>Вкладки</summary>
+		public Tabs.Tabs Tabs { get; }
+
+		#endregion Tabs
+
+		#region TableTabs
+		/// <summary>команды для добавления вкладок с таблицами</summary>
+		public ObservableCollection<Tab> Tables { get; }
+
+		#endregion TableTabs
+
+		#region ReportTabs
+		/// <summary>Команды для добавления вкладок отчёта</summary>
+		public ObservableCollection<Tab> ReportTabs { get; }
+
+		#endregion ReportTabs
+
+		#region Report
+
+		private ObservableCollection<string> reports;
+
+		/// <summary>Список отчётов</summary>
+		public ObservableCollection<string> Reports { get => reports; set => Set(ref reports, value); }
+
+		#endregion Report
+
+		public Tab Basket { get; }
+
+		#region ICommands
+		/// <summary>
+		/// Загружает все данные в базу
+		/// </summary>
+		public ICommand UpdateData { get; }
+		/// <summary>
+		/// открытие отчёты
+		/// </summary>
+		public ICommand OpenWordTemplate { get; }
+		/// <summary>
+		/// обновляет список отчётов
+		/// </summary>
+		public ICommand UpdateReports { get; }
+		public ICommand AddEmptyDiploma { get; }
 
 
-            ReportCommands = Tabs.CreateCommands();
-            ReportCommands.Add(new TabReport("Отчёт"));
+		#endregion
 
-            #region InitCommand
-            UpdateData = new lamdaCommand(() =>
-            {
-                try
-                {
-                    DiplomaData.SubmitChanges();
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message, "Ошибка");
-                }
-            });
-            OpenWordTemplate = new lamdaCommand(OnOpenWordTemplate);
-            UpdateReports = new lamdaCommand(OnUpdateReports);
+		/// <summary>
+		/// главный VM класс
+		/// </summary>
+		public MainVM()
+		{
+
+			if (!Directory.Exists(reportPath))
+				Directory.CreateDirectory(reportPath);
+			
+			OnUpdateReports();
+
+			DiplomaData = new DiplomasDataContext();
+
+			OnP(DiplomaData.Diplom_rus);
+
+			ReportTabs = new ObservableCollection<Tab>();
+			ReportTabs.Add(new TabReport("Отчёт"));
+
+			Tables = new ObservableCollection<Tab>();
+
+			#region AddTabs
+
+			var student = DiplomaData.Student_rus.CreateTabTable
+				(
+					(q, e) => q.Where(w => (w.Имя + " " + w.Отчество + " " + w.Фамилия).Contains(e))
+				, s => DiplomaData.Add_Student(s.Фамилия, s.Имя, s.Отчество, s.Номер_группы)
+				, s => DiplomaData.Delete_remotelt_student(s.id)
+				, "Студент"
+				, new FilterTableParam(Groups, g => DiplomaData.Student_rus.Where(s => s.Group_rus == g), "Группы:")
+				, new FilterTableParam(Lecturers, l => DiplomaData.Student_rus.Where(s => s.Diplom_rus.Lecturer_rus== l), "Руководители диплома:")
+				, new FilterDateParam(d => DiplomaData.Student_rus.Where(s=>s.Diplom_rus.Дата_сдачи<d),"по дате:")
+				, new FilterMarcParam(str=>DiplomaData.Student_rus.Where(s=>s.Diplom_rus.Оценка==str),"оценка:")
+				) ;
+			
+
+			var Lecturer = DiplomaData.Lecturer_rus.CreateTabTable
+				(
+				(q, e) => q.Where(w => (w.Имя + " " + w.Отчество + " " + w.Фамилия + " ").Contains(e))
+				, l => DiplomaData.Add_Lecturer(l.Фамилия,l.Имя,l.Отчество)
+				, l =>DiplomaData.Delete_remotelt_lecturer(l.id)
+				, "Преподователь"
+				, null
+				);
+
+			var Specialty = DiplomaData.Specialty_rus.CreateTabTable
+				(
+				(q, e) => q.Where(w => (w.Специальность + " " + w.Шифр_специальности).Contains(e))
+				, s => DiplomaData.Add_Specialty(s.Шифр_специальности,s.Специальность)
+				, s =>DiplomaData.Delete_remotelt_specialty(s.Шифр_специальности)
+				, "Специальность"
+				, null
+				);
+
+			var Thesis = DiplomaData.Thesis_rus.CreateTabTable
+			   (
+			   (q, e) => q.Where(w => (w.Название_темы + " " + w.Описание).Contains(e))
+				, t => DiplomaData.Add_Thesis(t.Название_темы,t.Описание,t.Дата_выдачи)
+				, t =>DiplomaData.Delete_remotelt_Thesis(t.id)
+			   , "Тема диплома"
+			   , null
+			   );
+
+			var group = DiplomaData.Group_rus.CreateTabTable
+				(
+					(q,e)=> q.Where(w=>w.Номер_группы.Contains(e))
+				, g => 
+				{ DiplomaData.Add_Group(g.Номер_группы, g.Специальность, g.Куратор, g.Форма_обучения); OnPropertyChanged(nameof(Groups)); }
+				, g =>DiplomaData.Delete_remotelt_group(g.Номер_группы)
+				, "Группа"
+				, null
+				);
+		   
+			Tables.Add(student);
+			Tables.Add(Lecturer);
+			Tables.Add(Specialty);
+			Tables.Add(Thesis);
+			Tables.Add(group);
+			#endregion
+
+			
+
+			Tabs = new Tabs.Tabs();
+
+            #region Корзина
+
+
+            Basket = new TabBasket("Корзина"
+				,   new BasketItem<Group_rus>
+					(
+						DiplomaData.remotely_Group
+					,	g=>DiplomaData.Recovery_group(g.Номер_группы)
+					,	g=> DiplomaData.Delete_remotelt_group(g.Номер_группы)
+					,	"Группы"
+					)
+				,   new BasketItem<Lecturer_rus>
+					(
+						DiplomaData.remotely_Lecturer
+					,	l=>DiplomaData.Recovery_lecturer(l.id)
+					,	l=> DiplomaData.Delete_remotelt_lecturer(l.id)
+					,	"Преподователи"
+					)
+				,   new BasketItem<Commission_rus>
+					(
+						DiplomaData.remotely_Commission
+					,	c=>DiplomaData.Recovery_commission(c.id)
+					,	c=> DiplomaData.Delete_remotelt_commision(c.id)
+					,	"Коммися"
+					)
+				,   new BasketItem<Specialty_rus>
+					(
+						DiplomaData.remotely_Specialty
+					,	s=>DiplomaData.Recovery_specialty(s.Шифр_специальности)
+					,	s=> DiplomaData.Delete_remotelt_specialty(s.Шифр_специальности)
+					,	"Специальность"
+					)
+				,   new BasketItem<Student_rus>
+					(
+						DiplomaData.remotely_Student
+					,	s=>DiplomaData.Recovery_student(s.id)
+					,	s=> DiplomaData.Delete_remotelt_student(s.id)
+					,	"Студент")
+				,   new BasketItem<Thesis_rus>
+					(
+						DiplomaData.remotely_Thesis
+					,	t=>DiplomaData.Recovery_thesis(t.id)
+					,	t=> DiplomaData.Delete_remotelt_Thesis(t.id)
+					,	"Тема"
+					)
+				);
+
             #endregion
-        }
 
-        
+			Tabs.Add(Basket);
 
-        /// <summary>
-        /// Обновляет список дипломов
-        /// </summary>
-        private void OnUpdateReports() =>
-            Reports = new ObservableCollection<string>(Directory.EnumerateFiles(reportPath, "*.docx"));
+			foreach (Tab tab in Tables)
+			{
+				Tabs.Add(tab);
+			}
+			foreach (Tab tab in ReportTabs)
+			{
+				Tabs.Add(tab);
+			}
 
-        /// <summary>
-        /// открывает фаил ворд
-        /// </summary>
-        private void OnOpenWordTemplate()
+			#region InitCommand
+			UpdateData = new lamdaCommand(() =>
+			{
+				try
+				{
+					DiplomaData.Refresh(RefreshMode.OverwriteCurrentValues,DiplomaData.Student_rus);
+					DiplomaData.Refresh(RefreshMode.OverwriteCurrentValues, DiplomaData.Group_rus);
+					DiplomaData.Refresh(RefreshMode.OverwriteCurrentValues, DiplomaData.Diplom_rus);
+				}
+				catch (Exception e)
+				{
+					MessageBox.Show(e.Message, "Ошибка");
+				}
+			});
+			OpenWordTemplate = new lamdaCommand(OnOpenWordTemplate);
+			UpdateReports = new lamdaCommand(OnUpdateReports);
+
+			AddEmptyDiploma = new lamdaCommand<Student_rus>
+				(
+				s => 
+					{
+						foreach (Diplom_rus diplom in DiplomaData.Add_Empty_Diploma(s.id))
+							s.Diplom_rus = diplom;
+					}
+				) ;
+
+			
+
+			#endregion
+		}
+
+		private	void OnCreateDocStudent(Student_rus student)
         {
-            OpenFileDialog openFile = new OpenFileDialog();
-            if (openFile.ShowDialog() == true)
+			//открыть шаблон
+			var app = new Application();
+			Document word = app.Documents.Add(Template: @"C:\Users\zop85\Source\Repos\DiplomaData\bin\Debug\Отчёты\ПРОТОКОЛ.docx", Visible: true);
+            //записать данные о студенте
+            foreach (ContentControl item in word.Range().ContentControls)
             {
-                var app = new Application();
-                Document word = app.Documents.Add(Template: openFile.FileName, Visible: true);
-
-                var wt = new WordTemplate()
+                if (item.Type == WdContentControlType.wdContentControlRichText)
                 {
-                    DataContext = word.Range().ContentControls
-                };
-                wt.ShowDialog();
-
-                try
-                {
-                    word.Close();
-                    app.Quit();
+                    switch (item.PlaceholderText.Value)
+                    {
+						case "ФИО студента":
+							item.Range.Text = student.ToString();
+							break;
+						case "Номер специальности":
+							item.Range.Text = student.Group_rus.Specialty_rus.Шифр_специальности;
+							break;
+						case "наименование специальности":
+							item.Range.Text = student.Group_rus.Specialty_rus.Специальность;
+							break;
+					}
+                    
                 }
-                catch { }
+            }
+			//показать результат
+			app.Visible = true;
+		}
+		
+
+		private void OnP(IEnumerable<Diplom_rus> diplomas)
+        {
+            using (var csv=new StreamWriter(reportPath+@"\данные.csv"))
+            {
+				csv.WriteLine(string.Join(";","ФИО","Номер_специальности","Название_специальности","Название_темы","Руководитель"));
+                foreach (Diplom_rus diplom in diplomas)
+                {
+					csv.WriteLine
+						(
+						string.Join(";"
+							,diplom?.Student_rus?.ToString() ?? ""
+							,diplom?.Student_rus.Group_rus.Specialty_rus.FormatШифр_специальности ?? ""
+							, diplom?.Student_rus.Group_rus.Specialty_rus.Специальность ?? ""
+							, ""
+							, "")
+						);
+                }
             }
         }
 
-        public void Dispose()
-        {
-            DiplomaData.Dispose();
-            Tabs.Clear();
+		/// <summary>
+		/// Обновляет список дипломов
+		/// </summary>
+		private void OnUpdateReports() =>
+			Reports = new ObservableCollection<string>(Directory.EnumerateFiles(reportPath, "*.docx"));
 
-            TableCommand.Clear();
-            ReportCommands.Clear();
-        }
-    }
+		/// <summary>
+		/// открывает фаил ворд
+		/// </summary>
+		private void OnOpenWordTemplate()
+		{
+			OpenFileDialog openFile = new OpenFileDialog();
+            if (openFile.ShowDialog() == true)
+			{
+				var app = new Application();
+				Document word = app.Documents.Add(Template: openFile.FileName, Visible: true);
+				word.MailMerge.OpenDataSource(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+				word.MailMerge.Fields.Add(word.Range(), "ФОИ");
+				var wt = new WordTemplate()
+				{
+					DataContext = word.Range().ContentControls
+				};
+				wt.ShowDialog();
+
+				try
+				{
+					word.Close();
+					app.Quit();
+				}
+				catch { }
+			}
+		}
+
+		public void Dispose()
+		{
+			DiplomaData.Dispose();
+			Tabs.Clear();
+
+			Tables.Clear();
+			ReportTabs.Clear();
+		}
+	}
 }

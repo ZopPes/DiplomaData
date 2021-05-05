@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using WPFMVVMHelper;
 
@@ -10,6 +11,13 @@ namespace DiplomaData
     /// </summary>
     public class Tab : peremlog
     {
+
+        #region isVisible
+        private Visibility visibility=Visibility.Collapsed;
+        /// <summary>Отображение элемента</summary>
+        public Visibility IsVisible { get => visibility; set => Set(ref visibility, value); }
+        #endregion
+
         /// <summary>
         /// Класс имя значения
         /// для списка свойств
@@ -69,7 +77,6 @@ namespace DiplomaData
         /// <summary>
         /// комманда для закрытия вкладки
         /// </summary>
-        public ICommand Close { get; }
 
 
         #region Filter
@@ -81,7 +88,7 @@ namespace DiplomaData
             set 
             {
                 Set(ref filter, value);
-                    FilterChanged?.Invoke(this,value);
+                    FilterChanged?.Invoke(this,value ?? "");
             } 
         }
         #endregion
@@ -90,7 +97,7 @@ namespace DiplomaData
 
         public event EventHandler<string> FilterChanged;
 
-        public Action<Tab> AClose;
+        
 
         /// <summary>
         /// Вкладка
@@ -98,7 +105,6 @@ namespace DiplomaData
         /// <param name="name">Имя Вкладки</param>
         public Tab(string name = "")
         {
-            Close = new lamdaCommand(() => AClose?.Invoke(this));
             Name = name;
             Properties = new ObservableCollection<Property>();
         }

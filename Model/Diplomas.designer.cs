@@ -30,6 +30,13 @@ namespace DiplomaData.Model
 		
     #region Определения метода расширяемости
     partial void OnCreated();
+    partial void InsertForm_of_education_rus(Form_of_education_rus instance);
+    partial void UpdateForm_of_education_rus(Form_of_education_rus instance);
+    partial void DeleteForm_of_education_rus(Form_of_education_rus instance);
+    partial void UpdateReviewer_rus(Reviewer_rus instance);
+    partial void UpdateSpecialty_rus(Specialty_rus instance);
+    partial void UpdateThesis_rus(Thesis_rus instance);
+    partial void UpdateStudent_rus(Student_rus instance);
     #endregion
 		
 		public DiplomasDataContext() : 
@@ -133,11 +140,388 @@ namespace DiplomaData.Model
 				return this.GetTable<Student_rus>();
 			}
 		}
+		
+		private void InsertCommission_rus(Commission_rus obj)
+		{
+			this.Add_commission(obj.Фамилия, obj.Имя, obj.Отчество);
+		}
+		
+		private void UpdateCommission_rus(Commission_rus obj)
+		{
+			this.Update_commission(((System.Nullable<int>)(obj.id)), obj.Фамилия, obj.Имя, obj.Отчество);
+		}
+		
+		private void DeleteCommission_rus(Commission_rus obj)
+		{
+			this.Delete_remotelt_commision(((System.Nullable<int>)(obj.id)));
+		}
+		
+		private void InsertDiplom_rus(Diplom_rus obj)
+		{
+			this.Add_Diploma(((System.Nullable<int>)(obj.id)), ((System.Nullable<int>)(obj.Тема)), ((System.Nullable<System.DateTime>)(obj.Дата_сдачи)), ((System.Nullable<int>)(obj.Руководитель)), ((System.Nullable<int>)(obj.Файлы)), ((System.Nullable<char>)(obj.Оценка)), ((System.Nullable<int>)(obj.Пояснительная_записка)));
+		}
+		
+		private void UpdateDiplom_rus(Diplom_rus obj)
+		{
+			this.Update_Diploma(((System.Nullable<int>)(obj.id)), ((System.Nullable<int>)(obj.Тема)), ((System.Nullable<System.DateTime>)(obj.Дата_сдачи)), ((System.Nullable<int>)(obj.Руководитель)), ((System.Nullable<int>)(obj.Файлы)), ((System.Nullable<char>)(obj.Оценка)), ((System.Nullable<int>)(obj.Пояснительная_записка)));
+		}
+		
+		private void DeleteDiplom_rus(Diplom_rus obj)
+		{
+			this.Delete_remotelt_diploma(((System.Nullable<int>)(obj.id)));
+		}
+		
+		private void InsertGroup_rus(Group_rus obj)
+		{
+			this.Add_Group(obj.Номер_группы, obj.Специальность, ((System.Nullable<int>)(obj.Куратор)), ((System.Nullable<short>)(obj.Форма_обучения)));
+		}
+		
+		private void UpdateGroup_rus(Group_rus obj)
+		{
+			this.Update_Group(obj.Номер_группы, obj.Специальность, ((System.Nullable<int>)(obj.Куратор)), ((System.Nullable<short>)(obj.Форма_обучения)));
+		}
+		
+		private void DeleteGroup_rus(Group_rus obj)
+		{
+			Group_rus original = ((Group_rus)(Group_rus.GetOriginalEntityState(obj)));
+			this.Delete_remotelt_group(original.Номер_группы);
+		}
+		
+		private void InsertLecturer_rus(Lecturer_rus obj)
+		{
+			this.Add_Lecturer(obj.Фамилия, obj.Имя, obj.Отчество);
+		}
+		
+		private void UpdateLecturer_rus(Lecturer_rus obj)
+		{
+			this.Update_Lecturer(((System.Nullable<int>)(obj.id)), obj.Фамилия, obj.Имя, obj.Отчество);
+		}
+		
+		private void DeleteLecturer_rus(Lecturer_rus obj)
+		{
+			this.Delete_remotelt_lecturer(((System.Nullable<int>)(obj.id)));
+		}
+		
+		private void InsertReviewer_rus(Reviewer_rus obj)
+		{
+			this.Add_Reviewer(obj.Фамилия, obj.Имя, obj.Отчество, obj.Компания);
+		}
+		
+		private void DeleteReviewer_rus(Reviewer_rus obj)
+		{
+			this.Delete_remotelt_reviewer(((System.Nullable<int>)(obj.id)));
+		}
+		
+		private void InsertSpecialty_rus(Specialty_rus obj)
+		{
+			this.Add_Specialty(obj.Шифр_специальности, obj.Специальность);
+		}
+		
+		private void DeleteSpecialty_rus(Specialty_rus obj)
+		{
+			Specialty_rus original = ((Specialty_rus)(Specialty_rus.GetOriginalEntityState(obj)));
+			this.Delete_remotelt_specialty(original.Шифр_специальности);
+		}
+		
+		private void InsertThesis_rus(Thesis_rus obj)
+		{
+			this.Add_Thesis(obj.Название_темы, obj.Описание, ((System.Nullable<System.DateTime>)(obj.Дата_выдачи)));
+		}
+		
+		private void DeleteThesis_rus(Thesis_rus obj)
+		{
+			this.Delete_remotelt_Thesis(((System.Nullable<int>)(obj.id)));
+		}
+		
+		private void InsertStudent_rus(Student_rus obj)
+		{
+			this.Add_Student(obj.Фамилия, obj.Имя, obj.Отчество, obj.Номер_группы);
+		}
+		
+		private void DeleteStudent_rus(Student_rus obj)
+		{
+			this.Delete_remotelt_student(((System.Nullable<int>)(obj.id)));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Student")]
+		public int Add_Student([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string fam, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string otch, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(4)")] string group)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), fam, name, otch, group);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Delete_remotelt_student")]
+		public int Delete_remotelt_student([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Delete_remotelt_lecturer")]
+		public int Delete_remotelt_lecturer([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Lecturer")]
+		public int Add_Lecturer([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string fam, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string otch)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), fam, name, otch);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_commission")]
+		public int Add_commission([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string fam, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string otch)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), fam, name, otch);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Group")]
+		public int Add_Group([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(4)")] string num, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(6)")] string spec, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> curator, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> form)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), num, spec, curator, form);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Reviewer")]
+		public int Add_Reviewer([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string fam, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string otch, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(300)")] string comp)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), fam, name, otch, comp);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Delete_remotelt_commision")]
+		public int Delete_remotelt_commision([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Delete_remotelt_diploma")]
+		public int Delete_remotelt_diploma([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Delete_remotelt_reviewer")]
+		public int Delete_remotelt_reviewer([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Delete_remotelt_Thesis")]
+		public int Delete_remotelt_Thesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Update_commission")]
+		public int Update_commission([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string fam, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string otch)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, fam, name, otch);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Update_Group")]
+		public int Update_Group([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(4)")] string num, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(6)")] string spec, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> curator, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> form)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), num, spec, curator, form);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Update_Lecturer")]
+		public int Update_Lecturer([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string fam, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string otch)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, fam, name, otch);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Update_Reviewer")]
+		public int Update_Reviewer([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string fam, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string otch, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(300)")] string comp)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, fam, name, otch, comp);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Update_Specialty")]
+		public int Update_Specialty([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> shifr, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(150)")] string name)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), shifr, name);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Update_Student")]
+		public int Update_Student([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string fam, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string otch, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(4)")] string group)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, fam, name, otch, group);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Update_Thesis")]
+		public int Update_Thesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(MAX)")] string opisanie, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> date, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Bit")] System.Nullable<bool> use)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, name, opisanie, date, use);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Thesis")]
+		public int Add_Thesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(MAX)")] string opisanie, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> date)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), name, opisanie, date);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Delete_remotelt_group")]
+		public int Delete_remotelt_group([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(4)")] string numb)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), numb);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Delete_remotelt_specialty")]
+		public int Delete_remotelt_specialty([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(6)")] string cipher)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), cipher);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Specialty")]
+		public int Add_Specialty([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(6)")] string cipher, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(150)")] string name)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), cipher, name);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Diploma")]
+		public int Add_Diploma([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> tema, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> date, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> rucovod, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> data, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(1)")] System.Nullable<char> ocen, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> poyasn_zapis)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, tema, date, rucovod, data, ocen, poyasn_zapis);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Empty_Diploma")]
+		public ISingleResult<Diplom_rus> Add_Empty_Diploma([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Student", DbType="Int")] System.Nullable<int> student)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), student);
+			return ((ISingleResult<Diplom_rus>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.remotely_Group")]
+		public ISingleResult<Group_rus> remotely_Group()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<Group_rus>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.remotely_Lecturer")]
+		public ISingleResult<Lecturer_rus> remotely_Lecturer()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<Lecturer_rus>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.remotely_Commission")]
+		public ISingleResult<Commission_rus> remotely_Commission()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<Commission_rus>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.remotely_Specialty")]
+		public ISingleResult<Specialty_rus> remotely_Specialty()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<Specialty_rus>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.remotely_Student")]
+		public ISingleResult<Student_rus> remotely_Student()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<Student_rus>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.remotely_Thesis")]
+		public ISingleResult<Thesis_rus> remotely_Thesis()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<Thesis_rus>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Recovery_commission")]
+		public int Recovery_commission([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Recovery_group")]
+		public int Recovery_group([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(4)")] string num)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), num);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Recovery_lecturer")]
+		public int Recovery_lecturer([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Recovery_remotely_diploma")]
+		public int Recovery_remotely_diploma([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Recovery_reviewer")]
+		public int Recovery_reviewer([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Recovery_student")]
+		public int Recovery_student([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Recovery_thesis")]
+		public int Recovery_thesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Recovery_specialty")]
+		public int Recovery_specialty([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(6)")] string shif)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), shif);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Update_Diploma")]
+		public int Update_Diploma([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> tema, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> date, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> rucovod, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> data, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(1)")] System.Nullable<char> ocen, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> poyasn_zapis)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, tema, date, rucovod, data, ocen, poyasn_zapis);
+			return ((int)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Commission_rus")]
-	public partial class Commission_rus
+	public partial class Commission_rus : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _id;
 		
@@ -147,11 +531,26 @@ namespace DiplomaData.Model
 		
 		private string _Отчество;
 		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnФамилияChanging(string value);
+    partial void OnФамилияChanged();
+    partial void OnИмяChanging(string value);
+    partial void OnИмяChanged();
+    partial void OnОтчествоChanging(string value);
+    partial void OnОтчествоChanged();
+    #endregion
+		
 		public Commission_rus()
 		{
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true)]
 		public int id
 		{
 			get
@@ -162,7 +561,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._id != value))
 				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
 					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
 				}
 			}
 		}
@@ -178,7 +581,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Фамилия != value))
 				{
+					this.OnФамилияChanging(value);
+					this.SendPropertyChanging();
 					this._Фамилия = value;
+					this.SendPropertyChanged("Фамилия");
+					this.OnФамилияChanged();
 				}
 			}
 		}
@@ -194,7 +601,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Имя != value))
 				{
+					this.OnИмяChanging(value);
+					this.SendPropertyChanging();
 					this._Имя = value;
+					this.SendPropertyChanged("Имя");
+					this.OnИмяChanged();
 				}
 			}
 		}
@@ -210,35 +621,91 @@ namespace DiplomaData.Model
 			{
 				if ((this._Отчество != value))
 				{
+					this.OnОтчествоChanging(value);
+					this.SendPropertyChanging();
 					this._Отчество = value;
+					this.SendPropertyChanged("Отчество");
+					this.OnОтчествоChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Diplom_rus")]
-	public partial class Diplom_rus
+	public partial class Diplom_rus : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _id;
 		
-		private int _Тема;
-		
-		private int _Студент;
+		private System.Nullable<int> _Тема;
 		
 		private System.DateTime _Дата_сдачи;
 		
-		private int _Руководитель;
+		private System.Nullable<int> _Руководитель;
 		
-		private int _Файлы;
+		private System.Nullable<int> _Файлы;
 		
-		private int _Пояснительная_записка;
+		private System.Nullable<int> _Пояснительная_записка;
+		
+		private char _Оценка;
+		
+		private EntityRef<Student_rus> _Student_rus;
+		
+		private EntityRef<Lecturer_rus> _Lecturer_rus;
+		
+		private EntityRef<Thesis_rus> _Thesis_rus;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnТемаChanging(System.Nullable<int> value);
+    partial void OnТемаChanged();
+    partial void OnДата_сдачиChanging(System.DateTime value);
+    partial void OnДата_сдачиChanged();
+    partial void OnРуководительChanging(System.Nullable<int> value);
+    partial void OnРуководительChanged();
+    partial void OnФайлыChanging(System.Nullable<int> value);
+    partial void OnФайлыChanged();
+    partial void OnПояснительная_запискаChanging(System.Nullable<int> value);
+    partial void OnПояснительная_запискаChanged();
+    partial void OnОценкаChanging(char value);
+    partial void OnОценкаChanged();
+    #endregion
 		
 		public Diplom_rus()
 		{
+			this._Student_rus = default(EntityRef<Student_rus>);
+			this._Lecturer_rus = default(EntityRef<Lecturer_rus>);
+			this._Thesis_rus = default(EntityRef<Thesis_rus>);
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true)]
 		public int id
 		{
 			get
@@ -249,13 +716,17 @@ namespace DiplomaData.Model
 			{
 				if ((this._id != value))
 				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
 					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Тема", DbType="Int NOT NULL")]
-		public int Тема
+		public System.Nullable<int> Тема
 		{
 			get
 			{
@@ -265,28 +736,20 @@ namespace DiplomaData.Model
 			{
 				if ((this._Тема != value))
 				{
+					if (this._Thesis_rus.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnТемаChanging(value);
+					this.SendPropertyChanging();
 					this._Тема = value;
+					this.SendPropertyChanged("Тема");
+					this.OnТемаChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Студент", DbType="Int NOT NULL")]
-		public int Студент
-		{
-			get
-			{
-				return this._Студент;
-			}
-			set
-			{
-				if ((this._Студент != value))
-				{
-					this._Студент = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Дата сдачи]", Storage="_Дата_сдачи", DbType="Date NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Дата сдачи]", Storage="_Дата_сдачи", AutoSync=AutoSync.Always, DbType="Date NOT NULL")]
 		public System.DateTime Дата_сдачи
 		{
 			get
@@ -297,13 +760,17 @@ namespace DiplomaData.Model
 			{
 				if ((this._Дата_сдачи != value))
 				{
+					this.OnДата_сдачиChanging(value);
+					this.SendPropertyChanging();
 					this._Дата_сдачи = value;
+					this.SendPropertyChanged("Дата_сдачи");
+					this.OnДата_сдачиChanged();
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Руководитель", DbType="Int NOT NULL")]
-		public int Руководитель
+		public System.Nullable<int> Руководитель
 		{
 			get
 			{
@@ -313,13 +780,21 @@ namespace DiplomaData.Model
 			{
 				if ((this._Руководитель != value))
 				{
+					if (this._Lecturer_rus.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnРуководительChanging(value);
+					this.SendPropertyChanging();
 					this._Руководитель = value;
+					this.SendPropertyChanged("Руководитель");
+					this.OnРуководительChanged();
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Файлы", DbType="Int NOT NULL")]
-		public int Файлы
+		public System.Nullable<int> Файлы
 		{
 			get
 			{
@@ -329,13 +804,17 @@ namespace DiplomaData.Model
 			{
 				if ((this._Файлы != value))
 				{
+					this.OnФайлыChanging(value);
+					this.SendPropertyChanging();
 					this._Файлы = value;
+					this.SendPropertyChanged("Файлы");
+					this.OnФайлыChanged();
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Пояснительная записка]", Storage="_Пояснительная_записка", DbType="Int NOT NULL")]
-		public int Пояснительная_записка
+		public System.Nullable<int> Пояснительная_записка
 		{
 			get
 			{
@@ -345,22 +824,179 @@ namespace DiplomaData.Model
 			{
 				if ((this._Пояснительная_записка != value))
 				{
+					this.OnПояснительная_запискаChanging(value);
+					this.SendPropertyChanging();
 					this._Пояснительная_записка = value;
+					this.SendPropertyChanged("Пояснительная_записка");
+					this.OnПояснительная_запискаChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Оценка", AutoSync=AutoSync.Always, DbType="char(1)")]
+		public char Оценка
+		{
+			get
+			{
+				return this._Оценка;
+			}
+			set
+			{
+				if ((this._Оценка != value))
+				{
+					this.OnОценкаChanging(value);
+					this.SendPropertyChanging();
+					this._Оценка = value;
+					this.SendPropertyChanged("Оценка");
+					this.OnОценкаChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Diplom_rus_Student_rus", Storage="_Student_rus", ThisKey="id", OtherKey="id", IsUnique=true, IsForeignKey=false)]
+		public Student_rus Student_rus
+		{
+			get
+			{
+				return this._Student_rus.Entity;
+			}
+			set
+			{
+				Student_rus previousValue = this._Student_rus.Entity;
+				if (((previousValue != value) 
+							|| (this._Student_rus.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Student_rus.Entity = null;
+						previousValue.Diplom_rus = null;
+					}
+					this._Student_rus.Entity = value;
+					if ((value != null))
+					{
+						value.Diplom_rus = this;
+					}
+					this.SendPropertyChanged("Student_rus");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Lecturer_rus_Diplom_rus", Storage="_Lecturer_rus", ThisKey="Руководитель", OtherKey="id", IsForeignKey=true)]
+		public Lecturer_rus Lecturer_rus
+		{
+			get
+			{
+				return this._Lecturer_rus.Entity;
+			}
+			set
+			{
+				Lecturer_rus previousValue = this._Lecturer_rus.Entity;
+				if (((previousValue != value) 
+							|| (this._Lecturer_rus.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Lecturer_rus.Entity = null;
+						previousValue.Diplom_rus.Remove(this);
+					}
+					this._Lecturer_rus.Entity = value;
+					if ((value != null))
+					{
+						value.Diplom_rus.Add(this);
+						this._Руководитель = value.id;
+					}
+					else
+					{
+						this._Руководитель = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Lecturer_rus");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Thesis_rus_Diplom_rus", Storage="_Thesis_rus", ThisKey="Тема", OtherKey="id", IsForeignKey=true)]
+		public Thesis_rus Thesis_rus
+		{
+			get
+			{
+				return this._Thesis_rus.Entity;
+			}
+			set
+			{
+				Thesis_rus previousValue = this._Thesis_rus.Entity;
+				if (((previousValue != value) 
+							|| (this._Thesis_rus.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Thesis_rus.Entity = null;
+						previousValue.Diplom_rus.Remove(this);
+					}
+					this._Thesis_rus.Entity = value;
+					if ((value != null))
+					{
+						value.Diplom_rus.Add(this);
+						this._Тема = value.id;
+					}
+					else
+					{
+						this._Тема = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Thesis_rus");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Form_of_education_rus")]
-	public partial class Form_of_education_rus
+	public partial class Form_of_education_rus : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private string _Форма_обучения;
 		
 		private short _id;
 		
+		private EntitySet<Group_rus> _Group_rus;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnФорма_обученияChanging(string value);
+    partial void OnФорма_обученияChanged();
+    partial void OnidChanging(short value);
+    partial void OnidChanged();
+    #endregion
+		
 		public Form_of_education_rus()
 		{
+			this._Group_rus = new EntitySet<Group_rus>(new Action<Group_rus>(this.attach_Group_rus), new Action<Group_rus>(this.detach_Group_rus));
+			OnCreated();
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Форма обучения]", Storage="_Форма_обучения", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
@@ -374,12 +1010,16 @@ namespace DiplomaData.Model
 			{
 				if ((this._Форма_обучения != value))
 				{
+					this.OnФорма_обученияChanging(value);
+					this.SendPropertyChanging();
 					this._Форма_обучения = value;
+					this.SendPropertyChanged("Форма_обучения");
+					this.OnФорма_обученияChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="SmallInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="SmallInt NOT NULL", IsPrimaryKey=true)]
 		public short id
 		{
 			get
@@ -390,15 +1030,66 @@ namespace DiplomaData.Model
 			{
 				if ((this._id != value))
 				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
 					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
 				}
 			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Form_of_education_rus_Group_rus", Storage="_Group_rus", ThisKey="id", OtherKey="Форма_обучения")]
+		public EntitySet<Group_rus> Group_rus
+		{
+			get
+			{
+				return this._Group_rus;
+			}
+			set
+			{
+				this._Group_rus.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Group_rus(Group_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.Form_of_education_rus = this;
+		}
+		
+		private void detach_Group_rus(Group_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.Form_of_education_rus = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Group_rus")]
-	public partial class Group_rus
+	public partial class Group_rus : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private string _Номер_группы;
 		
@@ -408,11 +1099,38 @@ namespace DiplomaData.Model
 		
 		private System.Nullable<short> _Форма_обучения;
 		
+		private EntitySet<Student_rus> _Student_rus;
+		
+		private EntityRef<Lecturer_rus> _Lecturer_rus;
+		
+		private EntityRef<Form_of_education_rus> _Form_of_education_rus;
+		
+		private EntityRef<Specialty_rus> _Specialty_rus;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnНомер_группыChanging(string value);
+    partial void OnНомер_группыChanged();
+    partial void OnСпециальностьChanging(string value);
+    partial void OnСпециальностьChanged();
+    partial void OnКураторChanging(int value);
+    partial void OnКураторChanged();
+    partial void OnФорма_обученияChanging(System.Nullable<short> value);
+    partial void OnФорма_обученияChanged();
+    #endregion
+		
 		public Group_rus()
 		{
+			this._Student_rus = new EntitySet<Student_rus>(new Action<Student_rus>(this.attach_Student_rus), new Action<Student_rus>(this.detach_Student_rus));
+			this._Lecturer_rus = default(EntityRef<Lecturer_rus>);
+			this._Form_of_education_rus = default(EntityRef<Form_of_education_rus>);
+			this._Specialty_rus = default(EntityRef<Specialty_rus>);
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Номер группы]", Storage="_Номер_группы", DbType="Char(4) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Номер группы]", Storage="_Номер_группы", DbType="Char(4) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string Номер_группы
 		{
 			get
@@ -423,7 +1141,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Номер_группы != value))
 				{
+					this.OnНомер_группыChanging(value);
+					this.SendPropertyChanging();
 					this._Номер_группы = value;
+					this.SendPropertyChanged("Номер_группы");
+					this.OnНомер_группыChanged();
 				}
 			}
 		}
@@ -439,7 +1161,15 @@ namespace DiplomaData.Model
 			{
 				if ((this._Специальность != value))
 				{
+					if (this._Specialty_rus.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnСпециальностьChanging(value);
+					this.SendPropertyChanging();
 					this._Специальность = value;
+					this.SendPropertyChanged("Специальность");
+					this.OnСпециальностьChanged();
 				}
 			}
 		}
@@ -455,7 +1185,15 @@ namespace DiplomaData.Model
 			{
 				if ((this._Куратор != value))
 				{
+					if (this._Lecturer_rus.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnКураторChanging(value);
+					this.SendPropertyChanging();
 					this._Куратор = value;
+					this.SendPropertyChanged("Куратор");
+					this.OnКураторChanged();
 				}
 			}
 		}
@@ -471,15 +1209,168 @@ namespace DiplomaData.Model
 			{
 				if ((this._Форма_обучения != value))
 				{
+					this.OnФорма_обученияChanging(value);
+					this.SendPropertyChanging();
 					this._Форма_обучения = value;
+					this.SendPropertyChanged("Форма_обучения");
+					this.OnФорма_обученияChanged();
 				}
 			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Group_rus_Student_rus", Storage="_Student_rus", ThisKey="Номер_группы", OtherKey="Номер_группы")]
+		public EntitySet<Student_rus> Student_rus
+		{
+			get
+			{
+				return this._Student_rus;
+			}
+			set
+			{
+				this._Student_rus.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Lecturer_rus_Group_rus", Storage="_Lecturer_rus", ThisKey="Куратор", OtherKey="id", IsForeignKey=true)]
+		public Lecturer_rus Lecturer_rus
+		{
+			get
+			{
+				return this._Lecturer_rus.Entity;
+			}
+			set
+			{
+				Lecturer_rus previousValue = this._Lecturer_rus.Entity;
+				if (((previousValue != value) 
+							|| (this._Lecturer_rus.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Lecturer_rus.Entity = null;
+						previousValue.Group_rus.Remove(this);
+					}
+					this._Lecturer_rus.Entity = value;
+					if ((value != null))
+					{
+						value.Group_rus.Add(this);
+						this._Куратор = value.id;
+					}
+					else
+					{
+						this._Куратор = default(int);
+					}
+					this.SendPropertyChanged("Lecturer_rus");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Form_of_education_rus_Group_rus", Storage="_Form_of_education_rus", ThisKey="Форма_обучения", OtherKey="id", IsForeignKey=true)]
+		public Form_of_education_rus Form_of_education_rus
+		{
+			get
+			{
+				return this._Form_of_education_rus.Entity;
+			}
+			set
+			{
+				Form_of_education_rus previousValue = this._Form_of_education_rus.Entity;
+				if (((previousValue != value) 
+							|| (this._Form_of_education_rus.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Form_of_education_rus.Entity = null;
+						previousValue.Group_rus.Remove(this);
+					}
+					this._Form_of_education_rus.Entity = value;
+					if ((value != null))
+					{
+						value.Group_rus.Add(this);
+						this._Форма_обучения = value.id;
+					}
+					else
+					{
+						this._Форма_обучения = default(Nullable<short>);
+					}
+					this.SendPropertyChanged("Form_of_education_rus");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Specialty_rus_Group_rus", Storage="_Specialty_rus", ThisKey="Специальность", OtherKey="Шифр_специальности", IsForeignKey=true)]
+		public Specialty_rus Specialty_rus
+		{
+			get
+			{
+				return this._Specialty_rus.Entity;
+			}
+			set
+			{
+				Specialty_rus previousValue = this._Specialty_rus.Entity;
+				if (((previousValue != value) 
+							|| (this._Specialty_rus.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Specialty_rus.Entity = null;
+						previousValue.Group_rus.Remove(this);
+					}
+					this._Specialty_rus.Entity = value;
+					if ((value != null))
+					{
+						value.Group_rus.Add(this);
+						this._Специальность = value.Шифр_специальности;
+					}
+					else
+					{
+						this._Специальность = default(string);
+					}
+					this.SendPropertyChanged("Specialty_rus");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Student_rus(Student_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.Group_rus = this;
+		}
+		
+		private void detach_Student_rus(Student_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.Group_rus = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Lecturer_rus")]
-	public partial class Lecturer_rus
+	public partial class Lecturer_rus : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _id;
 		
@@ -489,11 +1380,32 @@ namespace DiplomaData.Model
 		
 		private string _Отчество;
 		
+		private EntitySet<Diplom_rus> _Diplom_rus;
+		
+		private EntitySet<Group_rus> _Group_rus;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnФамилияChanging(string value);
+    partial void OnФамилияChanged();
+    partial void OnИмяChanging(string value);
+    partial void OnИмяChanged();
+    partial void OnОтчествоChanging(string value);
+    partial void OnОтчествоChanged();
+    #endregion
+		
 		public Lecturer_rus()
 		{
+			this._Diplom_rus = new EntitySet<Diplom_rus>(new Action<Diplom_rus>(this.attach_Diplom_rus), new Action<Diplom_rus>(this.detach_Diplom_rus));
+			this._Group_rus = new EntitySet<Group_rus>(new Action<Group_rus>(this.attach_Group_rus), new Action<Group_rus>(this.detach_Group_rus));
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true)]
 		public int id
 		{
 			get
@@ -504,7 +1416,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._id != value))
 				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
 					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
 				}
 			}
 		}
@@ -520,7 +1436,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Фамилия != value))
 				{
+					this.OnФамилияChanging(value);
+					this.SendPropertyChanging();
 					this._Фамилия = value;
+					this.SendPropertyChanged("Фамилия");
+					this.OnФамилияChanged();
 				}
 			}
 		}
@@ -536,7 +1456,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Имя != value))
 				{
+					this.OnИмяChanging(value);
+					this.SendPropertyChanging();
 					this._Имя = value;
+					this.SendPropertyChanged("Имя");
+					this.OnИмяChanged();
 				}
 			}
 		}
@@ -552,15 +1476,91 @@ namespace DiplomaData.Model
 			{
 				if ((this._Отчество != value))
 				{
+					this.OnОтчествоChanging(value);
+					this.SendPropertyChanging();
 					this._Отчество = value;
+					this.SendPropertyChanged("Отчество");
+					this.OnОтчествоChanged();
 				}
 			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Lecturer_rus_Diplom_rus", Storage="_Diplom_rus", ThisKey="id", OtherKey="Руководитель")]
+		public EntitySet<Diplom_rus> Diplom_rus
+		{
+			get
+			{
+				return this._Diplom_rus;
+			}
+			set
+			{
+				this._Diplom_rus.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Lecturer_rus_Group_rus", Storage="_Group_rus", ThisKey="id", OtherKey="Куратор")]
+		public EntitySet<Group_rus> Group_rus
+		{
+			get
+			{
+				return this._Group_rus;
+			}
+			set
+			{
+				this._Group_rus.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Diplom_rus(Diplom_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.Lecturer_rus = this;
+		}
+		
+		private void detach_Diplom_rus(Diplom_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.Lecturer_rus = null;
+		}
+		
+		private void attach_Group_rus(Group_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.Lecturer_rus = this;
+		}
+		
+		private void detach_Group_rus(Group_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.Lecturer_rus = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Reviewer_rus")]
-	public partial class Reviewer_rus
+	public partial class Reviewer_rus : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _id;
 		
@@ -572,11 +1572,28 @@ namespace DiplomaData.Model
 		
 		private string _Компания;
 		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnФамилияChanging(string value);
+    partial void OnФамилияChanged();
+    partial void OnИмяChanging(string value);
+    partial void OnИмяChanged();
+    partial void OnОтчествоChanging(string value);
+    partial void OnОтчествоChanged();
+    partial void OnКомпанияChanging(string value);
+    partial void OnКомпанияChanged();
+    #endregion
+		
 		public Reviewer_rus()
 		{
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true)]
 		public int id
 		{
 			get
@@ -587,7 +1604,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._id != value))
 				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
 					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
 				}
 			}
 		}
@@ -603,7 +1624,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Фамилия != value))
 				{
+					this.OnФамилияChanging(value);
+					this.SendPropertyChanging();
 					this._Фамилия = value;
+					this.SendPropertyChanged("Фамилия");
+					this.OnФамилияChanged();
 				}
 			}
 		}
@@ -619,7 +1644,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Имя != value))
 				{
+					this.OnИмяChanging(value);
+					this.SendPropertyChanging();
 					this._Имя = value;
+					this.SendPropertyChanged("Имя");
+					this.OnИмяChanged();
 				}
 			}
 		}
@@ -635,7 +1664,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Отчество != value))
 				{
+					this.OnОтчествоChanging(value);
+					this.SendPropertyChanging();
 					this._Отчество = value;
+					this.SendPropertyChanged("Отчество");
+					this.OnОтчествоChanged();
 				}
 			}
 		}
@@ -651,25 +1684,65 @@ namespace DiplomaData.Model
 			{
 				if ((this._Компания != value))
 				{
+					this.OnКомпанияChanging(value);
+					this.SendPropertyChanging();
 					this._Компания = value;
+					this.SendPropertyChanged("Компания");
+					this.OnКомпанияChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Specialty_rus")]
-	public partial class Specialty_rus
+	public partial class Specialty_rus : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private string _Шифр_специальности;
 		
 		private string _Специальность;
 		
+		private EntitySet<Group_rus> _Group_rus;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnШифр_специальностиChanging(string value);
+    partial void OnШифр_специальностиChanged();
+    partial void OnСпециальностьChanging(string value);
+    partial void OnСпециальностьChanged();
+    #endregion
+		
 		public Specialty_rus()
 		{
+			this._Group_rus = new EntitySet<Group_rus>(new Action<Group_rus>(this.attach_Group_rus), new Action<Group_rus>(this.detach_Group_rus));
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Шифр специальности]", Storage="_Шифр_специальности", DbType="Char(6) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Шифр специальности]", Storage="_Шифр_специальности", DbType="Char(6) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string Шифр_специальности
 		{
 			get
@@ -680,7 +1753,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Шифр_специальности != value))
 				{
+					this.OnШифр_специальностиChanging(value);
+					this.SendPropertyChanging();
 					this._Шифр_специальности = value;
+					this.SendPropertyChanged("Шифр_специальности");
+					this.OnШифр_специальностиChanged();
 				}
 			}
 		}
@@ -696,15 +1773,66 @@ namespace DiplomaData.Model
 			{
 				if ((this._Специальность != value))
 				{
+					this.OnСпециальностьChanging(value);
+					this.SendPropertyChanging();
 					this._Специальность = value;
+					this.SendPropertyChanged("Специальность");
+					this.OnСпециальностьChanged();
 				}
 			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Specialty_rus_Group_rus", Storage="_Group_rus", ThisKey="Шифр_специальности", OtherKey="Специальность")]
+		public EntitySet<Group_rus> Group_rus
+		{
+			get
+			{
+				return this._Group_rus;
+			}
+			set
+			{
+				this._Group_rus.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Group_rus(Group_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.Specialty_rus = this;
+		}
+		
+		private void detach_Group_rus(Group_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.Specialty_rus = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Thesis_rus")]
-	public partial class Thesis_rus
+	public partial class Thesis_rus : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _id;
 		
@@ -716,11 +1844,31 @@ namespace DiplomaData.Model
 		
 		private bool _Занята__не_занята;
 		
+		private EntitySet<Diplom_rus> _Diplom_rus;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnНазвание_темыChanging(string value);
+    partial void OnНазвание_темыChanged();
+    partial void OnОписаниеChanging(string value);
+    partial void OnОписаниеChanged();
+    partial void OnДата_выдачиChanging(System.DateTime value);
+    partial void OnДата_выдачиChanged();
+    partial void OnЗанята__не_занятаChanging(bool value);
+    partial void OnЗанята__не_занятаChanged();
+    #endregion
+		
 		public Thesis_rus()
 		{
+			this._Diplom_rus = new EntitySet<Diplom_rus>(new Action<Diplom_rus>(this.attach_Diplom_rus), new Action<Diplom_rus>(this.detach_Diplom_rus));
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true)]
 		public int id
 		{
 			get
@@ -731,7 +1879,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._id != value))
 				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
 					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
 				}
 			}
 		}
@@ -747,7 +1899,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Название_темы != value))
 				{
+					this.OnНазвание_темыChanging(value);
+					this.SendPropertyChanging();
 					this._Название_темы = value;
+					this.SendPropertyChanged("Название_темы");
+					this.OnНазвание_темыChanged();
 				}
 			}
 		}
@@ -763,7 +1919,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Описание != value))
 				{
+					this.OnОписаниеChanging(value);
+					this.SendPropertyChanging();
 					this._Описание = value;
+					this.SendPropertyChanged("Описание");
+					this.OnОписаниеChanged();
 				}
 			}
 		}
@@ -779,7 +1939,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Дата_выдачи != value))
 				{
+					this.OnДата_выдачиChanging(value);
+					this.SendPropertyChanging();
 					this._Дата_выдачи = value;
+					this.SendPropertyChanged("Дата_выдачи");
+					this.OnДата_выдачиChanged();
 				}
 			}
 		}
@@ -795,15 +1959,66 @@ namespace DiplomaData.Model
 			{
 				if ((this._Занята__не_занята != value))
 				{
+					this.OnЗанята__не_занятаChanging(value);
+					this.SendPropertyChanging();
 					this._Занята__не_занята = value;
+					this.SendPropertyChanged("Занята__не_занята");
+					this.OnЗанята__не_занятаChanged();
 				}
 			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Thesis_rus_Diplom_rus", Storage="_Diplom_rus", ThisKey="id", OtherKey="Тема")]
+		public EntitySet<Diplom_rus> Diplom_rus
+		{
+			get
+			{
+				return this._Diplom_rus;
+			}
+			set
+			{
+				this._Diplom_rus.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Diplom_rus(Diplom_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.Thesis_rus = this;
+		}
+		
+		private void detach_Diplom_rus(Diplom_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.Thesis_rus = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Student_rus")]
-	public partial class Student_rus
+	public partial class Student_rus : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _id;
 		
@@ -815,11 +2030,34 @@ namespace DiplomaData.Model
 		
 		private string _Номер_группы;
 		
+		private EntityRef<Group_rus> _Group_rus;
+		
+		private EntityRef<Diplom_rus> _Diplom_rus;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnФамилияChanging(string value);
+    partial void OnФамилияChanged();
+    partial void OnИмяChanging(string value);
+    partial void OnИмяChanged();
+    partial void OnОтчествоChanging(string value);
+    partial void OnОтчествоChanged();
+    partial void OnНомер_группыChanging(string value);
+    partial void OnНомер_группыChanged();
+    #endregion
+		
 		public Student_rus()
 		{
+			this._Group_rus = default(EntityRef<Group_rus>);
+			this._Diplom_rus = default(EntityRef<Diplom_rus>);
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true, IsVersion=true, UpdateCheck=UpdateCheck.Never)]
 		public int id
 		{
 			get
@@ -830,7 +2068,15 @@ namespace DiplomaData.Model
 			{
 				if ((this._id != value))
 				{
+					if (this._Diplom_rus.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
 					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
 				}
 			}
 		}
@@ -846,7 +2092,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Фамилия != value))
 				{
+					this.OnФамилияChanging(value);
+					this.SendPropertyChanging();
 					this._Фамилия = value;
+					this.SendPropertyChanged("Фамилия");
+					this.OnФамилияChanged();
 				}
 			}
 		}
@@ -862,7 +2112,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Имя != value))
 				{
+					this.OnИмяChanging(value);
+					this.SendPropertyChanging();
 					this._Имя = value;
+					this.SendPropertyChanged("Имя");
+					this.OnИмяChanged();
 				}
 			}
 		}
@@ -878,7 +2132,11 @@ namespace DiplomaData.Model
 			{
 				if ((this._Отчество != value))
 				{
+					this.OnОтчествоChanging(value);
+					this.SendPropertyChanging();
 					this._Отчество = value;
+					this.SendPropertyChanged("Отчество");
+					this.OnОтчествоChanged();
 				}
 			}
 		}
@@ -894,8 +2152,104 @@ namespace DiplomaData.Model
 			{
 				if ((this._Номер_группы != value))
 				{
+					if (this._Group_rus.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnНомер_группыChanging(value);
+					this.SendPropertyChanging();
 					this._Номер_группы = value;
+					this.SendPropertyChanged("Номер_группы");
+					this.OnНомер_группыChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Group_rus_Student_rus", Storage="_Group_rus", ThisKey="Номер_группы", OtherKey="Номер_группы", IsForeignKey=true)]
+		public Group_rus Group_rus
+		{
+			get
+			{
+				return this._Group_rus.Entity;
+			}
+			set
+			{
+				Group_rus previousValue = this._Group_rus.Entity;
+				if (((previousValue != value) 
+							|| (this._Group_rus.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Group_rus.Entity = null;
+						previousValue.Student_rus.Remove(this);
+					}
+					this._Group_rus.Entity = value;
+					if ((value != null))
+					{
+						value.Student_rus.Add(this);
+						this._Номер_группы = value.Номер_группы;
+					}
+					else
+					{
+						this._Номер_группы = default(string);
+					}
+					this.SendPropertyChanged("Group_rus");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Diplom_rus_Student_rus", Storage="_Diplom_rus", ThisKey="id", OtherKey="id", IsForeignKey=true)]
+		public Diplom_rus Diplom_rus
+		{
+			get
+			{
+				return this._Diplom_rus.Entity;
+			}
+			set
+			{
+				Diplom_rus previousValue = this._Diplom_rus.Entity;
+				if (((previousValue != value) 
+							|| (this._Diplom_rus.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Diplom_rus.Entity = null;
+						previousValue.Student_rus = null;
+					}
+					this._Diplom_rus.Entity = value;
+					if ((value != null))
+					{
+						value.Student_rus = this;
+						this._id = value.id;
+					}
+					else
+					{
+						this._id = default(int);
+					}
+					this.SendPropertyChanged("Diplom_rus");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

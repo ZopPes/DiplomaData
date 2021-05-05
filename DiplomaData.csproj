@@ -82,12 +82,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\MultiConverterFio.cs" />
+    <Compile Include="Model\Diplomas.cs">
+      <DependentUpon>Diplomas.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Diplomas.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Diplomas.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Tabs\CommandColection\AddCommand.cs" />
     <Compile Include="MainVM.cs" />
     <Compile Include="Model\DiplomaData.cs">
       <DependentUpon>DiplomaData.dbml</DependentUpon>
@@ -97,14 +99,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DiplomaData.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Tabs\CommandColection\CommandCollection.cs" />
+    <Compile Include="Tabs\BasketItem.cs" />
+    <Compile Include="Tabs\TabBasket.cs" />
     <Compile Include="Tabs\TabReport\TabReport.cs" />
     <Compile Include="Tabs\TabsNotGridControls\UCStudents.xaml.cs">
       <DependentUpon>UCStudents.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tabs\Tab.cs" />
     <Compile Include="Tabs\Tabs.cs" />
-    <Compile Include="Tabs\TabTable\TabStudent.cs" />
+    <Compile Include="Tabs\TabTable\FilterParamBase.cs" />
     <Compile Include="Tabs\TabTable\TabTable.cs" />
     <Compile Include="UserControls\DataGridFIOColumn.cs" />
     <Compile Include="UserControls\Testprotocol.xaml.cs">
