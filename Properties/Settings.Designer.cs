@@ -33,5 +33,17 @@ namespace DiplomaData.Properties {
                 return ((string)(this["DiplomasConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public uint IndexDiplomaReport {
+            get {
+                return ((uint)(this["IndexDiplomaReport"]));
+            }
+            set {
+                this["IndexDiplomaReport"] = value;
+            }
+        }
     }
 }

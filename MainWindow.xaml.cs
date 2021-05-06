@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DiplomaData.HelpInstrument;
+using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,6 +15,7 @@ namespace DiplomaData
         public MainWindow()
         {
             InitializeComponent();
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -95,6 +98,18 @@ namespace DiplomaData
         {
             e.Handled =!char.IsDigit(e.Text[0]);
         }
+
+        private void TextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            DiplomaData.Properties.Settings.Default.Save();
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = e.Key == Key.Space;
+        }
+
+
 
         //private IDocumentPaginatorSource ConvertWordDocToXPSDoc(string wordDocName, string xpsDocName)
         //{

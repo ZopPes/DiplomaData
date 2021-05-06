@@ -5,6 +5,6 @@
              xmlns:convert="clr-namespace:DiplomaData.Converters"
              >
     <Application.Resources>
-            <convert:MultiConverterFio x:Key="Fio"/>
+        <convert:MultiConverterFio x:Key="Fio"/>
     </Application.Resources>
 </Application>

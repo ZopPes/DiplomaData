@@ -15,6 +15,8 @@ namespace DiplomaData.Model
 
     partial class Diplom_rus 
     {
+        public bool IsError =>
+            this.Thesis_rus == null || this.Lecturer_rus == null || ќценка == '0';
 
         public override string ToString()
         {

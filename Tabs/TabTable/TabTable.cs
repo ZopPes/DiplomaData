@@ -1,4 +1,7 @@
-﻿using DiplomaData.Model;
+﻿using DiplomaData.HelpInstrument;
+using DiplomaData.HelpInstrument.Filter;
+using DiplomaData.HelpInstrument.Sort;
+using DiplomaData.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -39,6 +42,13 @@ namespace DiplomaData.Tabs.TabTable
         public IQueryable<T> SelectData { get => selectData; set { if (Set(ref selectData, value)) OnProperties(); } }
         #endregion
 
+
+        #region SortData
+        private IQueryable<T> sortData;
+        /// <summary>Отсортированный список</summary>
+        public IQueryable<T> SortData { get => sortData; set => Set(ref sortData, value); }
+        #endregion
+
         public ICommand InsertTable { get; }
         public ICommand RemoveTable { get; }
         public ICommand UpdateTable { get; }
@@ -46,14 +56,13 @@ namespace DiplomaData.Tabs.TabTable
         public Action<T> InsertData { get; }
         public Action<T> DeleteData { get; }
 
-        public List<IFilterParam> FilterParam { get; }
-
         
-        public IEnumerable FilterParams { get; }
             
         public Func<IQueryable<T>,string,IQueryable<T>> TFilt { get; }
 
         public Table<T> test;
+
+        public IHelpInstrument DeleteMy { get => FilterParam[0]; }
 
         /// <summary>
         /// Вкладка с таблицей
@@ -64,7 +73,6 @@ namespace DiplomaData.Tabs.TabTable
             (Table<T> table, Func<IQueryable<T>, string, IQueryable<T>> tFilt
             ,Action<T> insertData, Action<T> deleteData
             , string name = ""
-            ,params IFilterParam[] filterParams
             ) : base(name)
         {
             test = table;
@@ -77,25 +85,45 @@ namespace DiplomaData.Tabs.TabTable
             InsertItem = new T();
             InsertData = insertData;
             DeleteData = deleteData;
-
-            FilterParam = new List<IFilterParam>();
-            if (filterParams != null)
-            {
-
-                foreach (var item in filterParams)
-                {
-
-                    if (item != null)
-                    {
-                        FilterParam.Add(item);
-                        item.FilterChanged +=
-                            (obj, g) => SelectData = g.Queryable as IQueryable<T>;
-                    }
-                }
-            }
             FilterChanged += TabTable_FilterChanged;
             TFilt = tFilt;
+
+            
         }
+
+        public void AddFilterList<TFilter>(string name,IQueryable<TFilter> queryable,Func<TFilter, Expression<Func<T,bool>>> expression)
+        {
+            var filterList = new FilterList(queryable);
+            filterList.SelectedChenget += (obj, s) => SelectData= test.Where(expression?.Invoke((TFilter)s));
+            FilterParam.Add
+                (
+                new FilterProp(name,filterList)
+                );
+        }
+
+        public void AddFilterText(string name, Func<char, Expression<Func<T, bool>>> expression)
+        {
+            var filterList = new FilterMarcChar();
+            filterList.SelectedChenget += 
+                (obj,s) => SelectData = test.Where(expression?.Invoke(s));
+            FilterParam.Add
+                (
+                new FilterProp(name, filterList)
+                );
+        }
+
+        public void AddFilterDate(string name, Func<(DateTime,DateTime), Expression<Func<T, bool>>> expression)
+        {
+            var filterList = new FilterDate();
+            filterList.SelectedChenget +=
+                (obj, d) => SelectData = test.Where(expression?.Invoke(d));
+            FilterParam.Add
+                (
+                new FilterProp(name, filterList)
+                );
+        }
+
+        
 
         private void Update(T value)
         {
@@ -108,6 +136,29 @@ namespace DiplomaData.Tabs.TabTable
             {
                 MessageBox.Show(e.Message, "Ошибка");
             }
+        }
+
+        internal void AddSort<TKey>(string name,Expression<Func<T, TKey>> expression)
+        {
+            var sort = new SortProp(name);
+            sort.StatusChenget += (o, s) =>
+             {
+                 switch (s)
+                 {
+                     case SortStatus.off:
+                         SelectData = test;
+                         break;
+                     case SortStatus.desc:
+                         SelectData =selectData.OrderByDescending(expression);
+                         break;
+                     case SortStatus.asc:
+                         SelectData =SelectData.OrderBy(expression);
+                         break;
+                     default:
+                         break;
+                 }
+             };
+            SortParam.Add(sort);
         }
 
         private void TabTable_FilterChanged(object sender, string e)
@@ -143,93 +194,6 @@ namespace DiplomaData.Tabs.TabTable
             {
                 MessageBox.Show(e.Message, "Ошибка");
             }
-        }
-
-    }
-
-    
-    public class FilterMarcParam : FilterParam<char>
-    {
-        public FilterMarcParam(Func<char, IQueryable> filter, string name = "")
-            :base(filter,name)
-        {
-            this.Filter = '0';
-        }
-
-    }
-
-    public class FilterDateParam :FilterParam<DateTime>
-    {
-        public FilterDateParam(Func<DateTime, IQueryable> filter, string name = "") 
-            :base(filter,name)
-        {
-            Filter = DateTime.Now;
-        }
-
-    }
-
-    public class FilterTableParam :FilterParam
-    {
-        public IQueryable Tin { get; }
-        /// <summary>MyComment</summary>
-        public FilterTableParam(IQueryable tin, Func<object, IQueryable> filter, string name = "")
-            :base(filter,name)
-        {
-            Tin = tin;
-        }
-       
-    }
-
-    public class FilterParam : peremlog, IFilterParam
-    {
-
-        public event EventHandler<IFilterEventQuery> FilterChanged;
-        #region Filter
-        private object filter;
-        /// <summary>MyComment</summary>
-        public object Filter
-        {
-            get => filter;
-            set { if (Set(ref filter, value)) FilterChanged?.Invoke(this, new FilterEventQuery(Func?.Invoke(value))); }
-        }
-        #endregion
-
-
-        public string Name { get; }
-
-        public Func<object, IQueryable> Func { get; }
-
-        public FilterParam(Func<object, IQueryable> filter, string name = "")
-        {
-            Func = filter;
-            Name = name;
-        }
-
-    }
-
-    public class FilterParam<T> : peremlog, IFilterParam
-    {
-
-        public event EventHandler<IFilterEventQuery> FilterChanged;
-        #region Filter
-        private T filter;
-        /// <summary>MyComment</summary>
-        public T Filter
-        {
-            get => filter;
-            set { if (Set(ref filter, value)) FilterChanged?.Invoke(this, new FilterEventQuery(Func?.Invoke(value))); }
-        }
-        #endregion
-
-
-        public string Name { get; }
-
-        public Func<T, IQueryable> Func { get; }
-
-        public FilterParam(Func<T, IQueryable> filter, string name = "")
-        {
-            Func = filter;
-            Name = name;
         }
 
     }

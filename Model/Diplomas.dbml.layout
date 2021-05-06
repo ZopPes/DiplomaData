@@ -50,7 +50,7 @@
         <elementListCompartment Id="6b8667a3-0ee5-4762-927b-4218dc0835cb" absoluteBounds="3.765, 7.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(7.07812625 : 2.32859537760417); (7.07812625 : 4.96519903320312); (6.67708333333333 : 4.96519903320312 : JumpStart); (6.51041666666667 : 4.96519903320312 : JumpEnd); (5.75 : 4.96519903320312)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(7.07812625 : 2.32859537760417); (7.07812625 : 4.96519903320312); (6.92708583333333 : 4.96519903320312 : JumpStart); (6.76041916666667 : 4.96519903320312 : JumpEnd); (6.67708333333333 : 4.96519903320312 : JumpStart); (6.51041666666667 : 4.96519903320312 : JumpEnd); (5.75 : 4.96519903320312)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DiplomasDataContext/Lecturer_rus/Lecturer_rus_Group_rus" />
       <nodes>
         <classShapeMoniker Id="1bdb3efb-584f-4e7d-8ceb-27d87441f4cf" />
@@ -78,7 +78,7 @@
         <classShapeMoniker Id="d303e940-c0fd-4174-9d97-b5bdc32032d4" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.375 : 4.09699625651042); (6.67708333333333 : 4.09699625651042 : JumpStart); (6.51041666666667 : 4.09699625651042 : JumpEnd); (5.75 : 4.09699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(7.375 : 4.09699625651042); (5.75 : 4.09699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DiplomasDataContext/Specialty_rus/Specialty_rus_Group_rus" />
       <nodes>
         <classShapeMoniker Id="858dbaef-b95a-42da-967f-dbea18e8986a" />
@@ -91,7 +91,7 @@
         <elementListCompartment Id="429ea0c6-d03e-4457-97d7-dd922abb1af8" absoluteBounds="6.5150000000000006, 6.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.75 : 4.53929768880208); (6.51041666666667 : 4.53929768880208 : JumpStart); (6.67708333333333 : 4.53929768880208 : JumpEnd); (6.8437525 : 4.53929768880208); (6.8437525 : 6.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.75 : 4.53929768880208); (6.8437525 : 4.53929768880208); (6.8437525 : 6.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DiplomasDataContext/Group_rus/Group_rus_Student_rus" />
       <nodes>
         <classShapeMoniker Id="8a075e6b-319b-42a1-932a-b638a7b3126c" />

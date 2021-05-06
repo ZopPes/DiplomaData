@@ -1,4 +1,6 @@
-﻿using DiplomaData.Model;
+﻿using DiplomaData.HelpInstrument;
+using DiplomaData.HelpInstrument.Filter;
+using DiplomaData.Model;
 using DiplomaData.Tabs;
 using DiplomaData.Tabs.TabReport;
 using DiplomaData.Tabs.TabTable;
@@ -34,9 +36,8 @@ namespace DiplomaData
 		public static TabTable<T> CreateTabTable<T>
 			(this Table<T> table, Func<IQueryable<T>,string, IQueryable<T>> func
 			,Action<T> action, Action<T> delete
-			,string name
-			,params IFilterParam[] f) where T : class, new() =>
-			new TabTable<T>(table, func, action, delete, name,f);
+			,string name) where T : class, new() =>
+			new TabTable<T>(table, func, action, delete, name);
 
 	}
 
@@ -48,7 +49,7 @@ namespace DiplomaData
 		/// <summary>
 		/// имя папки с отчётами
 		/// </summary>
-		private const string reportPath = "Отчёты";
+		public const string reportPath = "Отчёты";
 
 		#region DiplomaData
 		/// <summary>Подключение к базе данных</summary>
@@ -81,6 +82,8 @@ namespace DiplomaData
 		#region ReportTabs
 		/// <summary>Команды для добавления вкладок отчёта</summary>
 		public ObservableCollection<Tab> ReportTabs { get; }
+
+		public TabReport Report { get; }
 
 		#endregion ReportTabs
 
@@ -126,10 +129,11 @@ namespace DiplomaData
 
 			DiplomaData = new DiplomasDataContext();
 
-			OnP(DiplomaData.Diplom_rus);
+			//OnP(DiplomaData.Diplom_rus);
 
 			ReportTabs = new ObservableCollection<Tab>();
-			ReportTabs.Add(new TabReport("Отчёт"));
+			Report = new TabReport(DiplomaData.Diplom_rus, "Отчет по защите диплома(?)");
+			ReportTabs.Add(Report);
 
 			Tables = new ObservableCollection<Tab>();
 
@@ -141,12 +145,15 @@ namespace DiplomaData
 				, s => DiplomaData.Add_Student(s.Фамилия, s.Имя, s.Отчество, s.Номер_группы)
 				, s => DiplomaData.Delete_remotelt_student(s.id)
 				, "Студент"
-				, new FilterTableParam(Groups, g => DiplomaData.Student_rus.Where(s => s.Group_rus == g), "Группы:")
-				, new FilterTableParam(Lecturers, l => DiplomaData.Student_rus.Where(s => s.Diplom_rus.Lecturer_rus== l), "Руководители диплома:")
-				, new FilterDateParam(d => DiplomaData.Student_rus.Where(s=>s.Diplom_rus.Дата_сдачи<d),"по дате:")
-				, new FilterMarcParam(str=>DiplomaData.Student_rus.Where(s=>s.Diplom_rus.Оценка==str),"оценка:")
 				) ;
-			
+			student.AddFilterList("Группа:", Groups, g => s => s.Group_rus == g);
+			student.AddFilterList("Рукаводитель:", Lecturers, l => s => s.Diplom_rus.Lecturer_rus== l);
+			student.AddFilterText("Оценка:", m => s =>s.Diplom_rus.Оценка==m);
+			student.AddFilterDate("Дата сдачи:", d => s => d.Item1 < s.Diplom_rus.Дата_сдачи && s.Diplom_rus.Дата_сдачи<d.Item2);
+			student.AddSort("Оценка:", s => s.Diplom_rus.Оценка);
+			student.AddSort("ФИО:", s => s.Фамилия+s.Имя+s.Отчество);
+			student.AddSort("Руководитель:", s => s.Diplom_rus.Lecturer_rus.Фамилия+ s.Diplom_rus.Lecturer_rus.Имя+ s.Diplom_rus.Lecturer_rus.Отчество);
+			student.AddSort("дата:", s => s.Diplom_rus.Дата_сдачи);
 
 			var Lecturer = DiplomaData.Lecturer_rus.CreateTabTable
 				(
@@ -154,7 +161,6 @@ namespace DiplomaData
 				, l => DiplomaData.Add_Lecturer(l.Фамилия,l.Имя,l.Отчество)
 				, l =>DiplomaData.Delete_remotelt_lecturer(l.id)
 				, "Преподователь"
-				, null
 				);
 
 			var Specialty = DiplomaData.Specialty_rus.CreateTabTable
@@ -163,7 +169,6 @@ namespace DiplomaData
 				, s => DiplomaData.Add_Specialty(s.Шифр_специальности,s.Специальность)
 				, s =>DiplomaData.Delete_remotelt_specialty(s.Шифр_специальности)
 				, "Специальность"
-				, null
 				);
 
 			var Thesis = DiplomaData.Thesis_rus.CreateTabTable
@@ -172,7 +177,6 @@ namespace DiplomaData
 				, t => DiplomaData.Add_Thesis(t.Название_темы,t.Описание,t.Дата_выдачи)
 				, t =>DiplomaData.Delete_remotelt_Thesis(t.id)
 			   , "Тема диплома"
-			   , null
 			   );
 
 			var group = DiplomaData.Group_rus.CreateTabTable
@@ -182,7 +186,6 @@ namespace DiplomaData
 				{ DiplomaData.Add_Group(g.Номер_группы, g.Специальность, g.Куратор, g.Форма_обучения); OnPropertyChanged(nameof(Groups)); }
 				, g =>DiplomaData.Delete_remotelt_group(g.Номер_группы)
 				, "Группа"
-				, null
 				);
 		   
 			Tables.Add(student);
@@ -378,5 +381,9 @@ namespace DiplomaData
 			Tables.Clear();
 			ReportTabs.Clear();
 		}
-	}
+
+        private object name1;
+
+        public object Name { get => name1; set => Set(ref name1, value); }
+    }
 }

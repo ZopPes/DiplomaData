@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DiplomaData.HelpInstrument;
+using DiplomaData.Tabs.TabTable;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -93,7 +96,8 @@ namespace DiplomaData
         }
         #endregion
 
-
+        public List<IHelpInstrument> FilterParam { get; set; }
+        public List<ISortInstument> SortParam { get; set; }
 
         public event EventHandler<string> FilterChanged;
 
@@ -107,6 +111,8 @@ namespace DiplomaData
         {
             Name = name;
             Properties = new ObservableCollection<Property>();
+            FilterParam = new List<IHelpInstrument>();
+            SortParam = new List<ISortInstument>();
         }
 
         
@@ -117,4 +123,6 @@ namespace DiplomaData
                 property.ValueOnPropertyChanged();
         }
     }
+
+    
 }

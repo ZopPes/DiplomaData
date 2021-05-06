@@ -10,6 +10,11 @@ namespace DiplomaData.Tabs
 {
     public interface IBasket
     {
+		string Name { get; set; }
+
+		ICommand Recovery { get; }
+		ICommand Delete { get; }
+
 		void Clear();
     }
 
