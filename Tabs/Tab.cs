@@ -1,26 +1,12 @@
 ﻿using DiplomaData.HelpInstrument;
-using DiplomaData.Tabs.TabTable;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Input;
 using WPFMVVMHelper;
 
 namespace DiplomaData
 {
-    /// <summary>
-    /// вкладка
-    /// </summary>
-    public class Tab : peremlog
-    {
-
-        #region isVisible
-        private Visibility visibility=Visibility.Collapsed;
-        /// <summary>Отображение элемента</summary>
-        public Visibility IsVisible { get => visibility; set => Set(ref visibility, value); }
-        #endregion
-
         /// <summary>
         /// Класс имя значения
         /// для списка свойств
@@ -28,7 +14,7 @@ namespace DiplomaData
         public class Property : peremlog
         {
             /// <summary>имя</summary>
-            public string Name { get;}
+            public string Name { get; }
 
             /// <summary>
             /// значение
@@ -59,49 +45,66 @@ namespace DiplomaData
             public Property(string name, object value)
             {
                 Name = name;
-                Func =()=> value;
+                Func = () => value;
             }
+
             /// <summary>
             /// обновление значения
             /// </summary>
             public void ValueOnPropertyChanged() => OnPropertyChanged(nameof(Value));
         }
+    /// <summary>
+    /// вкладка
+    /// </summary>
+    public class Tab : peremlog
+    {
+        #region isVisible
+
+        private Visibility visibility = Visibility.Collapsed;
+
+        /// <summary>Отображение элемента</summary>
+        public Visibility IsVisible { get => visibility; set => Set(ref visibility, value); }
+
+        #endregion isVisible
+
 
         #region Properties
+
         /// <summary>Свойства Вкладки</summary>
         public ObservableCollection<Property> Properties { get; }
+
         #endregion Properties
 
         /// <summary>
         /// название вкладки
         /// </summary>
-        public string Name { get;}
+        public string Name { get; }
 
         /// <summary>
         /// комманда для закрытия вкладки
         /// </summary>
 
-
         #region Filter
+
         private string filter;
+
         /// <summary>Фильтер</summary>
-        public string Filter 
+        public string Filter
         {
-            get => filter; 
-            set 
+            get => filter;
+            set
             {
                 Set(ref filter, value);
-                    FilterChanged?.Invoke(this,value ?? "");
-            } 
+                FilterChanged?.Invoke(this, value ?? "");
+            }
         }
-        #endregion
+
+        #endregion Filter
 
         public List<IHelpInstrument> FilterParam { get; set; }
         public List<ISortInstument> SortParam { get; set; }
 
         public event EventHandler<string> FilterChanged;
-
-        
 
         /// <summary>
         /// Вкладка
@@ -115,14 +118,10 @@ namespace DiplomaData
             SortParam = new List<ISortInstument>();
         }
 
-        
-
         public void OnProperties()
         {
             foreach (Property property in Properties)
                 property.ValueOnPropertyChanged();
         }
     }
-
-    
 }

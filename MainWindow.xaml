@@ -16,29 +16,30 @@
 	mc:Ignorable="d"
 		Title="Хранилище дипломных работ"
 	FontSize="18">
+
     <Window.Resources>
+
         <DataTemplate   DataType="{x:Type model:Student_rus}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
-                    <ColumnDefinition Width="AUTO"/>
+                    <ColumnDefinition Width="AUTO" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBox PreviewTextInput="TextBox_PreviewTextInput">
+                <UC:OnliLetterTextBox>
                     <TextBox.Text>
                         <MultiBinding Converter="{StaticResource Fio}">
-                            <Binding Path="Фамилия"/>
-                            <Binding Path="Имя"/>
-                            <Binding Path="Отчество"/>
+                            <Binding Path="Фамилия" />
+                            <Binding Path="Имя" />
+                            <Binding Path="Отчество" />
                         </MultiBinding>
                     </TextBox.Text>
-                </TextBox>
-                <ComboBox Grid.Column="1" SelectedItem="{Binding Group_rus}" 
-													  ItemsSource="{Binding DataContext.Groups, ElementName=window}"
-													  >
+                </UC:OnliLetterTextBox>
+                <ComboBox Grid.Column="1" SelectedItem="{Binding Group_rus}"
+													  ItemsSource="{Binding DataContext.Groups, ElementName=window}">
                 </ComboBox>
                 <ContentControl Content="{Binding Diplom_rus}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4">
                     <ContentControl.Resources>
@@ -57,148 +58,150 @@
                             </Style.Triggers>
                         </Style>
 
-                        <DataTemplate DataType="{x:Type model:Diplom_rus}" >
+                        <DataTemplate DataType="{x:Type model:Diplom_rus}">
                             <Expander x:Name="AnimatedExpander"  DataContext="{Binding }" IsExpanded="{Binding IsMouseOver, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
                                 <Expander.Header>
-                                    <TextBlock TextWrapping="Wrap" Text="{Binding Thesis_rus, TargetNullValue='нет значения'}"/>
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding Thesis_rus, TargetNullValue='нет значения'}" />
                                 </Expander.Header>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock TextWrapping="Wrap" Text="тема:"/>
-                                    <TextBlock TextWrapping="Wrap" Text="Руководитель:" Grid.Row="1"/>
-                                    <TextBlock TextWrapping="Wrap" Text="Пояснительная записка:" Grid.Row="2"/>
-                                    <TextBlock TextWrapping="Wrap" Text="Оценка:" Grid.Row="3"/>
+                                    <TextBlock TextWrapping="Wrap" Text="тема:" />
+                                    <TextBlock TextWrapping="Wrap" Text="Руководитель:" Grid.Row="1" />
+                                    <TextBlock TextWrapping="Wrap" Text="Пояснительная записка:" Grid.Row="2" />
+                                    <TextBlock TextWrapping="Wrap" Text="Оценка:" Grid.Row="3" />
 
-                                    <ComboBox SelectedItem="{Binding Thesis_rus}" 
+                                    <ComboBox SelectedItem="{Binding Thesis_rus}"
                                                                                   ItemsSource="{Binding DataContext.FreeTheses, ElementName=window}"
-                                                                                   IsSynchronizedWithCurrentItem="False" Grid.Column="1" 
+                                                                                   IsSynchronizedWithCurrentItem="False" Grid.Column="1"
                                                                                   Text="{Binding Thesis_rus.Название_темы, Mode=OneWay}" IsTextSearchCaseSensitive="False"   IsEditable="True" />
                                     <ComboBox SelectedItem="{Binding Lecturer_rus}" ItemsSource="{Binding DataContext.Lecturers, ElementName=window}"
-																				  Grid.Column="1" Grid.Row="1"/>
-                                    <TextBox Text="{Binding Пояснительная_записка}" Grid.Column="1" Grid.Row="2"/>
-                                    <TextBox Text="{Binding Оценка}" Grid.Column="1" Grid.Row="3" MaxLength="1" InputScope="Number" PreviewTextInput="TextBox_PreviewTextInput_1"/>
+																				  Grid.Column="1" Grid.Row="1" />
+                                    <TextBox Text="{Binding Пояснительная_записка}" Grid.Column="1" Grid.Row="2" />
+                                    <UC:OnliDigitTextBox Text="{Binding Оценка}" Grid.Column="1" Grid.Row="3" MaxLength="1" InputScope="Number"/>
                                     <Label Content="{Binding Дата_сдачи}"
                                                                                Grid.Column="2" Grid.RowSpan="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
                                 </Grid>
                             </Expander>
                         </DataTemplate>
                     </ContentControl.Resources>
-
                 </ContentControl>
             </Grid>
         </DataTemplate>
 
-
         <DataTemplate   DataType="{x:Type model:Group_rus}">
-                <Grid >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition  Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                   
-                    <Label Content="Номер:" />
-                    <Label Content="Куратор:" Grid.Row="1"/>
-                    <Label Content="форма обучения:" Grid.Row="2"/>
-                    <Label Content="Специальность:" Grid.Row="3"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition  Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Column="1" Text="{Binding Номер_группы}"/>
-                    <ComboBox Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Lecturer_rus}" ItemsSource="{Binding DataContext.Lecturers, ElementName=window}" />
-                    <ComboBox Grid.Column="1" Grid.Row="2" SelectedItem="{Binding Form_of_education_rus}" ItemsSource="{Binding DataContext.DiplomaData.Form_of_education_rus, ElementName=window}" />
-                    <ComboBox Grid.Column="1" Grid.Row="3" SelectedItem="{Binding Specialty_rus}" ItemsSource="{Binding DataContext.Specialties, ElementName=window}" />
+                <Label Content="Номер:" />
+                <Label Content="Куратор:" Grid.Row="1" />
+                <Label Content="форма обучения:" Grid.Row="2" />
+                <Label Content="Специальность:" Grid.Row="3" />
 
-                </Grid>
+                <TextBlock Grid.Column="1" Text="{Binding Номер_группы}" />
+                <ComboBox Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Lecturer_rus}" ItemsSource="{Binding DataContext.Lecturers, ElementName=window}" />
+                <ComboBox Grid.Column="1" Grid.Row="2" SelectedItem="{Binding Form_of_education_rus}" ItemsSource="{Binding DataContext.DiplomaData.Form_of_education_rus, ElementName=window}" />
+                <ComboBox Grid.Column="1" Grid.Row="3" SelectedItem="{Binding Specialty_rus}" ItemsSource="{Binding DataContext.Specialties, ElementName=window}" />
+            </Grid>
         </DataTemplate>
 
         <DataTemplate   DataType="{x:Type model:Specialty_rus}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="3*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Label Content="Шифр:"/>
-                    <Label VerticalAlignment="Center" Content="Название:" Grid.Row="1"/>
-                    <TextBlock Grid.Column="1" Text="{Binding FormatШифр_специальности, StringFormat={}{0}}"/>
-                    <TextBox TextWrapping="Wrap" Grid.Row="1" Grid.Column="1" Text="{Binding Специальность}"/>
-                </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Label Content="Шифр:" />
+                <Label VerticalAlignment="Center" Content="Название:" Grid.Row="1" />
+                <TextBlock Grid.Column="1" Text="{Binding FormatШифр_специальности, StringFormat={}{0}}" />
+                <TextBox TextWrapping="Wrap" Grid.Row="1" Grid.Column="1" Text="{Binding Специальность}" />
+            </Grid>
         </DataTemplate>
 
         <DataTemplate   DataType="{x:Type model:Thesis_rus}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Label >
-                        <Label.Resources>
-                            <Style TargetType="Label">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding used}" Value="true">
-                                        <Setter Property="Content" Value="уже используется"/>
-                                    </DataTrigger>
-
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Resources>
-                    </Label>
-                    <Label Grid.Row="0" Content="название:" VerticalAlignment="Center"/>
-                    <Label Content="описание:" Grid.Row="2" VerticalAlignment="Center"/>
-                    <TextBox Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" Text="{Binding Название_темы}"/>
-                    <TextBox Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Text="{Binding Описание}"/>
-                    <TextBlock Margin="20,0,0,0" Grid.Column="3" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Text="{Binding Дата_выдачи, StringFormat={}{0:dd.MM.yyyy}}"/>
-                </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" Content="название:" VerticalAlignment="Center" />
+                <Label Content="описание:" Grid.Row="1" VerticalAlignment="Center" />
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Используется">
+                    <TextBlock.Resources>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Занята__не_занята}" Value="true">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Занята__не_занята}" Value="false">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Resources>
+                </TextBlock>
+                <TextBox Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" Text="{Binding Название_темы}" />
+                <TextBox Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Описание}" />
+                <TextBlock Margin="20,0,0,0" Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" 
+                           VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                           Text="{Binding Дата_выдачи, StringFormat={}{0:dd.MM.yyyy}}" />
+            </Grid>
         </DataTemplate>
 
         <DataTemplate  DataType="{x:Type model:Lecturer_rus}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox PreviewTextInput="TextBox_PreviewTextInput">
-                        <TextBox.Text>
-                            <MultiBinding Converter="{StaticResource Fio}">
-                                <Binding Path="Фамилия"/>
-                                <Binding Path="Имя"/>
-                                <Binding Path="Отчество"/>
-                            </MultiBinding>
-                        </TextBox.Text>
-                    </TextBox>
-                </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <UC:OnliLetterTextBox>
+                    <TextBox.Text>
+                        <MultiBinding Converter="{StaticResource Fio}">
+                            <Binding Path="Фамилия" />
+                            <Binding Path="Имя" />
+                            <Binding Path="Отчество" />
+                        </MultiBinding>
+                    </TextBox.Text>
+                </UC:OnliLetterTextBox>
+            </Grid>
         </DataTemplate>
 
         <CollectionViewSource x:Key="tabs" Source="{Binding Tabs}" />
-        <CollectionViewSource x:Key="Group" Source="{Binding DiplomaData.Group_rus}"/>
-        <resours:Settings x:Key="resours"/>
-        <CollectionViewSource x:Key="RL" Source="{Binding RL}"/>
-        <CollectionViewSource x:Key="RG" Source="{Binding RPG}"/>
+        <CollectionViewSource x:Key="Group" Source="{Binding DiplomaData.Group_rus}" />
+        <resours:Settings x:Key="resours" />
+        <CollectionViewSource x:Key="RL" Source="{Binding RL}" />
+        <CollectionViewSource x:Key="RG" Source="{Binding RPG}" />
     </Window.Resources>
     <Window.DataContext>
         <local:MainVM />
@@ -211,21 +214,21 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="145" Width=".24*"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width=".3*" MinWidth="175" />
+            <ColumnDefinition MinWidth="145" Width="29*" />
+            <ColumnDefinition Width="29*" />
+            <ColumnDefinition Width="59*"/>
+            <ColumnDefinition Width="35*" MinWidth="175" />
         </Grid.ColumnDefinitions>
 
-        <Menu Grid.ColumnSpan="3">
-            <MenuItem Header="данные" Command="{Binding UpdateData, IsAsync=True}" />
+        <Menu Grid.ColumnSpan="4">
+            <MenuItem Header="Данные" Command="{Binding UpdateData, IsAsync=True}"/>
             <MenuItem Header="Отчёты">
                 <MenuItem Header="Номер Отчёта">
                     <TextBox Text="{Binding Source={StaticResource resours},Path=Default.IndexDiplomaReport}"
                              Width="125" InputScope="Number" PreviewTextInput="TextBox_PreviewTextInput_1"
-                             LostKeyboardFocus="TextBox_LostKeyboardFocus" PreviewKeyDown="TextBox_PreviewKeyDown"/>
+                             LostKeyboardFocus="TextBox_LostKeyboardFocus" PreviewKeyDown="TextBox_PreviewKeyDown" />
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="dcs" Command="{Binding OpenWordTemplate}"/>
         </Menu>
 
         <TreeView Grid.Row="1" x:Name="treeView" Background="#F0EFEF">
@@ -233,19 +236,19 @@
                 <Style TargetType="Button">
                     <Setter Property="Effect">
                         <Setter.Value>
-                            <DropShadowEffect Opacity="0.2" ShadowDepth="4"/>
+                            <DropShadowEffect Opacity="0.2" ShadowDepth="4" />
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="Margin" Value="0,3"/>
+                    <Setter Property="Margin" Value="0,3" />
                 </Style>
                 <DataTemplate DataType="{x:Type local:Tab}">
-                    <Button Content="{Binding Name}" 
+                    <Button Content="{Binding Name}"
 									Command="{Binding DataContext.Tabs.Visible, ElementName=treeView, Mode=OneWay}"
 									CommandParameter="{Binding}">
                     </Button>
                 </DataTemplate>
             </TreeView.Resources>
-            <TreeViewItem IsExpanded="True" ItemsSource="{Binding Tables}" Header="Таблицы"/>
+            <TreeViewItem IsExpanded="True" ItemsSource="{Binding Tables}" Header="Таблицы" />
             <TreeViewItem Header="Отчёты" ItemsSource="{Binding ReportTabs}">
                 <TreeViewItem.ContextMenu>
                     <ContextMenu>
@@ -253,34 +256,35 @@
                     </ContextMenu>
                 </TreeViewItem.ContextMenu>
             </TreeViewItem>
-            <Button DataContext="{Binding Basket}" Content="{Binding Name}" 
+            <Button DataContext="{Binding Basket}" Content="{Binding Name}"
 									Command="{Binding DataContext.Tabs.Visible, ElementName=treeView, Mode=OneWay}"
-									CommandParameter="{Binding}"/>
+									CommandParameter="{Binding}" />
         </TreeView>
 
-        <TabControl Grid.Row="1" x:Name="tabControl" Grid.Column="1" SelectedValue="{Binding Tabs.SelectedItem}">
+        <GridSplitter Grid.Row="1" Grid.Column="1" Background="#FFDCDBDB" Width="5" HorizontalAlignment="Left"/>
+        <TabControl Grid.Row="1" x:Name="tabControl" Grid.Column="1" SelectedValue="{Binding Tabs.SelectedItem}" Grid.ColumnSpan="2">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
-                    <Setter Property="Visibility" Value="{Binding IsVisible}"/>
-
+                    <Setter Property="Visibility" Value="{Binding IsVisible}" />
                 </Style>
 
                 <DataTemplate DataType="{x:Type local:Tab}">
+
                     <Grid x:Name="list">
                         <Grid.Resources>
                             <Style TargetType="ComboBox">
                                 <Setter Property="ItemTemplate">
                                     <Setter.Value>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding}"/>
+                                            <TextBlock Text="{Binding}" />
                                         </DataTemplate>
                                     </Setter.Value>
                                 </Setter>
                             </Style>
                         </Grid.Resources>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition />
+                            <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
 
                         <ScrollViewer VerticalScrollBarVisibility="Visible" CanContentScroll="True">
@@ -293,42 +297,39 @@
                                                 <StackPanel VerticalAlignment="Top"  Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <Button Margin="0,0,20,0" Content="✔"
                                                             Command="{Binding DataContext.UpdateTable, ElementName=list}"
-                                                            CommandParameter="{Binding}"/>
+                                                            CommandParameter="{Binding}" />
                                                     <Button Background="Transparent" BorderBrush="Transparent"
 													Content="Ⅹ" Command="{Binding DataContext.RemoveTable, ElementName=list}"
-													CommandParameter="{Binding}"
-													/>
+													CommandParameter="{Binding}" />
                                                 </StackPanel>
                                                 <ContentControl  Margin="0,30,20,0"  Content="{Binding}" Grid.Row="1">
                                                 </ContentControl>
                                             </Grid>
                                         </Border>
                                     </DataTemplate>
-
-
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </ScrollViewer>
-                        <Expander Header="Добавить" Grid.Row="1" >
+                        <Expander Header="Добавить" IsExpanded="True" Grid.Row="1">
                             <Expander.Resources>
                                 <DataTemplate DataType="{x:Type model:Student_rus}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
+                                            <RowDefinition />
+                                            <RowDefinition />
                                         </Grid.RowDefinitions>
-                                        <Label Content="ФИО:"/>
-                                        <Label Content="Группа:" Grid.Row="1"/>
+                                        <Label Content="ФИО:" />
+                                        <Label Content="Группа:" Grid.Row="1" />
                                         <TextBox  x:Name="studetnText" Grid.Column="1" PreviewTextInput="TextBox_PreviewTextInput">
                                             <TextBox.Text>
                                                 <MultiBinding  FallbackValue="" Converter="{StaticResource Fio}">
-                                                    <Binding Path="Фамилия"/>
-                                                    <Binding Path="Имя"/>
-                                                    <Binding Path="Отчество"/>
+                                                    <Binding Path="Фамилия" />
+                                                    <Binding Path="Имя" />
+                                                    <Binding Path="Отчество" />
                                                 </MultiBinding>
                                             </TextBox.Text>
                                         </TextBox>
@@ -340,107 +341,103 @@
                                 <DataTemplate DataType="{x:Type model:Group_rus}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
                                         </Grid.RowDefinitions>
-                                        <Label Content="Номер:"/>
-                                        <Label Grid.Row="1" Content="Куратор:"/>
-                                        <Label Grid.Row="2" Content="Форма обучения:"/>
-                                        <Label Grid.Row="3" Content="Специальность:"/>
-                                        <TextBox Grid.Column="1" Text="{Binding Номер_группы}" MaxLength="4"/>
-                                        <ComboBox Grid.Column="1" Grid.Row="1" 
-													SelectedItem="{Binding Lecturer_rus}" 
+                                        <Label Content="Номер:" />
+                                        <Label Grid.Row="1" Content="Куратор:" />
+                                        <Label Grid.Row="2" Content="Форма обучения:" />
+                                        <Label Grid.Row="3" Content="Специальность:" />
+                                        <TextBox Grid.Column="1" Text="{Binding Номер_группы}" MaxLength="4" />
+                                        <ComboBox Grid.Column="1" Grid.Row="1"
+													SelectedItem="{Binding Lecturer_rus}"
 													ItemsSource="{Binding DataContext.Lecturers, ElementName=window}" />
-                                        <ComboBox Grid.Column="1" Grid.Row="2"  SelectedItem="{Binding Form_of_education_rus}" ItemsSource="{Binding DataContext.DiplomaData.Form_of_education_rus, ElementName=window}"/>
+                                        <ComboBox Grid.Column="1" Grid.Row="2"  SelectedItem="{Binding Form_of_education_rus}" ItemsSource="{Binding DataContext.DiplomaData.Form_of_education_rus, ElementName=window}" />
                                         <ComboBox Grid.Column="1" Grid.Row="3"  SelectedItem="{Binding Specialty_rus}" ItemsSource="{Binding DataContext.Specialties, ElementName=window}" />
-
                                     </Grid>
                                 </DataTemplate>
 
                                 <DataTemplate DataType="{x:Type model:Lecturer_rus}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
+                                            <RowDefinition />
+                                            <RowDefinition />
                                         </Grid.RowDefinitions>
-                                        <Label Content="ФИО:"/>
+                                        <Label Content="ФИО:" />
                                         <TextBox Grid.Column="1" PreviewTextInput="TextBox_PreviewTextInput">
                                             <TextBox.Text>
                                                 <MultiBinding Converter="{StaticResource Fio}">
-                                                    <Binding Path="Фамилия"/>
-                                                    <Binding Path="Имя"/>
-                                                    <Binding Path="Отчество"/>
+                                                    <Binding Path="Фамилия" />
+                                                    <Binding Path="Имя" />
+                                                    <Binding Path="Отчество" />
                                                 </MultiBinding>
                                             </TextBox.Text>
                                         </TextBox>
-
                                     </Grid>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type model:Thesis_rus}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
                                         </Grid.RowDefinitions>
-                                        <Label Content="Название:"/>
-                                        <Label Grid.Row="1" Content="Описание:"/>
-                                        <Label Grid.Row="2" Content="Дата добавления:"/>
-                                        <TextBox Grid.Column="1"  Text="{Binding Название_темы}"/>
-                                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Описание}"/>
+                                        <Label Content="Название:" />
+                                        <Label Grid.Row="1" Content="Описание:" />
+                                        <Label Grid.Row="2" Content="Дата добавления:" />
+                                        <TextBox Grid.Column="1"  Text="{Binding Название_темы}" />
+                                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Описание}" />
                                         <DatePicker Grid.Row="2" Grid.Column="1" IsDropDownOpen="True"
-															DisplayDateStart="1/1/1999" 
+															DisplayDateStart="1/1/1999"
 															DisplayDateEnd="{x:Static sys:DateTime.Now}"
 															SelectedDate="{Binding Дата_выдачи}"
 															IsTodayHighlighted="True"
 															SelectedDateFormat="Long"
-															KeyUp="DatePicker_KeyUp"/>
-
+															KeyUp="DatePicker_KeyUp" />
                                     </Grid>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type model:Specialty_rus}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <Label Content="Шифр:" />
-                                        <Label Content="Название:" Grid.Row="1"/>
-                                        <TextBox Grid.Column="1" Text="{Binding Шифр_специальности}" MaxLength="6"/>
-                                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Специальность}"/>
-
+                                        <Label Content="Название:" Grid.Row="1" />
+                                        <TextBox Grid.Column="1" Text="{Binding Шифр_специальности}" MaxLength="6" />
+                                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Специальность}" />
                                     </Grid>
                                 </DataTemplate>
                             </Expander.Resources>
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition />
+                                    <RowDefinition Height="auto" />
                                 </Grid.RowDefinitions>
-                                <ContentControl Content="{Binding InsertItem}"/>
+                                <ContentControl Content="{Binding InsertItem}" />
                                 <Button Grid.Row="2" Grid.ColumnSpan="2"
-                                        Content="Добавить" 
+                                        Content="Добавить"
 													Command="{Binding DataContext.InsertTable, ElementName=list}">
                                 </Button>
                             </Grid>
@@ -449,7 +446,7 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type tabs:TabBasket}">
                     <StackPanel>
-                        <Button Content="Удалить всё" Command="{Binding ClearAll}"/>
+                        <Button Content="Удалить всё" Command="{Binding ClearAll}" />
                         <TreeView ItemsSource="{Binding Kor}">
                             <TreeView.ItemTemplate>
                                 <DataTemplate>
@@ -458,24 +455,24 @@
                                             <Style TargetType="Button">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding ElementName=ListItam,Path=Items.Count}" Value="0">
-                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                        <Setter Property="IsEnabled" Value="False" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Expander.Resources>
                                         <Expander.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Name}"/>
-                                                <Button Content="Восстановить" Margin="0, 0, 4, 0" CommandParameter="{Binding SelectedItems, ElementName=ListItam, Mode=OneWay}" 
-                                                    Command="{Binding Recovery}"/>
-                                                <Button Content="Удалить" CommandParameter="{Binding SelectedItems, ElementName=ListItam, Mode=OneWay}" 
+                                                <TextBlock Text="{Binding Name}" />
+                                                <Button Content="Восстановить" Margin="0, 0, 4, 0" CommandParameter="{Binding SelectedItems, ElementName=ListItam, Mode=OneWay}"
+                                                    Command="{Binding Recovery}" />
+                                                <Button Content="Удалить" CommandParameter="{Binding SelectedItems, ElementName=ListItam, Mode=OneWay}"
                                                     Command="{Binding Delete}" />
                                             </StackPanel>
                                         </Expander.Header>
                                         <ListBox Margin="30,0,0,0" BorderThickness="0" SelectionMode="Extended"  ItemsSource="{Binding Data}" x:Name="ListItam">
                                             <ListBox.ItemTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding}"/>
+                                                    <TextBlock Text="{Binding}" />
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
                                         </ListBox>
@@ -483,62 +480,59 @@
                                 </DataTemplate>
                             </TreeView.ItemTemplate>
                         </TreeView>
-
                     </StackPanel>
-
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type report:TabReport}">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition/>
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                            <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
-                        <Button Command="{Binding CreateReport}" 
-                                    CommandParameter="{Binding ElementName=DiplomaReportList,Path=SelectedItems}" Content="печатать выбранные"/>
-                        <Button Grid.Row="1" Command="{Binding CreateAllReport}" Content="печатать всё"/>
-                        <ListBox Grid.Row="2" x:Name="DiplomaReportList"  Margin="5" SelectionMode="Extended" ItemsSource="{Binding Diploms, IsAsync=True}">
+                        <Button Command="{Binding CreateReport}"
+                                    CommandParameter="{Binding ElementName=DiplomaReportList,Path=SelectedItems}" Content="печатать выбранные" />
+                        <Button Grid.Row="1" Command="{Binding CreateAllReport}" Content="печатать всё" />
+                        <ListBox Grid.Row="2" x:Name="DiplomaReportList"  Margin="5" SelectionMode="Extended" ItemsSource="{Binding SelectData, IsAsync=True}">
                             <ListBox.Resources>
-                                <DataTemplate DataType="{x:Type model:Diplom_rus}" >
+                                <DataTemplate DataType="{x:Type model:Diplom_rus}">
                                     <Grid Width="{Binding ElementName=DiplomaReportList,Path=ActualWidth}">
                                         <Grid Margin="0,0,40,0">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition/>
-                                                <RowDefinition/>
-                                                <RowDefinition/>
-                                                <RowDefinition/>
-                                                <RowDefinition/>
-                                                <RowDefinition/>
-                                                <RowDefinition/>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
                                             </Grid.RowDefinitions>
-                                            <TextBlock Text="Выполнил:"/>
-                                            <TextBlock TextWrapping="Wrap" Text="тема:" Grid.Row="1"/>
-                                            <TextBlock TextWrapping="Wrap" Text="Руководитель:" Grid.Row="2"/>
-                                            <TextBlock TextWrapping="Wrap" Text="Пояснительная записка:" Grid.Row="3"/>
-                                            <TextBlock TextWrapping="Wrap" Text="Оценка:" Grid.Row="4"/>
-                                            <TextBlock Text="{Binding Student_rus}" Grid.Column="1"/>
-                                            <ComboBox Text="{Binding Thesis_rus.Название_темы, Mode=OneWay}" IsTextSearchCaseSensitive="False"   IsEditable="True" SelectedItem="{Binding Thesis_rus}" 
+                                            <TextBlock Text="Выполнил:" />
+                                            <TextBlock TextWrapping="Wrap" Text="тема:" Grid.Row="1" />
+                                            <TextBlock TextWrapping="Wrap" Text="Руководитель:" Grid.Row="2" />
+                                            <TextBlock TextWrapping="Wrap" Text="Пояснительная записка:" Grid.Row="3" />
+                                            <TextBlock TextWrapping="Wrap" Text="Оценка:" Grid.Row="4" />
+                                            <TextBlock Text="{Binding Student_rus}" Grid.Column="1" />
+                                            <ComboBox Text="{Binding Thesis_rus.Название_темы, Mode=OneWay}" IsTextSearchCaseSensitive="False"   IsEditable="True" SelectedItem="{Binding Thesis_rus}"
                                                                                   ItemsSource="{Binding DataContext.FreeTheses, ElementName=tabControl}"
                                                                                    IsSynchronizedWithCurrentItem="False"
                                                           Grid.Column="1" Grid.Row="1">
-
                                             </ComboBox>
                                             <ComboBox SelectedItem="{Binding Lecturer_rus}" ItemsSource="{Binding DataContext.Lecturers, ElementName=tabControl}"
 																				  Grid.Column="1" Grid.Row="2">
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding}"/>
+                                                        <TextBlock Text="{Binding}" />
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
                                             </ComboBox>
-                                            <TextBox Text="{Binding Пояснительная_записка}" Grid.Column="1" Grid.Row="3"/>
-                                            <TextBox Text="{Binding Оценка}" Grid.Column="1" Grid.Row="4" MaxLength="1" InputScope="Number" PreviewTextInput="TextBox_PreviewTextInput_1"/>
+                                            <TextBox Text="{Binding Пояснительная_записка}" Grid.Column="1" Grid.Row="3" />
+                                            <TextBox Text="{Binding Оценка}" Grid.Column="1" Grid.Row="4" MaxLength="1" InputScope="Number" PreviewTextInput="TextBox_PreviewTextInput_1" />
                                             <Label Content="{Binding Дата_сдачи}"
                                                                                Grid.Column="2" Grid.RowSpan="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
                                             <Canvas Width="22" Height="22" Grid.Column="4" HorizontalAlignment="Right">
@@ -546,26 +540,24 @@
                                                     <Style TargetType="Canvas">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding IsError}" Value="false">
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Setter Property="Visibility" Value="Collapsed" />
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding IsError}" Value="true">
-                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                <Setter Property="Visibility" Value="Visible" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </Canvas.Resources>
                                                 <Path Fill="Black" Data="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z">
-
                                                 </Path>
                                             </Canvas>
-
                                         </Grid>
                                     </Grid>
                                 </DataTemplate>
                             </ListBox.Resources>
                         </ListBox>
                         <Button Content="✔" Grid.Row="3"
-                                                            Command="{Binding Update}"/>
+                                                            Command="{Binding Update}" />
                     </Grid>
                 </DataTemplate>
             </TabControl.Resources>
@@ -585,104 +577,188 @@
             </TabControl.ItemTemplate>
         </TabControl>
 
-        <GridSplitter Grid.Row="1" Grid.Column="1" Background="#FFDCDBDB" Width="5" HorizontalAlignment="Left"/>
 
-        <StackPanel Grid.Row="1" Background="#F0EFEF"  Grid.Column="2">
-            <Grid>
+        <GridSplitter Visibility="{Binding Visibility, ElementName=stackPanel}"  Grid.Row="1" Grid.Column="2" Background="#FFDCDBDB" Width="5" HorizontalAlignment="Right" />
+        <StackPanel  x:Name="stackPanel" DataContext="{Binding Tabs.SelectedItem, AsyncState=true}" Grid.Row="1" Background="#F0EFEF"  Grid.Column="3">
+            <StackPanel.Resources>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <Trigger Property="DataContext" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Setter Property="Width" Value="0"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                <DataTemplate DataType="{x:Type Filter:FilterList}">
+                    <ComboBox x:Name="comboBox" MinWidth="120" Grid.Column="1"
+                                      ItemsSource="{Binding InData}"
+                              SelectedItem="{Binding Select}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type Filter:FilterDate}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="С:" />
+                        <TextBlock Grid.Row="1" Text="По:" />
+                        <DatePicker Grid.Column="1"  MinWidth="120"
+                                        SelectedDate="{Binding Date1}" />
+                        <DatePicker Grid.Column="1" Grid.Row="1" MinWidth="120"
+                                        SelectedDate="{Binding Date2}" />
+                    </Grid>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type Filter:FilterMarc}">
+                    <TextBox MinWidth="120" Text="{Binding Select, UpdateSourceTrigger=PropertyChanged}"
+                                     Grid.Column="1"
+                                     InputScope="Number"
+                                     PreviewTextInput="TextBox_PreviewTextInput_1" />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type Filter:FilterBool}">
+                    <CheckBox MinWidth="120" 
+                              IsChecked="{Binding Select, UpdateSourceTrigger=PropertyChanged}"/>
+                </DataTemplate>
+            </StackPanel.Resources>
+            <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="textBox" Text="{Binding Tabs.SelectedItem.Filter, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox x:Name="textBox" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" />
                 <Viewbox Width="20" Height="20" Grid.Column="1">
                     <Canvas Width="24" Height="24">
                         <Path Fill="Black" Data="M15.5,12C18,12 20,14 20,16.5C20,17.38 19.75,18.21 19.31,18.9L22.39,22L21,23.39L17.88,20.32C17.19,20.75 16.37,21 15.5,21C13,21 11,19 11,16.5C11,14 13,12 15.5,12M15.5,14A2.5,2.5 0 0,0 13,16.5A2.5,2.5 0 0,0 15.5,19A2.5,2.5 0 0,0 18,16.5A2.5,2.5 0 0,0 15.5,14M7,15V17H9C9.14,18.55 9.8,19.94 10.81,21H5C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3H19A2,2 0 0,1 21,5V13.03C19.85,11.21 17.82,10 15.5,10C14.23,10 13.04,10.37 12.04,11H7V13H10C9.64,13.6 9.34,14.28 9.17,15H7M17,9V7H7V9H17Z" />
                     </Canvas>
                 </Viewbox>
             </Grid>
-            <Viewbox Width="25" Height="25" HorizontalAlignment="Left">
-                <Canvas Width="24" Height="24">
-                    <Path Fill="Black" Data="M14,12V19.88C14.04,20.18 13.94,20.5 13.71,20.71C13.32,21.1 12.69,21.1 12.3,20.71L10.29,18.7C10.06,18.47 9.96,18.16 10,17.87V12H9.97L4.21,4.62C3.87,4.19 3.95,3.56 4.38,3.22C4.57,3.08 4.78,3 5,3V3H19V3C19.22,3 19.43,3.08 19.62,3.22C20.05,3.56 20.13,4.19 19.79,4.62L14.03,12H14Z" />
-                </Canvas>
-            </Viewbox>
-            <ItemsControl Margin="10" BorderThickness="0" Background="Transparent" 
-                          x:Name="listBox" ItemsSource="{Binding Tabs.SelectedItem.FilterParam}">
-                <ItemsControl.Resources>
-                    <DataTemplate DataType="{x:Type Filter:FilterList}">
-                        <ComboBox x:Name="comboBox" MinWidth="120" Grid.Column="1" 
-                                      ItemsSource="{Binding InData}"
-                              SelectedItem="{Binding Select}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type Filter:FilterDate}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="С:"/>
-                            <TextBlock Grid.Row="1" Text="По:"/>
-                            <DatePicker Grid.Column="1"  MinWidth="120" 
-                                        SelectedDate="{Binding Date1}"/>
-                            <DatePicker Grid.Column="1" Grid.Row="1" MinWidth="120" 
-                                        SelectedDate="{Binding Date2}"/>
-                        </Grid>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type Filter:FilterMarc}">
-                        <TextBox MinWidth="120" Text="{Binding Select, UpdateSourceTrigger=PropertyChanged}"
-                                     Grid.Column="1" 
-                                     InputScope="Number" 
-                                     PreviewTextInput="TextBox_PreviewTextInput_1"/>
-                    </DataTemplate>
-                </ItemsControl.Resources>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Name}"/>
+            <Grid Margin="0,30">
+                <Grid.Resources>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding FilterParam.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="AUTO"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Viewbox Width="25" Height="25" HorizontalAlignment="Left">
+                    <Canvas Width="24" Height="24">
+                        <Path Fill="Black" Data="M14,12V19.88C14.04,20.18 13.94,20.5 13.71,20.71C13.32,21.1 12.69,21.1 12.3,20.71L10.29,18.7C10.06,18.47 9.96,18.16 10,17.87V12H9.97L4.21,4.62C3.87,4.19 3.95,3.56 4.38,3.22C4.57,3.08 4.78,3 5,3V3H19V3C19.22,3 19.43,3.08 19.62,3.22C20.05,3.56 20.13,4.19 19.79,4.62L14.03,12H14Z" />
+                    </Canvas>
+                </Viewbox>
+                <ComboBox Grid.Column="1" x:Name="comboBox" DisplayMemberPath="Name" 
+                      ItemsSource="{Binding FilterParam}"
+                      SelectedValuePath="Filter"/>
+            <ContentControl Grid.Row="1" MinWidth="120" Grid.Column="1"
+                            Content="{Binding SelectedValue, ElementName=comboBox}"/>
+            </Grid>
 
-                            <ContentControl MinWidth="120" Grid.Column="1" Content="{Binding Filter}">
-
-                            </ContentControl>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-
-            <ItemsControl Margin="10" BorderThickness="0" Background="Transparent" 
-                           ItemsSource="{Binding Tabs.SelectedItem.SortParam}">
+            <Grid>
+                <Grid.Resources>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SortParam.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <ContentControl>
+                    <ContentControl.Resources>
+                        <Style TargetType="ContentControl">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedValue, ElementName=sortStatus}"
+                                             Value="2">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Canvas Width="24" Height="24">
+                                                <Path Fill="Black" Data="M19 17H22L18 21L14 17H17V3H19M2 17H12V19H2M6 5V7H2V5M2 11H9V13H2V11Z" />
+                                            </Canvas>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding SelectedValue, ElementName=sortStatus}"
+                                             Value="1">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Canvas Width="24" Height="24">
+                                                <Path Fill="Black" Data="M19 7H22L18 3L14 7H17V21H19M2 17H12V19H2M6 5V7H2V5M2 11H9V13H2V11Z" />
+                                            </Canvas>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding SelectedValue, ElementName=sortStatus}"
+                                             Value="0">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Canvas Width="24" Height="24">
+                                                <Path Fill="Black" Data="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z" />
+                                            </Canvas>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding SelectedValue, ElementName=sortStatus}" Value="{x:Null}">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Canvas Width="24" Height="24">
+                                                <Path Fill="Black" Data="M18 21L14 17H17V7H14L18 3L22 7H19V17H22M2 19V17H12V19M2 13V11H9V13M2 7V5H6V7H2Z" />
+                                            </Canvas>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Resources>
+                </ContentControl>
                 
-               
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Name}"/>
-
-                            <UC:SortStatus SelectedItem="{Binding Status}" Grid.Column="1"/>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                <ComboBox x:Name="comboBox1" 
+                      DisplayMemberPath="Name" 
+                      ItemsSource="{Binding SortParam}"
+                      Grid.Column="1"
+                      />
+                <UC:SortStatus x:Name="sortStatus" Grid.Column="2" SelectedValue="{Binding SelectedItem.Status, ElementName=comboBox1}"/>
+            </Grid>
         </StackPanel>
-        <GridSplitter Grid.Row="1" Grid.Column="1" Background="#FFDCDBDB" Width="5" HorizontalAlignment="Right"/>
-        <StatusBar Grid.ColumnSpan="3" Grid.Row="2" ItemsSource="{Binding Tabs.SelectedItem.Properties}">
-            <StatusBar.ItemContainerStyle>
+        <StatusBar Grid.ColumnSpan="4" Grid.Row="2" ItemsSource="{Binding Tabs.SelectedItem.Properties}">
+            <StatusBar.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:Property}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock FontSize="18" Margin="10,0">
+													<Run Text="{Binding Name, StringFormat={}{0}:,Mode=OneWay,AsyncState=true}" />
+													<Run Text="{Binding Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged,AsyncState=true}" />
+                        </TextBlock>
+                        <Separator Grid.Column="1"  Style="{StaticResource {x:Static StatusBar.SeparatorStyleKey}}" />
+                    </Grid>
+                </DataTemplate>
+            </StatusBar.ItemTemplate>
+            <!--<StatusBar.ItemContainerStyle>
                 <Style TargetType="StatusBarItem" BasedOn="{StaticResource {x:Type StatusBarItem}}">
                     <Setter Property="Template">
                         <Setter.Value>
@@ -692,23 +768,17 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="5" />
                                     </Grid.ColumnDefinitions>
-                                    <ContentPresenter>
-                                        <ContentPresenter.Content>
-                                            <StackPanel Orientation="Horizontal">
                                                 <TextBlock FontSize="18" Margin="10,0">
 													<Run Text="{Binding Name, StringFormat={}{0}:,Mode=OneWay}" />
 													<Run Text="{Binding Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                                 </TextBlock>
-                                            </StackPanel>
-                                        </ContentPresenter.Content>
-                                    </ContentPresenter>
                                     <Separator Grid.Column="1"  Style="{StaticResource {x:Static StatusBar.SeparatorStyleKey}}" />
                                 </Grid>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
                 </Style>
-            </StatusBar.ItemContainerStyle>
+            </StatusBar.ItemContainerStyle>-->
         </StatusBar>
     </Grid>
 </Window>

@@ -1,19 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-
 namespace DiplomaData.Model
 {
     partial class Student_rus
     {
         public override string ToString()
         {
-            
             return $"{_Фамилия} {_Имя} {_Отчество}";
         }
     }
 
-    partial class Diplom_rus 
+    partial class Diplom_rus
     {
         public bool IsError =>
             this.Thesis_rus == null || this.Lecturer_rus == null || Оценка == '0';
@@ -24,9 +19,8 @@ namespace DiplomaData.Model
         }
     }
 
-    partial class Lecturer_rus 
+    partial class Lecturer_rus
     {
-
         public override string ToString()
         {
             return $"{_Фамилия} {_Имя} {_Отчество}";
@@ -41,7 +35,7 @@ namespace DiplomaData.Model
         }
     }
 
-    partial class Specialty_rus 
+    partial class Specialty_rus
     {
         public string FormatШифр_специальности => _Шифр_специальности.Insert(2, ".").Insert(5, ".");
 
@@ -65,9 +59,5 @@ namespace DiplomaData.Model
         {
             return _Номер_группы;
         }
-
-
     }
-
-    
 }

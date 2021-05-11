@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace DiplomaData.HelpInstrument
 {
@@ -11,10 +8,8 @@ namespace DiplomaData.HelpInstrument
         string Name { get; }
     }
 
-
     public interface IHelpInstrumentArg
     {
-
     }
 
     public interface IHelpInstrumentFilter : IHelpInstrumentArg
@@ -26,7 +21,14 @@ namespace DiplomaData.HelpInstrument
 
     public enum SortStatus
     {
-        off,desc,asc
+        [Description("")]
+        off
+            ,
+        [Description("⇑")]
+        desc
+            ,
+        [Description("⇓")]
+        asc
     }
 
     public interface ISortInstument : IHelpInstrument
@@ -34,6 +36,5 @@ namespace DiplomaData.HelpInstrument
         SortStatus Status { get; set; }
 
         event EventHandler<SortStatus> StatusChenget;
-
     }
 }

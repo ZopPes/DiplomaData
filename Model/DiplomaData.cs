@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace DiplomaData.Model
 {
@@ -35,7 +34,6 @@ namespace DiplomaData.Model
             name = this.name
                 ,
             id = this.id
- 
         };
 
         public override string ToString()
@@ -59,7 +57,6 @@ namespace DiplomaData.Model
 
         public override string ToString()
         => name;
-
     }
 
     partial class Lecturer : ICloneable
@@ -79,24 +76,17 @@ namespace DiplomaData.Model
 
         public override string ToString()
         => string.Join(" ", surname, name, patronymic);
-
     }
 
-    partial class Student 
+    partial class Student
     {
-       
-
         public override string ToString()
         => string.Join(" ", surname, name, patronymic);
-
-      
     }
 
-    partial class Thesis 
+    partial class Thesis
     {
-
         public override string ToString()
         => name;
-
     }
 }

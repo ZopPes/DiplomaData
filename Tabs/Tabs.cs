@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using WPFMVVMHelper;
-using System.Linq;
-
 
 namespace DiplomaData.Tabs
 {
@@ -39,13 +37,11 @@ namespace DiplomaData.Tabs
         /// </summary>
         public Tabs() : base()
         {
-            Visible = new lamdaCommand<Tab>(obj=> 
+            Visible = new lamdaCommand<Tab>(obj =>
             { obj.IsVisible = Visibility.Visible; SelectedItem = obj; });
-            Collapsed = new lamdaCommand<Tab>(obj=>
-            { obj.IsVisible = Visibility.Collapsed; SelectedItem = this.LastOrDefault(t=>t.IsVisible==Visibility.Visible); });
+            Collapsed = new lamdaCommand<Tab>(obj =>
+            { obj.IsVisible = Visibility.Collapsed; SelectedItem = this.LastOrDefault(t => t.IsVisible == Visibility.Visible); });
         }
-
-        
 
         /// <summary>
         /// добавляет новую вкладку
@@ -59,7 +55,5 @@ namespace DiplomaData.Tabs
             }
             SelectedItem = tab;
         }
-        
-
     }
 }

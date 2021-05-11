@@ -82,6 +82,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\MultiConverterFio.cs" />
+    <Compile Include="HelpInstrument\Filter\FilterBool.cs" />
     <Compile Include="HelpInstrument\Filter\FilterProp.cs" />
     <Compile Include="HelpInstrument\Filter\FilterList.cs" />
     <Compile Include="HelpInstrument\HelpInstrument.cs" />
@@ -110,19 +111,10 @@
     <Compile Include="Tabs\Tabs.cs" />
     <Compile Include="HelpInstrument\Filter\FilterDate.cs" />
     <Compile Include="HelpInstrument\Filter\FilterMarc.cs" />
-    <Compile Include="HelpInstrument\Filter\FilterParam.cs" />
     <Compile Include="Tabs\TabTable\TabTable.cs" />
-    <Compile Include="UserControls\DataGridFIOColumn.cs" />
+    <Compile Include="UserControls\OnliDigitTextBox.cs" />
+    <Compile Include="UserControls\OnliLetterTextBox.cs" />
     <Compile Include="UserControls\SortStatus.cs" />
-    <Compile Include="UserControls\Testprotocol.xaml.cs">
-      <DependentUpon>Testprotocol.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\UCDiplomas.xaml.cs">
-      <DependentUpon>UCDiplomas.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\UCTopic.xaml.cs">
-      <DependentUpon>UCTopic.xaml</DependentUpon>
-    </Compile>
     <Compile Include="импорт\ImportVM.cs" />
     <Compile Include="импорт\UCImport.xaml.cs">
       <DependentUpon>UCImport.xaml</DependentUpon>
@@ -132,10 +124,6 @@
     <Compile Include="Отчёты\WordTemplate.xaml.cs">
       <DependentUpon>WordTemplate.xaml</DependentUpon>
     </Compile>
-    <Page Include="DilpomasDataTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -148,18 +136,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UserControls\Testprotocol.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\UCDiplomas.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\UCTopic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="импорт\UCImport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

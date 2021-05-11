@@ -10,59 +10,56 @@ namespace DiplomaData.Tabs
 {
     public interface IBasket
     {
-		string Name { get; set; }
+        string Name { get; set; }
 
-		ICommand Recovery { get; }
-		ICommand Delete { get; }
+        ICommand Recovery { get; }
+        ICommand Delete { get; }
 
-		void Clear();
+        void Clear();
     }
 
-    public class BasketItem<T> : peremlog,IBasket
-{
-	public IEnumerable<T> Data { get=>dateFunc?.Invoke() ?? null;}
+    public class BasketItem<T> : peremlog, IBasket
+    {
+        public IEnumerable<T> Data { get => dateFunc?.Invoke() ?? null; }
 
-	private Func<IEnumerable<T>> dateFunc;
+        private Func<IEnumerable<T>> dateFunc;
 
-	public ICommand Recovery { get; }
-	public ICommand Delete { get; }
+        public ICommand Recovery { get; }
+        public ICommand Delete { get; }
 
-
-	public string Name { get; set; }
+        public string Name { get; set; }
 
         public BasketItem(Func<IEnumerable<T>> dateFunc, Action<T> recovery, Action<T> delete, string name)
-	{
-		this.dateFunc = dateFunc;
+        {
+            this.dateFunc = dateFunc;
 
-		Name = name;
+            Name = name;
 
-		Recovery =new lamdaCommand<IEnumerable>(t =>
-		  {
-              foreach (T item in t)
-				recovery?.Invoke(item);
-			  OnPropertyChanged(nameof(Data));
-		  });
+            Recovery = new lamdaCommand<IEnumerable>(t =>
+               {
+                   foreach (T item in t)
+                       recovery?.Invoke(item);
+                   OnPropertyChanged(nameof(Data));
+               });
 
-		Delete = new lamdaCommand<IEnumerable>(t =>
-		{
-            try
+            Delete = new lamdaCommand<IEnumerable>(t =>
             {
-
-			foreach (T item in t)
-				delete?.Invoke(item);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-			OnPropertyChanged(nameof(Data));
-		});
-	}
+                try
+                {
+                    foreach (T item in t)
+                        delete?.Invoke(item);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                OnPropertyChanged(nameof(Data));
+            });
+        }
 
         public void Clear()
         {
-			Delete.Execute(Data.AsEnumerable());
+            Delete.Execute(Data.AsEnumerable());
         }
     }
 }
-
