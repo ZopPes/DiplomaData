@@ -56,6 +56,8 @@ namespace DiplomaData.Tabs.TabTable
         public ICommand RemoveTable { get; }
         public ICommand UpdateTable { get; }
 
+        public ICommand RefreshData { get; }
+
         public Action<T> InsertData { get; }
         public Action<T> DeleteData { get; }
 
@@ -82,6 +84,11 @@ namespace DiplomaData.Tabs.TabTable
             InsertTable = new lamdaCommand(NewMethod);
             RemoveTable = new lamdaCommand<T>(Remove);
             UpdateTable = new lamdaCommand<T>(Update);
+            RefreshData = new lamdaCommand(
+                () =>
+                    {
+                        Context.Refresh(RefreshMode.OverwriteCurrentValues, test); SelectData = test;
+                    });
             Properties.Add(new Property("Количество строк", () => SelectData.Count()));
             InsertItem = new T();
             InsertData = insertData;
@@ -131,7 +138,7 @@ namespace DiplomaData.Tabs.TabTable
                 new FilterProp(name, filterList)
                 );
         }
-        
+
 
         private void Update(T value)
         {

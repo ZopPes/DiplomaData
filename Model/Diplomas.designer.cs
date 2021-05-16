@@ -37,6 +37,9 @@ namespace DiplomaData.Model
     partial void UpdateSpecialty_rus(Specialty_rus instance);
     partial void UpdateThesis_rus(Thesis_rus instance);
     partial void UpdateStudent_rus(Student_rus instance);
+    partial void InsertDataFile(DataFile instance);
+    partial void UpdateDataFile(DataFile instance);
+    partial void DeleteDataFile(DataFile instance);
     #endregion
 		
 		public DiplomasDataContext() : 
@@ -138,6 +141,14 @@ namespace DiplomaData.Model
 			get
 			{
 				return this.GetTable<Student_rus>();
+			}
+		}
+		
+		public System.Data.Linq.Table<DataFile> DataFile
+		{
+			get
+			{
+				return this.GetTable<DataFile>();
 			}
 		}
 		
@@ -677,6 +688,8 @@ namespace DiplomaData.Model
 		
 		private EntityRef<Thesis_rus> _Thesis_rus;
 		
+		private EntityRef<DataFile> _DataFile;
+		
     #region Определения метода расширяемости
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -702,6 +715,7 @@ namespace DiplomaData.Model
 			this._Student_rus = default(EntityRef<Student_rus>);
 			this._Lecturer_rus = default(EntityRef<Lecturer_rus>);
 			this._Thesis_rus = default(EntityRef<Thesis_rus>);
+			this._DataFile = default(EntityRef<DataFile>);
 			OnCreated();
 		}
 		
@@ -946,6 +960,40 @@ namespace DiplomaData.Model
 						this._Тема = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Thesis_rus");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DataFile_Diplom_rus", Storage="_DataFile", ThisKey="Пояснительная_записка", OtherKey="id", IsForeignKey=true)]
+		public DataFile DataFile
+		{
+			get
+			{
+				return this._DataFile.Entity;
+			}
+			set
+			{
+				DataFile previousValue = this._DataFile.Entity;
+				if (((previousValue != value) 
+							|| (this._DataFile.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DataFile.Entity = null;
+						previousValue.Diplom_rus.Remove(this);
+					}
+					this._DataFile.Entity = value;
+					if ((value != null))
+					{
+						value.Diplom_rus.Add(this);
+						this._Пояснительная_записка = value.id;
+					}
+					else
+					{
+						this._Пояснительная_записка = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("DataFile");
 				}
 			}
 		}
@@ -2251,6 +2299,144 @@ namespace DiplomaData.Model
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DataFile")]
+	public partial class DataFile : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _name;
+		
+		private bool _remotely;
+		
+		private EntitySet<Diplom_rus> _Diplom_rus;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OnremotelyChanging(bool value);
+    partial void OnremotelyChanged();
+    #endregion
+		
+		public DataFile()
+		{
+			this._Diplom_rus = new EntitySet<Diplom_rus>(new Action<Diplom_rus>(this.attach_Diplom_rus), new Action<Diplom_rus>(this.detach_Diplom_rus));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remotely", DbType="Bit NOT NULL")]
+		public bool remotely
+		{
+			get
+			{
+				return this._remotely;
+			}
+			set
+			{
+				if ((this._remotely != value))
+				{
+					this.OnremotelyChanging(value);
+					this.SendPropertyChanging();
+					this._remotely = value;
+					this.SendPropertyChanged("remotely");
+					this.OnremotelyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DataFile_Diplom_rus", Storage="_Diplom_rus", ThisKey="id", OtherKey="Пояснительная_записка")]
+		public EntitySet<Diplom_rus> Diplom_rus
+		{
+			get
+			{
+				return this._Diplom_rus;
+			}
+			set
+			{
+				this._Diplom_rus.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Diplom_rus(Diplom_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.DataFile = this;
+		}
+		
+		private void detach_Diplom_rus(Diplom_rus entity)
+		{
+			this.SendPropertyChanging();
+			entity.DataFile = null;
 		}
 	}
 }

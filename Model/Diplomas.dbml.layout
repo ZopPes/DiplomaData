@@ -64,7 +64,7 @@
         <classShapeMoniker Id="d303e940-c0fd-4174-9d97-b5bdc32032d4" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 4.34699625651042); (3.29166666666667 : 4.34699625651042 : JumpStart); (3.45833333333333 : 4.34699625651042 : JumpEnd); (3.75 : 4.34699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 4.34699625651042); (3.75 : 4.34699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DiplomasDataContext/Form_of_education_rus/Form_of_education_rus_Group_rus" />
       <nodes>
         <classShapeMoniker Id="e40a102b-57c7-4c2f-b10a-15a1408c8ae9" />
@@ -78,7 +78,7 @@
         <classShapeMoniker Id="d303e940-c0fd-4174-9d97-b5bdc32032d4" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.375 : 4.09699625651042); (5.75 : 4.09699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(7.375 : 4.09699625651042); (7.16145958333333 : 4.09699625651042 : JumpStart); (6.99479291666667 : 4.09699625651042 : JumpEnd); (6.67708333333333 : 4.09699625651042 : JumpStart); (6.51041666666667 : 4.09699625651042 : JumpEnd); (5.75 : 4.09699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/DiplomasDataContext/Specialty_rus/Specialty_rus_Group_rus" />
       <nodes>
         <classShapeMoniker Id="858dbaef-b95a-42da-967f-dbea18e8986a" />
@@ -103,6 +103,19 @@
       <nodes>
         <classShapeMoniker Id="d303e940-c0fd-4174-9d97-b5bdc32032d4" />
         <classShapeMoniker Id="32297cf9-031c-4a67-bfd6-7099b19c609e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="0aa2d8d4-390b-4f2d-93d4-637ec8484106" absoluteBounds="8.125, 4.75, 2, 1.3862939453125">
+      <DataClassMoniker Name="/DiplomasDataContext/DataFile" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3dcf7734-f03c-48d9-81b0-b4ffff659d5c" absoluteBounds="8.14, 5.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(9.78125 : 4.75); (9.78125 : 2.80815110026042); (7.16145958333333 : 2.80815110026042 : JumpStart); (6.99479291666667 : 2.80815110026042 : JumpEnd); (6.67708333333333 : 2.80815110026042 : JumpStart); (6.51041666666667 : 2.80815110026042 : JumpEnd); (5.75 : 2.80815110026042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DiplomasDataContext/DataFile/DataFile_Diplom_rus" />
+      <nodes>
+        <classShapeMoniker Id="0aa2d8d4-390b-4f2d-93d4-637ec8484106" />
+        <classShapeMoniker Id="d303e940-c0fd-4174-9d97-b5bdc32032d4" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

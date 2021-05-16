@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DiplomaData.Model;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,6 +11,7 @@ namespace DiplomaData
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
@@ -105,9 +107,11 @@ namespace DiplomaData
             e.Handled = e.Key == Key.Space;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void AnimatedExpander_Drop(object sender, DragEventArgs e)
         {
-
+            var con = ((Control)sender).DataContext;
+            Diplom_rus diplom = (Diplom_rus)con;
+            diplom.MyProperty = (string)e.Data.GetData(DataFormats.Text);
         }
 
         //private IDocumentPaginatorSource ConvertWordDocToXPSDoc(string wordDocName, string xpsDocName)

@@ -1,5 +1,9 @@
 namespace DiplomaData.Model
 {
+    partial class Commission_rus
+    {
+    }
+
     partial class Student_rus
     {
         public override string ToString()
@@ -12,6 +16,7 @@ namespace DiplomaData.Model
     {
         public bool IsError =>
             this.Thesis_rus == null || this.Lecturer_rus == null || ќценка == '0';
+        public string MyProperty { get; set; }
 
         public override string ToString()
         {

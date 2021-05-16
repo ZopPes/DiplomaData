@@ -8,9 +8,8 @@ namespace DiplomaData.Tabs
     {
         public ICommand ClearAll { get; }
 
-        public TabBasket(string name = "", params IBasket[] vs) : base(name)
+        public TabBasket(string name = "") : base(name)
         {
-            Kor = new ObservableCollection<IBasket>(vs);
             IsVisible = System.Windows.Visibility.Visible;
 
             ClearAll = new lamdaCommand
@@ -22,6 +21,6 @@ namespace DiplomaData.Tabs
                     });
         }
 
-        public ObservableCollection<IBasket> Kor { get; set; }
+        public ObservableCollection<IBasket> Kor { get; set; } = new ObservableCollection<IBasket>();
     }
 }

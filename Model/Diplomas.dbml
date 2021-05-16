@@ -34,6 +34,7 @@
       <Association Name="Diplom_rus_Student_rus" Member="Student_rus" ThisKey="id" OtherKey="id" Type="Student_rus" Cardinality="One" />
       <Association Name="Lecturer_rus_Diplom_rus" Member="Lecturer_rus" ThisKey="Руководитель" OtherKey="id" Type="Lecturer_rus" IsForeignKey="true" />
       <Association Name="Thesis_rus_Diplom_rus" Member="Thesis_rus" ThisKey="Тема" OtherKey="id" Type="Thesis_rus" IsForeignKey="true" />
+      <Association Name="DataFile_Diplom_rus" Member="DataFile" ThisKey="Пояснительная_записка" OtherKey="id" Type="DataFile" IsForeignKey="true" />
     </Type>
     <InsertFunction FunctionId="FunctionId4">
       <Argument Parameter="id" Member="id" />
@@ -184,6 +185,14 @@
     <DeleteFunction FunctionId="FunctionId20">
       <Argument Parameter="id" Member="id" />
     </DeleteFunction>
+  </Table>
+  <Table Name="dbo.DataFile" Member="DataFile">
+    <Type Name="DataFile">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="remotely" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="DataFile_Diplom_rus" Member="Diplom_rus" ThisKey="id" OtherKey="Пояснительная_записка" Type="Diplom_rus" />
+    </Type>
   </Table>
   <Function Id="FunctionId19" Name="dbo.Add_Student" Method="Add_Student">
     <Parameter Name="fam" Type="System.String" DbType="NVarChar(50)" />

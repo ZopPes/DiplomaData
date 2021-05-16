@@ -17,13 +17,15 @@ using Application = Microsoft.Office.Interop.Word.Application;
 
 namespace DiplomaData.Tabs.TabReport
 {
-    internal class TabReport : Tab
+    public class TabReport : Tab
     {
-        public Table<Diplom_rus> Diploms { get; }
+        private Table<Diplom_rus> diploms;
+        public Table<Diplom_rus> Diploms { get => diploms; set { diploms = value; selectData = Diploms; } }
 
 
         #region SelectData
         private IQueryable<Diplom_rus> selectData;
+
         /// <summary>список дипломов</summary>
         public IQueryable<Diplom_rus> SelectData { get => selectData; set { if (Set(ref selectData, value)) OnProperties(); } }
         #endregion
@@ -43,12 +45,12 @@ namespace DiplomaData.Tabs.TabReport
         public ICommand CreateReport { get; }
         public ICommand CreateAllReport { get; }
 
-        public Func<IQueryable<Diplom_rus>, string, IQueryable<Diplom_rus>> TFilt { get; }
+        public Func<IQueryable<Diplom_rus>, string, IQueryable<Diplom_rus>> TFilt { get; set; }
 
 
         public TabReport(
             Func<IQueryable<Diplom_rus>, string, IQueryable<Diplom_rus>> tFilt
-            , Table<Diplom_rus> diploms, string name = "") 
+            , Table<Diplom_rus> diploms, string name = "")
             : base(name)
         {
             TFilt = tFilt;
@@ -59,7 +61,16 @@ namespace DiplomaData.Tabs.TabReport
             CreateReport = new lamdaCommand<IEnumerable>(OnCreateReport);
             CreateAllReport = new lamdaCommand(() => OnCreateReport(Diploms));
             Update = new lamdaCommand(OnUpdate);
-            Properties.Add(new Property("Количество строк",()=> SelectData.Count()));
+            Properties.Add(new Property("Количество строк", () => SelectData.Count()));
+        }
+
+        public TabReport(string name = "") : base(name)
+        {
+            FilterChanged += TabTable_FilterChanged;
+            CreateReport = new lamdaCommand<IEnumerable>(OnCreateReport);
+            CreateAllReport = new lamdaCommand(() => OnCreateReport(Diploms));
+            Update = new lamdaCommand(OnUpdate);
+            Properties.Add(new Property("Количество строк", () => SelectData.Count()));
         }
 
         private void TabTable_FilterChanged(object sender, string e)

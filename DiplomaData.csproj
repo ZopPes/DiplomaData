@@ -81,7 +81,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AutorizWindows.xaml.cs">
+      <DependentUpon>AutorizWindows.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\MultiConverterFio.cs" />
+    <Compile Include="DataBaseMainVM.cs" />
     <Compile Include="HelpInstrument\Filter\FilterBool.cs" />
     <Compile Include="HelpInstrument\Filter\FilterProp.cs" />
     <Compile Include="HelpInstrument\Filter\FilterList.cs" />
@@ -96,14 +100,6 @@
       <DependentUpon>Diplomas.dbml</DependentUpon>
     </Compile>
     <Compile Include="MainVM.cs" />
-    <Compile Include="Model\DiplomaData.cs">
-      <DependentUpon>DiplomaData.dbml</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DiplomaData.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DiplomaData.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Tabs\BasketItem.cs" />
     <Compile Include="Tabs\TabBasket.cs" />
     <Compile Include="Tabs\TabReport\TabReport.cs" />
@@ -112,6 +108,7 @@
     <Compile Include="HelpInstrument\Filter\FilterDate.cs" />
     <Compile Include="HelpInstrument\Filter\FilterMarc.cs" />
     <Compile Include="Tabs\TabTable\TabTable.cs" />
+    <Compile Include="UserControls\FileLink.cs" />
     <Compile Include="UserControls\OnliDigitTextBox.cs" />
     <Compile Include="UserControls\OnliLetterTextBox.cs" />
     <Compile Include="UserControls\SortStatus.cs" />
@@ -124,6 +121,10 @@
     <Compile Include="Отчёты\WordTemplate.xaml.cs">
       <DependentUpon>WordTemplate.xaml</DependentUpon>
     </Compile>
+    <Page Include="AutorizWindows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -163,14 +164,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Model\DiplomaData.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DiplomaData.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Model\DiplomaData.dbml.layout">
-      <DependentUpon>DiplomaData.dbml</DependentUpon>
-    </None>
     <None Include="Model\Diplomas.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>Diplomas.designer.cs</LastGenOutput>

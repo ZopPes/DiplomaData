@@ -18,7 +18,46 @@
 	FontSize="18">
 
     <Window.Resources>
+        <DataTemplate DataType="{x:Type model:Diplom_rus}">
+            <Expander AllowDrop="True" Drop="AnimatedExpander_Drop" x:Name="AnimatedExpander"  DataContext="{Binding }" IsExpanded="{Binding IsMouseOver, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
+                <Expander.Header>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding Thesis_rus, TargetNullValue='нет значения'}" />
+                </Expander.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
+                    <TextBlock TextWrapping="Wrap" Text="тема:" />
+                    <TextBlock TextWrapping="Wrap" Text="Руководитель:" Grid.Row="1" />
+                    <TextBlock TextWrapping="WrapWithOverflow" Text="Пояснительная  записка:" Grid.Row="2" Grid.RowSpan="3"/>
+                    <TextBlock TextWrapping="Wrap" Text="Оценка:" Grid.Row="4" />
+                    <ComboBox SelectedItem="{Binding Thesis_rus}"
+                                                                                  ItemsSource="{Binding DataContext.FreeTheses, ElementName=window}"
+                                                                                   IsSynchronizedWithCurrentItem="False" Grid.Column="1"
+                                                                                  Text="{Binding Thesis_rus.Название_темы, Mode=OneWay}" IsTextSearchCaseSensitive="False"   IsEditable="True" />
+                    <ComboBox SelectedItem="{Binding Lecturer_rus}" ItemsSource="{Binding DataContext.Lecturers, ElementName=window}"
+																		  Grid.Column="1" Grid.Row="1" />
+                    <TextBlock Text="{Binding DataFile.name}" Grid.Column="1" Grid.Row="2"/>
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
+                        <Button Content="обзор..." Command="{Binding DataContext.CopyFileDiploma, ElementName=window}" CommandParameter="{Binding}"/>
+                        <Button Content="открыть" Command="{Binding DataContext.OpenFileDiploma, ElementName=window}" CommandParameter="{Binding}"/>
+                    </StackPanel>
+                    <UC:OnliDigitTextBox Text="{Binding Оценка}" Grid.Column="1" Grid.Row="4" MaxLength="1" InputScope="Number"/>
+                    <Label Content="{Binding Дата_сдачи}"
+                                                                               Grid.Column="2" Grid.RowSpan="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+                </Grid>
+            </Expander>
+        </DataTemplate>
         <DataTemplate   DataType="{x:Type model:Student_rus}">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -58,49 +97,11 @@
                             </Style.Triggers>
                         </Style>
 
-                        <DataTemplate DataType="{x:Type model:Diplom_rus}">
-                            <Expander x:Name="AnimatedExpander"  DataContext="{Binding }" IsExpanded="{Binding IsMouseOver, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
-                                <Expander.Header>
-                                    <TextBlock TextWrapping="Wrap" Text="{Binding Thesis_rus, TargetNullValue='нет значения'}" />
-                                </Expander.Header>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-
-                                    <TextBlock TextWrapping="Wrap" Text="тема:" />
-                                    <TextBlock TextWrapping="Wrap" Text="Руководитель:" Grid.Row="1" />
-                                    <TextBlock TextWrapping="Wrap" Text="Пояснительная записка:" Grid.Row="2" />
-                                    <TextBlock TextWrapping="Wrap" Text="Оценка:" Grid.Row="3" />
-
-                                    <ComboBox SelectedItem="{Binding Thesis_rus}"
-                                                                                  ItemsSource="{Binding DataContext.FreeTheses, ElementName=window}"
-                                                                                   IsSynchronizedWithCurrentItem="False" Grid.Column="1"
-                                                                                  Text="{Binding Thesis_rus.Название_темы, Mode=OneWay}" IsTextSearchCaseSensitive="False"   IsEditable="True" />
-                                    <ComboBox SelectedItem="{Binding Lecturer_rus}" ItemsSource="{Binding DataContext.Lecturers, ElementName=window}"
-																				  Grid.Column="1" Grid.Row="1" />
-                                    <TextBox Text="{Binding Пояснительная_записка}" Grid.Column="1" Grid.Row="2" />
-                                    <UC:OnliDigitTextBox Text="{Binding Оценка}" Grid.Column="1" Grid.Row="3" MaxLength="1" InputScope="Number"/>
-                                    <Label Content="{Binding Дата_сдачи}"
-                                                                               Grid.Column="2" Grid.RowSpan="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
-                                </Grid>
-                            </Expander>
-                        </DataTemplate>
+                       
                     </ContentControl.Resources>
                 </ContentControl>
             </Grid>
         </DataTemplate>
-
         <DataTemplate   DataType="{x:Type model:Group_rus}">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -125,7 +126,6 @@
                 <ComboBox Grid.Column="1" Grid.Row="3" SelectedItem="{Binding Specialty_rus}" ItemsSource="{Binding DataContext.Specialties, ElementName=window}" />
             </Grid>
         </DataTemplate>
-
         <DataTemplate   DataType="{x:Type model:Specialty_rus}">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -142,7 +142,6 @@
                 <TextBox TextWrapping="Wrap" Grid.Row="1" Grid.Column="1" Text="{Binding Специальность}" />
             </Grid>
         </DataTemplate>
-
         <DataTemplate   DataType="{x:Type model:Thesis_rus}">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -178,7 +177,6 @@
                            Text="{Binding Дата_выдачи, StringFormat={}{0:dd.MM.yyyy}}" />
             </Grid>
         </DataTemplate>
-
         <DataTemplate  DataType="{x:Type model:Lecturer_rus}">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -196,12 +194,9 @@
                 </UC:OnliLetterTextBox>
             </Grid>
         </DataTemplate>
-
         <CollectionViewSource x:Key="tabs" Source="{Binding Tabs}" />
         <CollectionViewSource x:Key="Group" Source="{Binding DiplomaData.Group_rus}" />
         <resours:Settings x:Key="resours" />
-        <CollectionViewSource x:Key="RL" Source="{Binding RL}" />
-        <CollectionViewSource x:Key="RG" Source="{Binding RPG}" />
     </Window.Resources>
     <Window.DataContext>
         <local:MainVM />
@@ -221,7 +216,6 @@
         </Grid.ColumnDefinitions>
 
         <Menu Grid.ColumnSpan="4">
-            <MenuItem Header="Данные" Command="{Binding UpdateData, IsAsync=True}"/>
             <MenuItem Header="Отчёты">
                 <MenuItem Header="Номер Отчёта">
                     <TextBox Text="{Binding Source={StaticResource resours},Path=Default.IndexDiplomaReport}"
@@ -245,6 +239,11 @@
                     <Button Content="{Binding Name}"
 									Command="{Binding DataContext.Tabs.Visible, ElementName=treeView, Mode=OneWay}"
 									CommandParameter="{Binding}">
+                        <Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Command="{Binding RefreshData}" Header="Обновить" InputGestureText="Ctrl+U"/>
+                            </ContextMenu>
+                        </Button.ContextMenu>
                     </Button>
                 </DataTemplate>
             </TreeView.Resources>
@@ -572,12 +571,16 @@
 						<Run Text="{Binding Name, Mode=OneWay}" />
 						<Hyperlink Command="{Binding DataContext.Tabs.Collapsed, ElementName=tabControl, Mode=OneWay}"
 								   CommandParameter="{Binding}">X</Hyperlink>
+                        <TextBlock.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Command="{Binding RefreshData}" Header="Обновить" InputGestureText="Ctrl+U"/>
+                            </ContextMenu>
+                        </TextBlock.ContextMenu>
                     </TextBlock>
                 </DataTemplate>
             </TabControl.ItemTemplate>
         </TabControl>
-
-
+        
         <GridSplitter Visibility="{Binding Visibility, ElementName=stackPanel}"  Grid.Row="1" Grid.Column="2" Background="#FFDCDBDB" Width="5" HorizontalAlignment="Right" />
         <StackPanel  x:Name="stackPanel" DataContext="{Binding Tabs.SelectedItem, AsyncState=true}" Grid.Row="1" Background="#F0EFEF"  Grid.Column="3">
             <StackPanel.Resources>

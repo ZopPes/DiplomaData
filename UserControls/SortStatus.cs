@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using Sort = DiplomaData.HelpInstrument.SortStatus;
 namespace DiplomaData.UserControls
@@ -29,7 +26,7 @@ namespace DiplomaData.UserControls
     {
         public SortStatus() : base()
         {
-            ItemsSource = Enum.GetValues(typeof(Sort)).Cast<Enum>().Select(e =>new { sort= e,name= e.GetPs() });
+            ItemsSource = Enum.GetValues(typeof(Sort)).Cast<Enum>().Select(e => new { sort = e, name = e.GetPs() });
             DisplayMemberPath = "name";
             SelectedValuePath = "sort";
         }
