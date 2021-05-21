@@ -8,7 +8,7 @@ namespace DiplomaData.HelpInstrument.Filter
 
         private object select;
 
-        /// <summary>MyComment</summary>
+        /// <summary>значение фильтрации</summary>
         public object Select { get => select; set { select = value; SelectedChenget.Invoke(this, Select); } }
 
         #endregion Select

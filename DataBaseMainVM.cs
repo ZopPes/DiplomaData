@@ -28,18 +28,18 @@ namespace DiplomaData
         {
             #region InitReport
 
-            Report.TFilt = (q, e) => q.Where(w => (w.Student_rus.Имя + " " + w.Student_rus.Отчество + " " + w.Student_rus.Фамилия + " " + w.Thesis_rus.Название_темы).Contains(e));
             Report.Diploms = DiplomaData.Diplom_rus;
+            Report.TFilt = (q, e) => q.Where(w => (w.Student_rus.Имя + " " + w.Student_rus.Отчество + " " + w.Student_rus.Фамилия + " " + w.Thesis_rus.Название_темы).Contains(e));
 
             Report.AddFilterList("Группа:", Groups, g => d => d.Student_rus.Group_rus == g);
             Report.AddFilterList("Руководитель:", Lecturers, l => d => d.Lecturer_rus == l);
             Report.AddFilterText("Оценка:", m => d => d.Оценка == m);
             Report.AddFilterDate("Дата сдачи:", date => d => date.Item1 < d.Дата_сдачи && d.Дата_сдачи < date.Item2);
 
-            Report.AddSort("Оценка:", d => d.Оценка);
-            Report.AddSort("ФИО:", d => d.Student_rus.Фамилия + d.Student_rus.Имя + d.Student_rus.Отчество);
             Report.AddSort("Руководитель:", d => d.Lecturer_rus.Фамилия + d.Lecturer_rus.Имя + d.Lecturer_rus.Отчество);
+            Report.AddSort("Оценка:", d => d.Оценка);
             Report.AddSort("Дата:", d => d.Дата_сдачи);
+            Report.AddSort("ФИО:", d => d.Student_rus.Фамилия + d.Student_rus.Имя + d.Student_rus.Отчество);
             Report.AddSort("Тема:", d => d.Thesis_rus.Название_темы);
 
             ReportTabs.Add(Report);
@@ -72,7 +72,7 @@ namespace DiplomaData
                 (q, e) => q.Where(w => (w.Имя + " " + w.Отчество + " " + w.Фамилия).Contains(e))
                 , l => DiplomaData.Add_Lecturer(l.Фамилия, l.Имя, l.Отчество)
                 , l => DiplomaData.Delete_remotelt_lecturer(l.id)
-                , "Преподователь"
+                , "Преподаватель"
                 );
             Lecturer.AddSort("ФИО:", l => l.Фамилия + l.Имя + l.Отчество);
 
