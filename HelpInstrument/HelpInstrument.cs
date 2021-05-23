@@ -10,14 +10,17 @@ namespace DiplomaData.HelpInstrument
 
     public interface IHelpInstrumentArg
     {
+
     }
+
+    public delegate void EventFilter<Tout,TEventArgs>(Tout sender, TEventArgs e);
 
     public interface IHelpInstrumentFilter : IHelpInstrumentArg
     {
-        object Select { get; set; }
 
-        event EventHandler<object> SelectedChenget;
+        event EventFilter<object,object> SelectedChenget;
     }
+   
 
     public enum SortStatus
     {
@@ -36,5 +39,10 @@ namespace DiplomaData.HelpInstrument
         SortStatus Status { get; set; }
 
         event EventHandler<SortStatus> StatusChenget;
+    }
+
+    public interface IStatus : IHelpInstrument
+    {
+        object Value { get; }
     }
 }

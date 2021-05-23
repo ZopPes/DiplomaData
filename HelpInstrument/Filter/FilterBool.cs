@@ -2,7 +2,7 @@
 
 namespace DiplomaData.HelpInstrument.Filter
 {
-    public class FilterBool : IHelpInstrumentArg
+    public class FilterBool : FilterProp, IHelpInstrumentFilter
     {
         #region Select
 
@@ -13,10 +13,12 @@ namespace DiplomaData.HelpInstrument.Filter
 
         #endregion Select
 
-        public event EventHandler<bool> SelectedChenget;
+        public event EventFilter<object, object> SelectedChenget;
 
-        public FilterBool()
+        public FilterBool(string name,Action<bool> action):base(name)
         {
+            SelectedChenget += (o, b) => action?.Invoke((bool)b);
         }
+
     }
 }

@@ -26,11 +26,10 @@ namespace DiplomaData
             return true;
         }
 
-        public static TabTable<T> CreateTabTable<T>
+        public static TabTable<T> CreateTab<T>
             (this Table<T> table, Func<IQueryable<T>, string, IQueryable<T>> func
-            , Action<T> action, Action<T> delete
-            , string name) where T : class, new() =>
-            new TabTable<T>(table, func, action, delete, name);
+            , string name) where T : class,New<T>, new() =>
+            new TabTable<T>(table, func, name);
     }
 
    
@@ -65,7 +64,7 @@ namespace DiplomaData
         /// <summary>Команды для добавления вкладок отчёта</summary>
         public ObservableCollection<Tab> ReportTabs { get; } = new ObservableCollection<Tab>();
 
-        public TabReport Report { get; } = new TabReport("Протокол защиты дипломного проекта");
+        public TabReport Report { get; set; }
 
         #endregion ReportTabs
 
@@ -89,10 +88,10 @@ namespace DiplomaData
         public ICommand UpdateReports { get; set; }
         public ICommand CopyFileDiploma { get; set; }
         public ICommand OpenFileDiploma { get; set; }
-
-       /// <summary>
-       /// Добавление пустого диплома
-       /// </summary>
+        
+        /// <summary>
+        /// Добавление пустого диплома
+        /// </summary>
         public ICommand AddEmptyDiploma { get; set; }
 
         #endregion ICommands

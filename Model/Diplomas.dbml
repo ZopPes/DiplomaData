@@ -168,11 +168,11 @@
   </Table>
   <Table Name="dbo.Student_rus" Member="Student_rus">
     <Type Name="Student_rus" Id="ID6">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" CanBeNull="false" IsVersion="true" />
-      <Column Name="Фамилия" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" UpdateCheck="Always" />
-      <Column Name="Имя" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" UpdateCheck="Always" />
-      <Column Name="Отчество" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" UpdateCheck="Always" />
-      <Column Name="Номер_группы" Type="System.String" DbType="Char(4) NOT NULL" CanBeNull="false" UpdateCheck="Always" />
+      <Column Name="id" AutoSync="Always" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Фамилия" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Имя" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Отчество" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Номер_группы" Type="System.String" DbType="Char(4) NOT NULL" CanBeNull="false" />
       <Association Name="Group_rus_Student_rus" Member="Group_rus" ThisKey="Номер_группы" OtherKey="Номер_группы" Type="Group_rus" IsForeignKey="true" />
       <Association Name="Diplom_rus_Student_rus" Member="Diplom_rus" ThisKey="id" OtherKey="id" Type="Diplom_rus" IsForeignKey="true" />
     </Type>

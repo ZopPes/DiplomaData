@@ -2,20 +2,20 @@
 
 namespace DiplomaData.HelpInstrument.Filter
 {
-    public class FilterMarc : IHelpInstrumentFilter
+    public class FilterMarc : FilterProp,IHelpInstrumentFilter
     {
         #region Select
 
-        private object select;
+        private string select;
 
         /// <summary>значение фильтрации</summary>
-        public object Select { get => select; set { select = value; SelectedChenget.Invoke(this, Select); } }
+        public string Select { get => select; set { select = value; SelectedChenget.Invoke(this, Select); } }
 
         #endregion Select
 
-        public event EventHandler<object> SelectedChenget;
+        public event EventFilter<object, object> SelectedChenget;
 
-        public FilterMarc()
+        public FilterMarc(string name):base(name)
         {
         }
     }
@@ -37,7 +37,7 @@ namespace DiplomaData.HelpInstrument.Filter
 
         public new event EventHandler<char> SelectedChenget;
 
-        public FilterMarcChar()
+        public FilterMarcChar(string name):base(name)
         {
         }
     }

@@ -21,6 +21,8 @@ namespace DiplomaData.Tabs
                     });
         }
 
+        public TabBasket() : this(""){}
+
         public ObservableCollection<IBasket> Kor { get; set; } = new ObservableCollection<IBasket>();
     }
 }

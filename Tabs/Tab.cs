@@ -1,58 +1,13 @@
 ﻿using DiplomaData.HelpInstrument;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using WPFMVVMHelper;
+using DiplomaData.HelpInstrument.Status;
 
 namespace DiplomaData
 {
-    /// <summary>
-    /// Класс имя значения
-    /// для списка свойств
-    /// </summary>
-    public class Property : peremlog
-    {
-        /// <summary>имя</summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// значение
-        /// </summary>
-        public object Value { get => Func?.Invoke(); }
-
-        /// <summary>
-        /// Функция для получения значения
-        /// </summary>
-        public Func<object> Func { get; }
-
-        /// <summary>
-        /// свойство вкладки
-        /// </summary>
-        /// <param name="name">имя свойства</param>
-        /// <param name="value">функция для получения значения</param>
-        public Property(string name, Func<object> value)
-        {
-            Name = name;
-            Func = value;
-        }
-
-        /// <summary>
-        /// свойство вкладки
-        /// </summary>
-        /// <param name="name">имя свойства</param>
-        /// <param name="value">значение</param>
-        public Property(string name, object value)
-        {
-            Name = name;
-            Func = () => value;
-        }
-
-        /// <summary>
-        /// обновление значения
-        /// </summary>
-        public void ValueOnPropertyChanged() => OnPropertyChanged(nameof(Value));
-    }
+    
     /// <summary>
     /// вкладка
     /// </summary>
@@ -68,12 +23,6 @@ namespace DiplomaData
         #endregion isVisible
 
 
-        #region Properties
-
-        /// <summary>Свойства Вкладки</summary>
-        public ObservableCollection<Property> Properties { get; }
-
-        #endregion Properties
 
         /// <summary>
         /// название вкладки
@@ -101,8 +50,9 @@ namespace DiplomaData
 
         #endregion Filter
 
-        public List<IHelpInstrument> FilterParam { get; set; }
-        public List<ISortInstument> SortParam { get; set; }
+        public Collection<IHelpInstrumentArg> FilterParams { get; }
+        public Collection<ISortInstument> SortParams { get; }
+        public Collection<object> StatusProps { get; }
 
         public event EventHandler<string> FilterChanged;
 
@@ -113,15 +63,12 @@ namespace DiplomaData
         public Tab(string name = "")
         {
             Name = name;
-            Properties = new ObservableCollection<Property>();
-            FilterParam = new List<IHelpInstrument>();
-            SortParam = new List<ISortInstument>();
+            FilterParams = new Collection<IHelpInstrumentArg>();
+            SortParams = new Collection<ISortInstument>();
+            StatusProps = new Collection<object>();
+            
         }
 
-        public void OnProperties()
-        {
-            foreach (Property property in Properties)
-                property.ValueOnPropertyChanged();
-        }
+     
     }
 }

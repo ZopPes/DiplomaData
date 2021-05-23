@@ -1,7 +1,9 @@
 ﻿using DiplomaData.HelpInstrument;
 using DiplomaData.HelpInstrument.Filter;
 using DiplomaData.HelpInstrument.Sort;
+using DiplomaData.Model;
 using System;
+using System.Collections;
 using System.Data.Linq;
 using System.Data.SqlClient;
 using System.Linq;
@@ -16,7 +18,7 @@ namespace DiplomaData.Tabs.TabTable
     /// Вкладка с таблицей
     /// </summary>
     /// <typeparam name="T">тип для таблицы</typeparam>
-    public class TabTable<T> : Tab where T : class, new()
+    public class TabTable<T> : TabTable where T : class, New<T>, new()
     {
         #region Context
 
@@ -30,7 +32,7 @@ namespace DiplomaData.Tabs.TabTable
         private T insertItem;
 
         /// <summary>Переменная для добавления</summary>
-        public T InsertItem { get => insertItem; set => Set(ref insertItem, value); }
+        public  T InsertItem { get => insertItem; set => Set(ref insertItem, value); }
 
         #endregion InsertItem
 
@@ -39,18 +41,10 @@ namespace DiplomaData.Tabs.TabTable
         private IQueryable<T> selectData;
 
         /// <summary>данные для вывода</summary>
-        public IQueryable<T> SelectData { get => selectData; set { if (Set(ref selectData, value)) OnProperties(); } }
+        public  IQueryable<T> SelectData { get => selectData; set =>Set(ref selectData, value); }
 
         #endregion SelectData
 
-        #region SortData
-
-        private IQueryable<T> sortData;
-
-        /// <summary>Отсортированный список</summary>
-        public IQueryable<T> SortData { get => sortData; set => Set(ref sortData, value); }
-
-        #endregion SortData
 
         public ICommand InsertTable { get; }
         public ICommand RemoveTable { get; }
@@ -58,14 +52,11 @@ namespace DiplomaData.Tabs.TabTable
 
         public ICommand RefreshData { get; }
 
-        public Action<T> InsertData { get; }
-        public Action<T> DeleteData { get; }
 
         public Func<IQueryable<T>, string, IQueryable<T>> TFilt { get; }
 
-        public Table<T> test;
+        public Table<T> Table;
 
-        public IHelpInstrument DeleteMy { get => FilterParam[0]; }
 
         /// <summary>
         /// Вкладка с таблицей
@@ -74,12 +65,11 @@ namespace DiplomaData.Tabs.TabTable
         /// <param name="name">название вкладки</param>
         public TabTable
             (Table<T> table, Func<IQueryable<T>, string, IQueryable<T>> tFilt
-            , Action<T> insertData, Action<T> deleteData
             , string name = ""
             ) : base(name)
         {
-            test = table;
-            SelectData = test;
+            Table = table;
+            SelectData = Table;
             Context = table.Context;
             InsertTable = new lamdaCommand(NewMethod);
             RemoveTable = new lamdaCommand<T>(Remove);
@@ -87,55 +77,57 @@ namespace DiplomaData.Tabs.TabTable
             RefreshData = new lamdaCommand(
                 () =>
                     {
-                        Context.Refresh(RefreshMode.OverwriteCurrentValues, test); SelectData = test;
+                        Context.Refresh(RefreshMode.OverwriteCurrentValues, Table); SelectData = Table;
                     });
-            Properties.Add(new Property("Количество строк", () => SelectData.Count()));
+            //Properties.Add(new Property("Количество строк", () => SelectData.Count()));
             InsertItem = new T();
-            InsertData = insertData;
-            DeleteData = deleteData;
             FilterChanged += TabTable_FilterChanged;
             TFilt = tFilt;
         }
 
-        public void AddFilterList<TFilter>(string name, IQueryable<TFilter> queryable, Func<TFilter, Expression<Func<T, bool>>> expression)
-        {
-            var filterList = new FilterList(queryable);
-            filterList.SelectedChenget += (obj, s) => SelectData = test.Where(expression?.Invoke((TFilter)s));
-            FilterParam.Add
+
+        public void AddFilterList<TFilter>(string name, IQueryable<TFilter> queryable
+            , Expression<Func<T, TFilter>> ex) => FilterParams.Add
                 (
-                new FilterProp(name, filterList)
+                    new FilterList<TabTable<T>, TFilter>
+                    (
+                        queryable, name
+                        , t => SelectData = Table.Join
+                            (
+                                queryable.Where(r => r.Equals(t))
+                                , ex, r => r, (d, g) => d)
+                    )
                 );
-        }
+
 
         public void AddFilterBool(string name, Func<bool, Expression<Func<T, bool>>> expression)
         {
-            var filterList = new FilterBool();
-            filterList.SelectedChenget +=
-                (obj, s) => SelectData = test.Where(expression?.Invoke(s));
-            FilterParam.Add
+            var filterList = new FilterBool(name
+                , s => SelectData = Table.Where(expression?.Invoke(s)));
+            FilterParams.Add
                 (
-                new FilterProp(name, filterList)
+                filterList
                 );
         }
         public void AddFilterText(string name, Func<char, Expression<Func<T, bool>>> expression)
         {
-            var filterList = new FilterMarcChar();
+            var filterList = new FilterMarcChar(name);
             filterList.SelectedChenget +=
-                (obj, s) => SelectData = test.Where(expression?.Invoke(s));
-            FilterParam.Add
+                (obj, s) => SelectData = Table.Where(expression?.Invoke(s));
+            FilterParams.Add
                 (
-                new FilterProp(name, filterList)
+               filterList
                 );
         }
 
-        public void AddFilterDate(string name, Func<(DateTime, DateTime), Expression<Func<T, bool>>> expression)
+        public void AddFilterDate(string name, Func<(DateTime date1,DateTime date2),Expression<Func<T,bool>>> expression)
         {
-            var filterList = new FilterDate();
-            filterList.SelectedChenget +=
-                (obj, d) => SelectData = test.Where(expression?.Invoke(d));
-            FilterParam.Add
+            var filterList = new FilterDate(name
+                , d => SelectData = Table.Where(expression?.Invoke(d)));
+
+            FilterParams.Add
                 (
-                new FilterProp(name, filterList)
+                filterList
                 );
         }
 
@@ -161,7 +153,7 @@ namespace DiplomaData.Tabs.TabTable
                  switch (s)
                  {
                      case SortStatus.off:
-                         SelectData = test;
+                         SelectData = Table;
                          break;
 
                      case SortStatus.desc:
@@ -176,42 +168,58 @@ namespace DiplomaData.Tabs.TabTable
                          break;
                  }
              };
-            SortParam.Add(sort);
+            SortParams.Add(sort);
         }
 
         private void TabTable_FilterChanged(object sender, string e)
         {
-            SelectData = TFilt?.Invoke(test, e);
+            SelectData = TFilt?.Invoke(Table, e);
         }
 
         private void NewMethod()
         {
             try
             {
-                InsertData?.Invoke(InsertItem);
-                Context.Refresh(RefreshMode.KeepCurrentValues, test);
+                Table.InsertOnSubmit(InsertItem);
+                Context.SubmitChanges();
+                Context.Refresh(RefreshMode.KeepCurrentValues, Table);
                 Filter = Filter;
+               
             }
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message + "\r\n П ерепроверьте данные", ex.Number.ToString());
             }
-            InsertItem = new T();
+            InsertItem =new T().New;
         }
 
-        public void Remove(object value)
+        public void Remove(T value)
         {
             try
             {
-                DeleteData?.Invoke((T)value);
-                Context.Refresh(RefreshMode.OverwriteCurrentValues, test);
+                Table.DeleteOnSubmit(value);
+                Context.SubmitChanges(ConflictMode.ContinueOnConflict);
+                Context.Refresh(RefreshMode.OverwriteCurrentValues, Table);
                 Filter = Filter;
             }
             catch (Exception e)
             {
+                
                 MessageBox.Show(e.Message, "Ошибка");
             }
         }
+
+    }
+
+    public class TabTable : Tab
+    {
+
+        public TabTable(string name = "") : base(name)
+        {
+            
+        }
+
+
 
     }
 }

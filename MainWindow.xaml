@@ -10,12 +10,15 @@
     xmlns:report="clr-namespace:DiplomaData.Tabs.TabReport"
     xmlns:resours="clr-namespace:DiplomaData.Properties"
     xmlns:Filter="clr-namespace:DiplomaData.HelpInstrument.Filter"
+    xmlns:Help="clr-namespace:DiplomaData.HelpInstrument"
     xmlns:UC="clr-namespace:DiplomaData.UserControls"
+    xmlns:TabTable="clr-namespace:DiplomaData.Tabs.TabTable"
     x:Name="window"
 	x:Class="DiplomaData.MainWindow"
 	mc:Ignorable="d"
 		Title="Хранилище дипломных работ"
-	FontSize="18">
+	FontSize="18"
+    Background="White">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type model:Diplom_rus}">
@@ -64,11 +67,13 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="AUTO" />
+                    <ColumnDefinition Width="AUTO" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
+                <TextBlock Text="{Binding id}" Grid.Column="2"/>
                 <UC:OnliLetterTextBox>
                     <TextBox.Text>
                         <MultiBinding Converter="{StaticResource Fio}">
@@ -196,6 +201,8 @@
             </Grid>
         </DataTemplate>
         <CollectionViewSource x:Key="tabs" Source="{Binding Tabs}" />
+        <CollectionViewSource x:Key="tabs1" Source="{Binding Tables}" />
+        <CollectionViewSource x:Key="tabs2" Source="{Binding ReportTabs}" />
         <CollectionViewSource x:Key="Group" Source="{Binding DiplomaData.Group_rus}" />
         <resours:Settings x:Key="resours" />
     </Window.Resources>
@@ -204,7 +211,7 @@
         
     </Window.DataContext>
 
-    <Grid>
+    <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition />
@@ -217,19 +224,21 @@
             <ColumnDefinition Width="35*" MinWidth="175" />
         </Grid.ColumnDefinitions>
 
-        <Menu Grid.ColumnSpan="4">
+        <Menu Background="Transparent" Grid.ColumnSpan="4" FontSize="18">
             <MenuItem Header="Отчёты">
-                <MenuItem Header="Номер Отчёта">
+                <MenuItem Header="Номер Отчёта" Background="White">
                     <TextBox Text="{Binding Source={StaticResource resours},Path=Default.IndexDiplomaReport}"
                              Width="125" InputScope="Number" PreviewTextInput="TextBox_PreviewTextInput_1"
                              LostKeyboardFocus="TextBox_LostKeyboardFocus" PreviewKeyDown="TextBox_PreviewKeyDown" />
                 </MenuItem>
             </MenuItem>
         </Menu>
-
-        <TreeView Grid.Row="1" x:Name="treeView" Background="#F0EFEF">
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="4" VerticalAlignment="Bottom"/>
+        <TreeView BorderThickness="0" Grid.Row="1" x:Name="treeView">
             <TreeView.Resources>
                 <Style TargetType="Button">
+                    
+                    <Setter Property="Background" Value="White"/>
                     <Setter Property="Effect">
                         <Setter.Value>
                             <DropShadowEffect Opacity="0.2" ShadowDepth="4" />
@@ -262,15 +271,19 @@
 									CommandParameter="{Binding}" />
         </TreeView>
 
-        <TabControl Grid.Row="1" x:Name="tabControl" Grid.Column="1" SelectedValue="{Binding Tabs.SelectedItem}" Grid.ColumnSpan="2">
+        <TabControl 
+            BorderThickness="0" Background="Transparent" 
+            Grid.Row="1" x:Name="tabControl" Grid.Column="1"
+            SelectedValue="{Binding Tabs.SelectedItem}" 
+            Grid.ColumnSpan="2">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
                     <Setter Property="Visibility" Value="{Binding IsVisible}" />
                 </Style>
 
-                <DataTemplate DataType="{x:Type local:Tab}">
+                <DataTemplate DataType="{x:Type TabTable:TabTable}">
 
-                    <Grid x:Name="list">
+                    <Grid >
                         <Grid.Resources>
                             <Style TargetType="ComboBox">
                                 <Setter Property="ItemTemplate">
@@ -285,31 +298,33 @@
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
 
-                        <ScrollViewer VerticalScrollBarVisibility="Visible" CanContentScroll="True">
-                            <ItemsControl Margin="5" ItemsSource="{Binding SelectData, IsAsync=True}">
+                        <ScrollViewer VerticalScrollBarVisibility="Visible" 
+                                      CanContentScroll="True" x:Name="list" >
+                            <ItemsControl  Margin="5" ItemsSource="{Binding SelectData}">
+                                
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border x:Name="studentBorder" Background="AliceBlue"  Margin="5" Padding="10" BorderBrush="Black" BorderThickness="1">
-                                            <Grid>
+                                        <Border Margin="10" BorderBrush="Black" BorderThickness="1"
+                                                Background="White">
+                                            <StackPanel>
 
-                                                <StackPanel VerticalAlignment="Top"  Orientation="Horizontal" HorizontalAlignment="Right">
-                                                    <Button Margin="0,0,20,0" Content="✔"
-                                                            Command="{Binding DataContext.UpdateTable, ElementName=list}"
-                                                            CommandParameter="{Binding}" />
-                                                    <Button Background="Transparent" BorderBrush="Transparent"
-													Content="Ⅹ" Command="{Binding DataContext.RemoveTable, ElementName=list}"
-													CommandParameter="{Binding}" />
-                                                </StackPanel>
-                                                <ContentControl  Margin="0,30,20,0"  Content="{Binding}" Grid.Row="1">
-                                                </ContentControl>
-                                            </Grid>
+                                                <MenuItem Header="delete" Command="{Binding DataContext.RemoveTable, ElementName=list}"
+                                                              CommandParameter="{Binding }"/>
+                                        <ContentControl Margin="20" Content="{Binding}">
+                                            
+                                        </ContentControl>
+                                            </StackPanel>
                                         </Border>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </ScrollViewer>
+                        <StackPanel Grid.Row="2">
+                            <Button  Content="u" Command="{Binding Update}"/>
+                        </StackPanel>
                         <Expander Header="Добавить" IsExpanded="True" Grid.Row="1">
                             <Expander.Resources>
                                 <DataTemplate DataType="{x:Type model:Student_rus}">
@@ -438,12 +453,13 @@
                                 <ContentControl Content="{Binding InsertItem}" />
                                 <Button Grid.Row="2" Grid.ColumnSpan="2"
                                         Content="Добавить"
-													Command="{Binding DataContext.InsertTable, ElementName=list}">
+													Command="{Binding InsertTable}">
                                 </Button>
                             </Grid>
                         </Expander>
                     </Grid>
                 </DataTemplate>
+                
                 <DataTemplate DataType="{x:Type tabs:TabBasket}">
                     <StackPanel>
                         <Button Content="Удалить всё" Command="{Binding ClearAll}" />
@@ -566,8 +582,8 @@
                 <DataTemplate DataType="{x:Type local:Tab}">
                     <TextBlock>
 						<Run Text="{Binding Name, Mode=OneWay}" />
-						<Hyperlink Command="{Binding DataContext.Tabs.Collapsed, ElementName=tabControl, Mode=OneWay}"
-								   CommandParameter="{Binding}">X</Hyperlink>
+						<Button Background="Transparent" BorderBrush="Transparent" Command="{Binding DataContext.Tabs.Collapsed, ElementName=tabControl, Mode=OneWay}"
+								   CommandParameter="{Binding}">X</Button>
                         <TextBlock.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Command="{Binding RefreshData}" Header="Обновить" InputGestureText="Ctrl+U"/>
@@ -577,10 +593,12 @@
                 </DataTemplate>
             </TabControl.ItemTemplate>
         </TabControl>
-        <GridSplitter Grid.Row="1" Grid.Column="1" Background="#FFDCDBDB" Width="5" HorizontalAlignment="Left"/>
+        <GridSplitter Background="Black" Grid.Row="1" Grid.Column="1"  Width="5" HorizontalAlignment="Left"/>
         
-        <GridSplitter Visibility="{Binding Visibility, ElementName=stackPanel}"  Grid.Row="1" Grid.Column="2" Background="#FFDCDBDB" Width="5" HorizontalAlignment="Right" />
-        <StackPanel  x:Name="stackPanel" DataContext="{Binding Tabs.SelectedItem, AsyncState=true}" Grid.Row="1" Background="#F0EFEF"  Grid.Column="3">
+        <GridSplitter Visibility="{Binding Visibility, ElementName=stackPanel}"  Grid.Row="1" Grid.Column="2" Background="Black" Width="5" HorizontalAlignment="Right" />
+        <StackPanel  x:Name="stackPanel" 
+                     DataContext="{Binding Tabs.SelectedItem, AsyncState=true}" 
+                     Grid.Row="1" Background="Transparent"  Grid.Column="3">
             <StackPanel.Resources>
                 <Style TargetType="StackPanel">
                     <Style.Triggers>
@@ -646,7 +664,7 @@
                 <Grid.Resources>
                     <Style TargetType="Grid">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding FilterParam.Count}" Value="0">
+                            <DataTrigger Binding="{Binding FilterParams.Count}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -666,8 +684,7 @@
                     </Canvas>
                 </Viewbox>
                 <ComboBox Grid.Column="1" x:Name="comboBox" DisplayMemberPath="Name" 
-                      ItemsSource="{Binding FilterParam}"
-                      SelectedValuePath="Filter"/>
+                      ItemsSource="{Binding FilterParams}"/>
             <ContentControl Grid.Row="1" MinWidth="120" Grid.Column="1"
                             Content="{Binding SelectedValue, ElementName=comboBox}"/>
             </Grid>
@@ -676,7 +693,7 @@
                 <Grid.Resources>
                     <Style TargetType="Grid">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding SortParam.Count}" Value="0">
+                            <DataTrigger Binding="{Binding SortParams.Count}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -737,15 +754,16 @@
                 
                 <ComboBox x:Name="comboBox1" 
                       DisplayMemberPath="Name" 
-                      ItemsSource="{Binding SortParam}"
+                      ItemsSource="{Binding SortParams}"
                       Grid.Column="1"
                       />
                 <UC:SortStatus x:Name="sortStatus" Grid.Column="2" SelectedValue="{Binding SelectedItem.Status, ElementName=comboBox1}"/>
             </Grid>
         </StackPanel>
-        <StatusBar Grid.ColumnSpan="4" Grid.Row="2" ItemsSource="{Binding Tabs.SelectedItem.Properties}">
+        <StatusBar Grid.ColumnSpan="4" Grid.Row="2" ItemsSource="{Binding Tabs.SelectedItem.StatusProps}"
+                   Background="Transparent">
             <StatusBar.ItemTemplate>
-                <DataTemplate DataType="{x:Type local:Property}">
+                <DataTemplate >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -759,27 +777,6 @@
                     </Grid>
                 </DataTemplate>
             </StatusBar.ItemTemplate>
-            <!--<StatusBar.ItemContainerStyle>
-                <Style TargetType="StatusBarItem" BasedOn="{StaticResource {x:Type StatusBarItem}}">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="StatusBarItem">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="5" />
-                                    </Grid.ColumnDefinitions>
-                                                <TextBlock FontSize="18" Margin="10,0">
-													<Run Text="{Binding Name, StringFormat={}{0}:,Mode=OneWay}" />
-													<Run Text="{Binding Value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                </TextBlock>
-                                    <Separator Grid.Column="1"  Style="{StaticResource {x:Static StatusBar.SeparatorStyleKey}}" />
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </StatusBar.ItemContainerStyle>-->
         </StatusBar>
     </Grid>
 </Window>

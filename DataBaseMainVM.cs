@@ -1,9 +1,14 @@
-﻿using DiplomaData.Model;
+﻿using DiplomaData.HelpInstrument.Filter;
+using DiplomaData.Model;
+using DiplomaData.Tabs.TabTable;
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Input;
 using WPFMVVMHelper;
 
 namespace DiplomaData
@@ -13,6 +18,7 @@ namespace DiplomaData
     {
         #region DiplomaData
 
+         
         /// <summary>Подключение к базе данных</summary>
         public DiplomasDataContext DiplomaData { get; } = new DiplomasDataContext();
 
@@ -27,38 +33,39 @@ namespace DiplomaData
         private void initDataBase()
         {
             #region InitReport
+            Report = new Tabs.TabReport.TabReport
+                ((q, e) => q.Where(w => (w.Student_rus.Имя + " " + w.Student_rus.Отчество + " " + w.Student_rus.Фамилия + " " + w.Thesis_rus.Название_темы).Contains(e))
+                ,DiplomaData.Diplom_rus
+                , "Протокол защиты дипломного проекта"
+                );
 
-            Report.Diploms = DiplomaData.Diplom_rus;
-            Report.TFilt = (q, e) => q.Where(w => (w.Student_rus.Имя + " " + w.Student_rus.Отчество + " " + w.Student_rus.Фамилия + " " + w.Thesis_rus.Название_темы).Contains(e));
+            
 
-            Report.AddFilterList("Группа:", Groups, g => d => d.Student_rus.Group_rus == g);
-            Report.AddFilterList("Руководитель:", Lecturers, l => d => d.Lecturer_rus == l);
+            Report.AddFilterList("Группа:", Groups, d=>d.Student_rus.Group_rus);
+            Report.AddFilterList("Руководитель:", Lecturers, d => d.Lecturer_rus);
             Report.AddFilterText("Оценка:", m => d => d.Оценка == m);
-            Report.AddFilterDate("Дата сдачи:", date => d => date.Item1 < d.Дата_сдачи && d.Дата_сдачи < date.Item2);
+            Report.AddFilterDate("Дата сдачи:", d => s => d.date1 < s.Дата_сдачи && s.Дата_сдачи < d.date2);
 
             Report.AddSort("Руководитель:", d => d.Lecturer_rus.Фамилия + d.Lecturer_rus.Имя + d.Lecturer_rus.Отчество);
             Report.AddSort("Оценка:", d => d.Оценка);
             Report.AddSort("Дата:", d => d.Дата_сдачи);
             Report.AddSort("ФИО:", d => d.Student_rus.Фамилия + d.Student_rus.Имя + d.Student_rus.Отчество);
             Report.AddSort("Тема:", d => d.Thesis_rus.Название_темы);
-
+            
             ReportTabs.Add(Report);
             #endregion
 
             #region AddTabs
-
-            var student = DiplomaData.Student_rus.CreateTabTable
+            var student = DiplomaData.Student_rus.CreateTab
                 (
                     (q, e) => q.Where(w => (w.Имя + " " + w.Отчество + " " + w.Фамилия).Contains(e))
-                , s => DiplomaData.Add_Student(s.Фамилия, s.Имя, s.Отчество, s.Номер_группы)
-                , s => DiplomaData.Delete_remotelt_student(s.id)
                 , "Студент"
                 );
 
-            student.AddFilterList("Группа:", Groups, g => s => s.Group_rus == g);
-            student.AddFilterList("Руководитель:", Lecturers, l => s => s.Diplom_rus.Lecturer_rus == l);
+            student.AddFilterList("Группа:", Groups, s => s.Group_rus);
+            student.AddFilterList("Руководитель:", Lecturers, s => s.Diplom_rus.Lecturer_rus);
             student.AddFilterText("Оценка:", m => s => s.Diplom_rus.Оценка == m);
-            student.AddFilterDate("Дата сдачи:", d => s => d.Item1 < s.Diplom_rus.Дата_сдачи && s.Diplom_rus.Дата_сдачи < d.Item2);
+            student.AddFilterDate("Дата сдачи:", d => s => d.date1 < s.Diplom_rus.Дата_сдачи && s.Diplom_rus.Дата_сдачи < d.date2);
            
             student.AddSort("Группа:", s => s.Group_rus.Номер_группы);
             student.AddSort("Руководитель:", s => s.Diplom_rus.Lecturer_rus.Фамилия + s.Diplom_rus.Lecturer_rus.Имя + s.Diplom_rus.Lecturer_rus.Отчество);
@@ -67,31 +74,25 @@ namespace DiplomaData
             student.AddSort("ФИО:", s => s.Фамилия + s.Имя + s.Отчество);
             student.AddSort("Тема:", s => s.Diplom_rus.Thesis_rus.Название_темы);
 
-            var Lecturer = DiplomaData.Lecturer_rus.CreateTabTable
+            var Lecturer = DiplomaData.Lecturer_rus.CreateTab
                 (
                 (q, e) => q.Where(w => (w.Имя + " " + w.Отчество + " " + w.Фамилия).Contains(e))
-                , l => DiplomaData.Add_Lecturer(l.Фамилия, l.Имя, l.Отчество)
-                , l => DiplomaData.Delete_remotelt_lecturer(l.id)
                 , "Преподаватель"
                 );
             Lecturer.AddSort("ФИО:", l => l.Фамилия + l.Имя + l.Отчество);
 
 
-            var Specialty = DiplomaData.Specialty_rus.CreateTabTable
+            var Specialty = DiplomaData.Specialty_rus.CreateTab
                 (
                 (q, e) => q.Where(w => (w.Специальность + " " + w.Шифр_специальности).Contains(e))
-                , s => DiplomaData.Add_Specialty(s.Шифр_специальности, s.Специальность)
-                , s => DiplomaData.Delete_remotelt_specialty(s.Шифр_специальности)
                 , "Специальность"
                 );
             Specialty.AddSort("Шифр:", s => s.Шифр_специальности);
             Specialty.AddSort("Название:", s => s.Специальность);
 
-            var Thesis = DiplomaData.Thesis_rus.CreateTabTable
+            var Thesis = DiplomaData.Thesis_rus.CreateTab
                (
                (q, e) => q.Where(w => (w.Название_темы + " " + w.Описание).Contains(e))
-                , t => DiplomaData.Add_Thesis(t.Название_темы, t.Описание, t.Дата_выдачи)
-                , t => DiplomaData.Delete_remotelt_Thesis(t.id)
                , "Тема диплома"
                );
             Thesis.AddFilterBool("Используемые:", b => t => t.Занята__не_занята == b);
@@ -99,19 +100,16 @@ namespace DiplomaData
             Thesis.AddSort("Дата создания:", t => t.Дата_выдачи);
             Thesis.AddSort("Используется:", t => t.Занята__не_занята);
             Thesis.AddSort("Название:", t => t.Название_темы);
-            Thesis.Properties.Add(new Property("используются", () => Thesis.SelectData.Where(t => t.Занята__не_занята).Count()));
-            Thesis.Properties.Add(new Property("не используются", () => Thesis.SelectData.Where(t => !t.Занята__не_занята).Count()));
+            //Thesis.Properties.Add(new Property("используются", () => Thesis.SelectData.Where(t => t.Занята__не_занята).Count()));
+            //Thesis.Properties.Add(new Property("не используются", () => Thesis.SelectData.Where(t => !t.Занята__не_занята).Count()));
           
-            var group = DiplomaData.Group_rus.CreateTabTable
+            var group = DiplomaData.Group_rus.CreateTab
                 (
                 (q, e) => q.Where(w => (w.Номер_группы + " " + w.Lecturer_rus.Фамилия + " " + w.Lecturer_rus.Имя + " " + w.Lecturer_rus.Отчество).Contains(e))
-                , g =>
-                { DiplomaData.Add_Group(g.Номер_группы, g.Специальность, g.Куратор, g.Форма_обучения); OnPropertyChanged(nameof(Groups)); }
-                , g => DiplomaData.Delete_remotelt_group(g.Номер_группы)
                 , "Группа"
                 );
-            group.AddFilterList("Форма обучения:", DiplomaData.Form_of_education_rus, f => g => g.Form_of_education_rus == f);
-            group.AddFilterList("Специальность:", Specialties, s => g => g.Specialty_rus == s);
+            group.AddFilterList("Форма обучения:", DiplomaData.Form_of_education_rus, g => g.Form_of_education_rus);
+            group.AddFilterList("Специальность:", Specialties,g => g.Specialty_rus);
             group.AddSort("Номер:", g => g.Номер_группы);
             group.AddSort("Куратор:", g => g.Lecturer_rus.Фамилия + g.Lecturer_rus.Имя + g.Lecturer_rus.Отчество);
             group.AddSort("Специальность", g => g.Specialty_rus.Специальность);
@@ -121,7 +119,6 @@ namespace DiplomaData
             Tables.Add(Specialty);
             Tables.Add(Thesis);
             Tables.Add(group);
-
             #endregion AddTabs
 
             AddEmptyDiploma = new lamdaCommand<Student_rus>

@@ -91,6 +91,7 @@
     <Compile Include="HelpInstrument\Filter\FilterList.cs" />
     <Compile Include="HelpInstrument\HelpInstrument.cs" />
     <Compile Include="HelpInstrument\Sort\SortProp.cs" />
+    <Compile Include="HelpInstrument\Status\StatusProp.cs" />
     <Compile Include="Model\Diplomas.cs">
       <DependentUpon>Diplomas.dbml</DependentUpon>
     </Compile>
@@ -184,6 +185,8 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="HelpInstrument\Command\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
