@@ -6,13 +6,12 @@
 	xmlns:local="clr-namespace:DiplomaData"
 	xmlns:tabs="clr-namespace:DiplomaData.Tabs"
 	xmlns:model="clr-namespace:DiplomaData.Model"
-	xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:report="clr-namespace:DiplomaData.Tabs.TabReport"
     xmlns:resours="clr-namespace:DiplomaData.Properties"
     xmlns:Filter="clr-namespace:DiplomaData.HelpInstrument.Filter"
-    xmlns:Help="clr-namespace:DiplomaData.HelpInstrument"
     xmlns:UC="clr-namespace:DiplomaData.UserControls"
     xmlns:TabTable="clr-namespace:DiplomaData.Tabs.TabTable"
+    xmlns:Instruments="clr-namespace:DiplomaData.HelpInstrument.Command"
     x:Name="window"
 	x:Class="DiplomaData.MainWindow"
 	mc:Ignorable="d"
@@ -21,6 +20,12 @@
     Background="White">
 
     <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#f5f3f2"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#f5f3f2"/>
+        </Style>
         <DataTemplate DataType="{x:Type model:Diplom_rus}">
             <Expander AllowDrop="True" Drop="AnimatedExpander_Drop" x:Name="AnimatedExpander"  DataContext="{Binding }" IsExpanded="{Binding IsMouseOver, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
                 <Expander.Header>
@@ -57,7 +62,7 @@
                         <Button Content="открыть" Command="{Binding DataContext.OpenFileDiploma, ElementName=window}" CommandParameter="{Binding}"/>
                     </StackPanel>
                     <UC:OnliDigitTextBox Text="{Binding Оценка}" Grid.Column="1" Grid.Row="4" MaxLength="1" InputScope="Number"/>
-                    <Label Content="{Binding Дата_сдачи}"
+                    <TextBlock Text="{Binding Дата_сдачи,StringFormat=\{0:dd.MM.yyyy\}}"
                                                                                Grid.Column="2" Grid.RowSpan="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
                 </Grid>
             </Expander>
@@ -73,7 +78,6 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBlock Text="{Binding id}" Grid.Column="2"/>
                 <UC:OnliLetterTextBox>
                     <TextBox.Text>
                         <MultiBinding Converter="{StaticResource Fio}">
@@ -84,8 +88,7 @@
                     </TextBox.Text>
                 </UC:OnliLetterTextBox>
                 <ComboBox Grid.Column="1" SelectedItem="{Binding Group_rus}"
-													  ItemsSource="{Binding DataContext.Groups, ElementName=window}">
-                </ComboBox>
+                          ItemsSource="{Binding DataContext.Groups, ElementName=window}"/>
                 <ContentControl Content="{Binding Diplom_rus}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4">
                     <ContentControl.Resources>
                         <Style TargetType="ContentControl">
@@ -153,34 +156,23 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 
                 <Label Grid.Row="0" Content="название:" VerticalAlignment="Center" />
                 <Label Content="описание:" Grid.Row="1" VerticalAlignment="Center" />
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="Используется">
-                    <TextBlock.Resources>
-                        <Style TargetType="TextBlock">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Занята__не_занята}" Value="true">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Занята__не_занята}" Value="false">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Resources>
-                </TextBlock>
                 <TextBox Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" Text="{Binding Название_темы}" />
                 <TextBox Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Описание}" />
-                <TextBlock Margin="20,0,0,0" Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" 
+                <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="3">
+                <TextBlock Grid.Row="2" Text="дата последнего использования:" TextWrapping="Wrap" />
+                <TextBlock Margin="30,0,0,0" Grid.Column="2" Grid.Row="2"
                            VerticalAlignment="Bottom" HorizontalAlignment="Right" 
                            Text="{Binding Дата_выдачи, StringFormat={}{0:dd.MM.yyyy}}" />
+                </StackPanel>
             </Grid>
         </DataTemplate>
         <DataTemplate  DataType="{x:Type model:Lecturer_rus}">
@@ -204,6 +196,7 @@
         <CollectionViewSource x:Key="tabs1" Source="{Binding Tables}" />
         <CollectionViewSource x:Key="tabs2" Source="{Binding ReportTabs}" />
         <CollectionViewSource x:Key="Group" Source="{Binding DiplomaData.Group_rus}" />
+        
         <resours:Settings x:Key="resours" />
     </Window.Resources>
     <Window.DataContext>
@@ -237,8 +230,8 @@
         <TreeView BorderThickness="0" Grid.Row="1" x:Name="treeView">
             <TreeView.Resources>
                 <Style TargetType="Button">
-                    
-                    <Setter Property="Background" Value="White"/>
+
+                    <Setter Property="Background" Value="#f5f3f2"/>
                     <Setter Property="Effect">
                         <Setter.Value>
                             <DropShadowEffect Opacity="0.2" ShadowDepth="4" />
@@ -297,11 +290,31 @@
                         </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition />
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
+                        
+                        <ListBox Grid.Row="0"  x:Name="list"  Margin="5" SelectionMode="Extended"
+                                 ItemsSource="{Binding SelectData, IsAsync=True}"
+                                  SelectionChanged="DiplomaReportList_SelectionChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,0,-40,0" Width="{Binding ElementName=list,Path=ActualWidth}">
+                                        <Border Margin="10,10,40,10" BorderBrush="Black" BorderThickness="1"
+                                                Background="White">
+                                            <StackPanel>
 
-                        <ScrollViewer VerticalScrollBarVisibility="Visible" 
+                                                <ContentControl Margin="20" Content="{Binding}">
+
+                                                </ContentControl>
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <!--<ScrollViewer VerticalScrollBarVisibility="Visible" 
                                       CanContentScroll="True" x:Name="list" >
                             <ItemsControl  Margin="5" ItemsSource="{Binding SelectData}">
                                 
@@ -321,10 +334,7 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                        </ScrollViewer>
-                        <StackPanel Grid.Row="2">
-                            <Button  Content="u" Command="{Binding Update}"/>
-                        </StackPanel>
+                        </ScrollViewer>-->
                         <Expander Header="Добавить" IsExpanded="True" Grid.Row="1">
                             <Expander.Resources>
                                 <DataTemplate DataType="{x:Type model:Student_rus}">
@@ -410,21 +420,12 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
                                             <RowDefinition />
-                                            <RowDefinition />
-                                            <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <Label Content="Название:" />
                                         <Label Grid.Row="1" Content="Описание:" />
-                                        <Label Grid.Row="2" Content="Дата добавления:" />
                                         <TextBox Grid.Column="1"  Text="{Binding Название_темы}" />
                                         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Описание}" />
-                                        <DatePicker Grid.Row="2" Grid.Column="1" IsDropDownOpen="True"
-															DisplayDateStart="1/1/1999"
-															DisplayDateEnd="{x:Static sys:DateTime.Now}"
-															SelectedDate="{Binding Дата_выдачи}"
-															IsTodayHighlighted="True"
-															SelectedDateFormat="Long"
-															KeyUp="DatePicker_KeyUp" />
+                                        
                                     </Grid>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type model:Specialty_rus}">
@@ -460,9 +461,79 @@
                     </Grid>
                 </DataTemplate>
                 
+                <DataTemplate DataType="{x:Type report:TabReport}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <ListBox Grid.Row="2" x:Name="DiplomaReportList"  Margin="5" SelectionMode="Extended"
+                                 ItemsSource="{Binding SelectData, IsAsync=True}" SelectionChanged="DiplomaReportList_SelectionChanged">
+                            <ListBox.Resources>
+                                <DataTemplate DataType="{x:Type model:Diplom_rus}">
+                                    <Grid Width="{Binding ElementName=DiplomaReportList,Path=ActualWidth}">
+                                        <Grid Margin="0,0,40,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="Выполнил:" />
+                                            <TextBlock TextWrapping="Wrap" Text="тема:" Grid.Row="1" />
+                                            <TextBlock TextWrapping="Wrap" Text="Руководитель:" Grid.Row="2" />
+                                            <TextBlock TextWrapping="Wrap" Text="Оценка:" Grid.Row="4" />
+                                            <TextBlock Text="{Binding Student_rus}" Grid.Column="1" />
+                                            <ComboBox Text="{Binding Thesis_rus.Название_темы, Mode=OneWay}" IsTextSearchCaseSensitive="False"   IsEditable="True" SelectedItem="{Binding Thesis_rus}"
+                                                                                  ItemsSource="{Binding DataContext.FreeTheses, ElementName=tabControl}"
+                                                                                   IsSynchronizedWithCurrentItem="False"
+                                                          Grid.Column="1" Grid.Row="1"
+                                                      DisplayMemberPath="Название_темы">
+                                            </ComboBox>
+                                            <ComboBox SelectedItem="{Binding Lecturer_rus}" ItemsSource="{Binding DataContext.Lecturers, ElementName=tabControl}"
+																				  Grid.Column="1" Grid.Row="2">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <TextBox Text="{Binding Оценка}" Grid.Column="1" Grid.Row="4" MaxLength="1" InputScope="Number" PreviewTextInput="TextBox_PreviewTextInput_1" />
+                                            <TextBlock Text="{Binding Дата_сдачи,StringFormat=\{0:dd.MM.yyyy\}}"
+                                                                               Grid.Column="2" Grid.RowSpan="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+                                            <Canvas Width="22" Height="22" Grid.Column="4" HorizontalAlignment="Right">
+                                                <Canvas.Resources>
+                                                    <Style TargetType="Canvas">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsError}" Value="false">
+                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsError}" Value="true">
+                                                                <Setter Property="Visibility" Value="Visible" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Canvas.Resources>
+                                                <Path Fill="Black" Data="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z">
+                                                </Path>
+                                            </Canvas>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.Resources>
+                        </ListBox>
+                        
+                    </Grid>
+                </DataTemplate>
                 <DataTemplate DataType="{x:Type tabs:TabBasket}">
                     <StackPanel>
-                        <Button Content="Удалить всё" Command="{Binding ClearAll}" />
                         <TreeView ItemsSource="{Binding Kor}">
                             <TreeView.ItemTemplate>
                                 <DataTemplate>
@@ -497,80 +568,6 @@
                             </TreeView.ItemTemplate>
                         </TreeView>
                     </StackPanel>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type report:TabReport}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
-                            <RowDefinition />
-                            <RowDefinition Height="auto" />
-                        </Grid.RowDefinitions>
-                        <Button Command="{Binding CreateReport}"
-                                    CommandParameter="{Binding ElementName=DiplomaReportList,Path=SelectedItems}" Content="печатать выбранные" />
-                        <Button Grid.Row="1" Command="{Binding CreateAllReport}" Content="печатать всё" />
-                        <ListBox Grid.Row="2" x:Name="DiplomaReportList"  Margin="5" SelectionMode="Extended" ItemsSource="{Binding SelectData, IsAsync=True}">
-                            <ListBox.Resources>
-                                <DataTemplate DataType="{x:Type model:Diplom_rus}">
-                                    <Grid Width="{Binding ElementName=DiplomaReportList,Path=ActualWidth}">
-                                        <Grid Margin="0,0,40,0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition />
-                                                <ColumnDefinition />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Text="Выполнил:" />
-                                            <TextBlock TextWrapping="Wrap" Text="тема:" Grid.Row="1" />
-                                            <TextBlock TextWrapping="Wrap" Text="Руководитель:" Grid.Row="2" />
-                                            <TextBlock TextWrapping="Wrap" Text="Оценка:" Grid.Row="4" />
-                                            <TextBlock Text="{Binding Student_rus}" Grid.Column="1" />
-                                            <ComboBox Text="{Binding Thesis_rus.Название_темы, Mode=OneWay}" IsTextSearchCaseSensitive="False"   IsEditable="True" SelectedItem="{Binding Thesis_rus}"
-                                                                                  ItemsSource="{Binding DataContext.FreeTheses, ElementName=tabControl}"
-                                                                                   IsSynchronizedWithCurrentItem="False"
-                                                          Grid.Column="1" Grid.Row="1"
-                                                      DisplayMemberPath="Название_темы">
-                                            </ComboBox>
-                                            <ComboBox SelectedItem="{Binding Lecturer_rus}" ItemsSource="{Binding DataContext.Lecturers, ElementName=tabControl}"
-																				  Grid.Column="1" Grid.Row="2">
-                                                <ComboBox.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{Binding}" />
-                                                    </DataTemplate>
-                                                </ComboBox.ItemTemplate>
-                                            </ComboBox>
-                                            <TextBox Text="{Binding Оценка}" Grid.Column="1" Grid.Row="4" MaxLength="1" InputScope="Number" PreviewTextInput="TextBox_PreviewTextInput_1" />
-                                            <Label Content="{Binding Дата_сдачи}"
-                                                                               Grid.Column="2" Grid.RowSpan="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
-                                            <Canvas Width="22" Height="22" Grid.Column="4" HorizontalAlignment="Right">
-                                                <Canvas.Resources>
-                                                    <Style TargetType="Canvas">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsError}" Value="false">
-                                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding IsError}" Value="true">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Canvas.Resources>
-                                                <Path Fill="Black" Data="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z">
-                                                </Path>
-                                            </Canvas>
-                                        </Grid>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListBox.Resources>
-                        </ListBox>
-                        <Button Content="✔" Grid.Row="3"
-                                                            Command="{Binding Update}" />
-                    </Grid>
                 </DataTemplate>
             </TabControl.Resources>
             <TabControl.ItemsSource>
@@ -607,11 +604,14 @@
                             <Setter Property="Width" Value="0"/>
                         </Trigger>
                     </Style.Triggers>
+                    
                 </Style>
                 <DataTemplate DataType="{x:Type Filter:FilterList}">
                     <ComboBox x:Name="comboBox" MinWidth="120" Grid.Column="1"
                                       ItemsSource="{Binding InData}"
-                              SelectedItem="{Binding Select}">
+                              SelectedItem="{Binding Select}"
+                             
+                              >
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding}" />
@@ -683,12 +683,11 @@
                         <Path Fill="Black" Data="M14,12V19.88C14.04,20.18 13.94,20.5 13.71,20.71C13.32,21.1 12.69,21.1 12.3,20.71L10.29,18.7C10.06,18.47 9.96,18.16 10,17.87V12H9.97L4.21,4.62C3.87,4.19 3.95,3.56 4.38,3.22C4.57,3.08 4.78,3 5,3V3H19V3C19.22,3 19.43,3.08 19.62,3.22C20.05,3.56 20.13,4.19 19.79,4.62L14.03,12H14Z" />
                     </Canvas>
                 </Viewbox>
-                <ComboBox Grid.Column="1" x:Name="comboBox" DisplayMemberPath="Name" 
+                <ComboBox  Grid.Column="1" x:Name="comboBox" DisplayMemberPath="Name" 
                       ItemsSource="{Binding FilterParams}"/>
             <ContentControl Grid.Row="1" MinWidth="120" Grid.Column="1"
                             Content="{Binding SelectedValue, ElementName=comboBox}"/>
             </Grid>
-
             <Grid>
                 <Grid.Resources>
                     <Style TargetType="Grid">
@@ -759,8 +758,43 @@
                       />
                 <UC:SortStatus x:Name="sortStatus" Grid.Column="2" SelectedValue="{Binding SelectedItem.Status, ElementName=comboBox1}"/>
             </Grid>
+            <Grid Margin="0,30">
+                <Grid.Resources>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding InstrumentProps.Count, AsyncState=true}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="AUTO"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Viewbox Width="25" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Canvas Width="24" Height="24">
+                        <Path Fill="Black" Data="M13.78 15.3L19.78 21.3L21.89 19.14L15.89 13.14L13.78 15.3M17.5 10.1C17.11 10.1 16.69 10.05 16.36 9.91L4.97 21.25L2.86 19.14L10.27 11.74L8.5 9.96L7.78 10.66L6.33 9.25V12.11L5.63 12.81L2.11 9.25L2.81 8.55H5.62L4.22 7.14L7.78 3.58C8.95 2.41 10.83 2.41 12 3.58L9.89 5.74L11.3 7.14L10.59 7.85L12.38 9.63L14.2 7.75C14.06 7.42 14 7 14 6.63C14 4.66 15.56 3.11 17.5 3.11C18.09 3.11 18.61 3.25 19.08 3.53L16.41 6.2L17.91 7.7L20.58 5.03C20.86 5.5 21 6 21 6.63C21 8.55 19.45 10.1 17.5 10.1Z" />
+                    </Canvas>
+                </Viewbox>
+                <ScrollViewer Grid.Column="1" Height="200">
+                <ItemsControl x:Name="comboBox2" 
+                      ItemsSource="{Binding InstrumentProps, AsyncState=true}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type Instruments:InstrumentProp}">
+                                <Button Margin="10" Height="50"  Content="{Binding Name, Mode=OneWay}"
+                                    Command="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                </ScrollViewer>
+            </Grid>
         </StackPanel>
-        <StatusBar Grid.ColumnSpan="4" Grid.Row="2" ItemsSource="{Binding Tabs.SelectedItem.StatusProps}"
+        <StatusBar Grid.ColumnSpan="4" Grid.Row="2" ItemsSource="{Binding Tabs.SelectedItem.SatusProps}"
                    Background="Transparent">
             <StatusBar.ItemTemplate>
                 <DataTemplate >

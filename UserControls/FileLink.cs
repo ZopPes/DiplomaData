@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace DiplomaData.UserControls
@@ -9,6 +10,7 @@ namespace DiplomaData.UserControls
         {
             AllowDrop = true;
             Drop += txtTarget_Drop;
+            
         }
 
         private void txtTarget_Drop(object sender, DragEventArgs e)
@@ -17,4 +19,5 @@ namespace DiplomaData.UserControls
         }
 
     }
+   
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using DiplomaData.HelpInstrument.Command;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using WPFMVVMHelper;
 
@@ -12,16 +13,16 @@ namespace DiplomaData.Tabs
         {
             IsVisible = System.Windows.Visibility.Visible;
 
-            ClearAll = new lamdaCommand
+            ClearAll = new InstrumentProp
                 (
-                    () =>
+                    "Удалить всё"
+                    ,() =>
                     {
                         foreach (IBasket item in Kor)
                             item.Clear();
                     });
+            InstrumentProps.Add(ClearAll);
         }
-
-        public TabBasket() : this(""){}
 
         public ObservableCollection<IBasket> Kor { get; set; } = new ObservableCollection<IBasket>();
     }

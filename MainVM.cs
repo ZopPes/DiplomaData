@@ -4,6 +4,7 @@ using DiplomaData.Tabs.TabReport;
 using DiplomaData.Tabs.TabTable;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Linq;
 using System.Diagnostics;
@@ -94,6 +95,7 @@ namespace DiplomaData
         /// </summary>
         public ICommand AddEmptyDiploma { get; set; }
 
+        public ICommand RefreshLastDataThesis { get; set; }
         #endregion ICommands
 
         private void initViewModel()
@@ -165,6 +167,8 @@ namespace DiplomaData
             OpenFileDiploma = new lamdaCommand<Diplom_rus>(OnOpenFileDiploma);
             #endregion InitCommand
         }
+
+       
 
         /// <summary>
         /// главный VM класс

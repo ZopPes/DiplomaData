@@ -57,9 +57,7 @@ namespace DiplomaData.Tabs
             });
         }
 
-        public void Clear()
-        {
-            Delete.Execute(Data.AsEnumerable());
-        }
+        public void Clear() => 
+            Delete.Execute(Data);
     }
 }

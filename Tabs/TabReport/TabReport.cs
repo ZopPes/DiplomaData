@@ -1,4 +1,5 @@
 ﻿using DiplomaData.HelpInstrument;
+using DiplomaData.HelpInstrument.Command;
 using DiplomaData.HelpInstrument.Filter;
 using DiplomaData.HelpInstrument.Sort;
 using DiplomaData.Model;
@@ -7,17 +8,19 @@ using Microsoft.Office.Interop.Word;
 using Microsoft.Win32;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data.Linq;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using WPFMVVMHelper;
 using Application = Microsoft.Office.Interop.Word.Application;
 
 namespace DiplomaData.Tabs.TabReport
 {
+
 	public class TabReport : TabTable<Diplom_rus>
 	{
 
@@ -32,7 +35,9 @@ namespace DiplomaData.Tabs.TabReport
 		}
 
 
-		public ICommand CreateReport { get; }
+        
+
+        public ICommand CreateReport { get; }
 		public ICommand CreateAllReport { get; }
 
 
@@ -42,26 +47,25 @@ namespace DiplomaData.Tabs.TabReport
 			, Table<Diplom_rus> diploms, string name = "")
 			: base(diploms,tFilt,name)
 		{
-			CreateReport = new lamdaCommand<IEnumerable>(OnCreateReport);
-			CreateAllReport = new lamdaCommand(() => OnCreateReport(Table));
-			//Properties.Add(new Property("Количество строк", () => SelectData.Count()));
+			CreateReport = new InstrumentProp("печатать выбранные"
+				,()=> OnCreateReport(SelectedItems)
+				, ()=>
+                {
+					return SelectedItems != null;
+                });
+			CreateAllReport = new InstrumentProp("печатать всё", () => OnCreateReport(TableT));
+			InstrumentProps.Add(CreateReport);
+			InstrumentProps.Add(CreateAllReport);
 		}
-			
-		
-		
 
-
-
-		
-
-		private void OnCreateReport(IEnumerable obj)
+		private void OnCreateReport(IEnumerable Diploms)
 		{
-			var file = CopyReport();
-			if (file == string.Empty) return;
+			var file = CopyReport();	
+			if (string.IsNullOrEmpty(file)) return;
 			var path = Path.GetDirectoryName(file);
 			var dataPath = path + @"\данные.csv";
-			CreateDataFile(dataPath, obj);
-			ConectWordCSV(file, dataPath, obj);
+			CreateDataFile(dataPath, Diploms);
+			ConectWordCSV(file, dataPath, Diploms);
 		}
 
 		private void ConectWordCSV(string file, string dataPath, IEnumerable diploms)
@@ -101,7 +105,7 @@ namespace DiplomaData.Tabs.TabReport
 								, diplom?.Lecturer_rus?.ToString() ?? "")
 							);
 					}
-					catch (System.Exception)
+					catch (Exception)
 					{
 						MessageBox.Show("Не корректные данные", "Ошибка");
 					}

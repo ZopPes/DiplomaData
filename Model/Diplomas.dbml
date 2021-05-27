@@ -153,16 +153,19 @@
       <Column Name="id" AutoSync="Always" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="[Название темы]" Member="Название_темы" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
       <Column Name="Описание" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="[Дата выдачи]" Member="Дата_выдачи" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="[Занята/ не занята]" Member="Занята__не_занята" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="[Дата выдачи]" Member="Дата_выдачи" AutoSync="Always" Type="System.DateTime" DbType="Date" IsReadOnly="true" CanBeNull="true" UpdateCheck="Always" />
       <Association Name="Thesis_rus_Diplom_rus" Member="Diplom_rus" ThisKey="id" OtherKey="Тема" Type="Diplom_rus" />
     </Type>
     <InsertFunction FunctionId="FunctionId17">
       <Argument Parameter="name" Member="Название_темы" />
       <Argument Parameter="opisanie" Member="Описание" />
-      <Argument Parameter="date" Member="Дата_выдачи" />
     </InsertFunction>
-    <DeleteFunction FunctionId="FunctionId18">
+    <UpdateFunction FunctionId="FunctionId18">
+      <Argument Parameter="id" Member="id" />
+      <Argument Parameter="name" Member="Название_темы" />
+      <Argument Parameter="opisanie" Member="Описание" />
+    </UpdateFunction>
+    <DeleteFunction FunctionId="FunctionId19">
       <Argument Parameter="id" Member="id" />
     </DeleteFunction>
   </Table>
@@ -176,13 +179,13 @@
       <Association Name="Group_rus_Student_rus" Member="Group_rus" ThisKey="Номер_группы" OtherKey="Номер_группы" Type="Group_rus" IsForeignKey="true" />
       <Association Name="Diplom_rus_Student_rus" Member="Diplom_rus" ThisKey="id" OtherKey="id" Type="Diplom_rus" IsForeignKey="true" />
     </Type>
-    <InsertFunction FunctionId="FunctionId19">
+    <InsertFunction FunctionId="FunctionId20">
       <Argument Parameter="fam" Member="Фамилия" />
       <Argument Parameter="name" Member="Имя" />
       <Argument Parameter="otch" Member="Отчество" />
       <Argument Parameter="group" Member="Номер_группы" />
     </InsertFunction>
-    <DeleteFunction FunctionId="FunctionId20">
+    <DeleteFunction FunctionId="FunctionId21">
       <Argument Parameter="id" Member="id" />
     </DeleteFunction>
   </Table>
@@ -194,14 +197,14 @@
       <Association Name="DataFile_Diplom_rus" Member="Diplom_rus" ThisKey="id" OtherKey="Пояснительная_записка" Type="Diplom_rus" />
     </Type>
   </Table>
-  <Function Id="FunctionId19" Name="dbo.Add_Student" Method="Add_Student">
+  <Function Id="FunctionId20" Name="dbo.Add_Student" Method="Add_Student">
     <Parameter Name="fam" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="otch" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="group" Type="System.String" DbType="Char(4)" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Id="FunctionId20" Name="dbo.Delete_remotelt_student" Method="Delete_remotelt_student">
+  <Function Id="FunctionId21" Name="dbo.Delete_remotelt_student" Method="Delete_remotelt_student">
     <Parameter Name="id" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
@@ -247,10 +250,6 @@
     <Parameter Name="id" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Id="FunctionId18" Name="dbo.Delete_remotelt_Thesis" Method="Delete_remotelt_Thesis">
-    <Parameter Name="id" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Id="FunctionId2" Name="dbo.Update_commission" Method="Update_commission">
     <Parameter Name="id" Type="System.Int32" DbType="Int" />
     <Parameter Name="fam" Type="System.String" DbType="NVarChar(50)" />
@@ -291,20 +290,6 @@
     <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="otch" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="group" Type="System.String" DbType="Char(4)" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.Update_Thesis" Method="Update_Thesis">
-    <Parameter Name="id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="opisanie" Type="System.String" DbType="NVarChar(MAX)" />
-    <Parameter Name="date" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="use" Type="System.Boolean" DbType="Bit" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Id="FunctionId17" Name="dbo.Add_Thesis" Method="Add_Thesis">
-    <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="opisanie" Type="System.String" DbType="NVarChar(MAX)" />
-    <Parameter Name="date" Type="System.DateTime" DbType="Date" />
     <Return Type="System.Int32" />
   </Function>
   <Function Id="FunctionId9" Name="dbo.Delete_remotelt_group" Method="Delete_remotelt_group">
@@ -349,9 +334,6 @@
   <Function Name="dbo.remotely_Student" Method="remotely_Student">
     <ElementType IdRef="ID6" />
   </Function>
-  <Function Name="dbo.remotely_Thesis" Method="remotely_Thesis">
-    <ElementType IdRef="ID7" />
-  </Function>
   <Function Name="dbo.Recovery_commission" Method="Recovery_commission">
     <Parameter Name="id" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
@@ -376,10 +358,6 @@
     <Parameter Name="id" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.Recovery_thesis" Method="Recovery_thesis">
-    <Parameter Name="id" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.Recovery_specialty" Method="Recovery_specialty">
     <Parameter Name="shif" Type="System.String" DbType="Char(6)" />
     <Return Type="System.Int32" />
@@ -392,6 +370,32 @@
     <Parameter Name="data" Type="System.Int32" DbType="Int" />
     <Parameter Name="ocen" Type="System.Char" DbType="Char(1)" />
     <Parameter Name="poyasn_zapis" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId17" Name="dbo.Add_Thesis" Method="Add_Thesis">
+    <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="opisanie" Type="System.String" DbType="NVarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId19" Name="dbo.Delete_remotelt_Thesis" Method="Delete_remotelt_Thesis">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId18" Name="dbo.Update_Thesis" Method="Update_Thesis">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="opisanie" Type="System.String" DbType="NVarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Recovery_thesis" Method="Recovery_thesis">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.remotely_Thesis" Method="remotely_Thesis">
+    <ElementType IdRef="ID7" />
+  </Function>
+  <Function Name="dbo.RefreshLastDataThesis" Method="RefreshLastDataThesis">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
 </Database>

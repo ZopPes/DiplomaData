@@ -35,7 +35,6 @@ namespace DiplomaData.Model
     partial void DeleteForm_of_education_rus(Form_of_education_rus instance);
     partial void UpdateReviewer_rus(Reviewer_rus instance);
     partial void UpdateSpecialty_rus(Specialty_rus instance);
-    partial void UpdateThesis_rus(Thesis_rus instance);
     partial void UpdateStudent_rus(Student_rus instance);
     partial void InsertDataFile(DataFile instance);
     partial void UpdateDataFile(DataFile instance);
@@ -236,7 +235,12 @@ namespace DiplomaData.Model
 		
 		private void InsertThesis_rus(Thesis_rus obj)
 		{
-			this.Add_Thesis(obj.Название_темы, obj.Описание, ((System.Nullable<System.DateTime>)(obj.Дата_выдачи)));
+			this.Add_Thesis(obj.Название_темы, obj.Описание);
+		}
+		
+		private void UpdateThesis_rus(Thesis_rus obj)
+		{
+			this.Update_Thesis(((System.Nullable<int>)(obj.id)), obj.Название_темы, obj.Описание);
 		}
 		
 		private void DeleteThesis_rus(Thesis_rus obj)
@@ -324,13 +328,6 @@ namespace DiplomaData.Model
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Delete_remotelt_Thesis")]
-		public int Delete_remotelt_Thesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Update_commission")]
 		public int Update_commission([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string fam, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string otch)
 		{
@@ -370,20 +367,6 @@ namespace DiplomaData.Model
 		public int Update_Student([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string fam, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string otch, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(4)")] string group)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, fam, name, otch, group);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Update_Thesis")]
-		public int Update_Thesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(MAX)")] string opisanie, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> date, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Bit")] System.Nullable<bool> use)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, name, opisanie, date, use);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Thesis")]
-		public int Add_Thesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(MAX)")] string opisanie, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> date)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), name, opisanie, date);
 			return ((int)(result.ReturnValue));
 		}
 		
@@ -457,13 +440,6 @@ namespace DiplomaData.Model
 			return ((ISingleResult<Student_rus>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.remotely_Thesis")]
-		public ISingleResult<Thesis_rus> remotely_Thesis()
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
-			return ((ISingleResult<Thesis_rus>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Recovery_commission")]
 		public int Recovery_commission([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
 		{
@@ -506,13 +482,6 @@ namespace DiplomaData.Model
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Recovery_thesis")]
-		public int Recovery_thesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Recovery_specialty")]
 		public int Recovery_specialty([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(6)")] string shif)
 		{
@@ -524,6 +493,48 @@ namespace DiplomaData.Model
 		public int Update_Diploma([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> tema, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> date, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> rucovod, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> data, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(1)")] System.Nullable<char> ocen, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> poyasn_zapis)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, tema, date, rucovod, data, ocen, poyasn_zapis);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Thesis")]
+		public int Add_Thesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(MAX)")] string opisanie)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), name, opisanie);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Delete_remotelt_Thesis")]
+		public int Delete_remotelt_Thesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Update_Thesis")]
+		public int Update_Thesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(MAX)")] string opisanie)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, name, opisanie);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Recovery_thesis")]
+		public int Recovery_thesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.remotely_Thesis")]
+		public ISingleResult<Thesis_rus> remotely_Thesis()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<Thesis_rus>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.RefreshLastDataThesis")]
+		public int RefreshLastDataThesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
 			return ((int)(result.ReturnValue));
 		}
 	}
@@ -1888,9 +1899,7 @@ namespace DiplomaData.Model
 		
 		private string _Описание;
 		
-		private System.DateTime _Дата_выдачи;
-		
-		private bool _Занята__не_занята;
+		private System.Nullable<System.DateTime> _Дата_выдачи = default(System.Nullable<System.DateTime>);
 		
 		private EntitySet<Diplom_rus> _Diplom_rus;
 		
@@ -1904,10 +1913,6 @@ namespace DiplomaData.Model
     partial void OnНазвание_темыChanged();
     partial void OnОписаниеChanging(string value);
     partial void OnОписаниеChanged();
-    partial void OnДата_выдачиChanging(System.DateTime value);
-    partial void OnДата_выдачиChanged();
-    partial void OnЗанята__не_занятаChanging(bool value);
-    partial void OnЗанята__не_занятаChanged();
     #endregion
 		
 		public Thesis_rus()
@@ -1976,43 +1981,12 @@ namespace DiplomaData.Model
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Дата выдачи]", Storage="_Дата_выдачи", DbType="Date NOT NULL")]
-		public System.DateTime Дата_выдачи
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Дата выдачи]", Storage="_Дата_выдачи", AutoSync=AutoSync.Always, DbType="Date", UpdateCheck=UpdateCheck.Never)]
+		public System.Nullable<System.DateTime> Дата_выдачи
 		{
 			get
 			{
 				return this._Дата_выдачи;
-			}
-			set
-			{
-				if ((this._Дата_выдачи != value))
-				{
-					this.OnДата_выдачиChanging(value);
-					this.SendPropertyChanging();
-					this._Дата_выдачи = value;
-					this.SendPropertyChanged("Дата_выдачи");
-					this.OnДата_выдачиChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Занята/ не занята]", Storage="_Занята__не_занята", DbType="Bit NOT NULL")]
-		public bool Занята__не_занята
-		{
-			get
-			{
-				return this._Занята__не_занята;
-			}
-			set
-			{
-				if ((this._Занята__не_занята != value))
-				{
-					this.OnЗанята__не_занятаChanging(value);
-					this.SendPropertyChanging();
-					this._Занята__не_занята = value;
-					this.SendPropertyChanged("Занята__не_занята");
-					this.OnЗанята__не_занятаChanged();
-				}
 			}
 		}
 		

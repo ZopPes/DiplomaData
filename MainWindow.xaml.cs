@@ -1,4 +1,6 @@
 ﻿using DiplomaData.Model;
+using DiplomaData.Tabs.TabReport;
+using DiplomaData.Tabs.TabTable;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -112,6 +114,13 @@ namespace DiplomaData
             var con = ((Control)sender).DataContext;
             Diplom_rus diplom = (Diplom_rus)con;
             diplom.MyProperty = (string)e.Data.GetData(DataFormats.Text);
+        }
+
+        private void DiplomaReportList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListBox list = (ListBox)sender;
+            TabTable report = (TabTable)list.DataContext;
+            report.SelectedItems = list.SelectedItems;
         }
 
         //private IDocumentPaginatorSource ConvertWordDocToXPSDoc(string wordDocName, string xpsDocName)

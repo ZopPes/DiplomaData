@@ -11,7 +11,7 @@ namespace DiplomaData.HelpInstrument.Status
     /// Класс имя значения
     /// для списка свойств
     /// </summary>
-    public class Property : peremlog
+    public class SatusProp : peremlog
     {
         /// <summary>имя</summary>
         public string Name { get; }
@@ -19,7 +19,7 @@ namespace DiplomaData.HelpInstrument.Status
         /// <summary>
         /// значение
         /// </summary>
-        public object Value { get => Func?.Invoke(); }
+        public object Value => Func?.Invoke(); 
 
         /// <summary>
         /// Функция для получения значения
@@ -31,7 +31,7 @@ namespace DiplomaData.HelpInstrument.Status
         /// </summary>
         /// <param name="name">имя свойства</param>
         /// <param name="value">функция для получения значения</param>
-        public Property(string name, Func<object> value)
+        public SatusProp(string name, Func<object> value)
         {
             Name = name;
             Func = value;
@@ -42,7 +42,7 @@ namespace DiplomaData.HelpInstrument.Status
         /// </summary>
         /// <param name="name">имя свойства</param>
         /// <param name="value">значение</param>
-        public Property(string name, object value)
+        public SatusProp(string name, object value)
         {
             Name = name;
             Func = () => value;

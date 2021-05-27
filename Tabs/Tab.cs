@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using WPFMVVMHelper;
 using DiplomaData.HelpInstrument.Status;
+using DiplomaData.HelpInstrument.Command;
+using System.Windows.Input;
 
 namespace DiplomaData
 {
@@ -52,7 +54,8 @@ namespace DiplomaData
 
         public Collection<IHelpInstrumentArg> FilterParams { get; }
         public Collection<ISortInstument> SortParams { get; }
-        public Collection<object> StatusProps { get; }
+        public Collection<SatusProp> SatusProps { get; }
+        public Collection<ICommand> InstrumentProps { get; }
 
         public event EventHandler<string> FilterChanged;
 
@@ -65,10 +68,17 @@ namespace DiplomaData
             Name = name;
             FilterParams = new Collection<IHelpInstrumentArg>();
             SortParams = new Collection<ISortInstument>();
-            StatusProps = new Collection<object>();
-            
+            SatusProps = new Collection<SatusProp>();
+            InstrumentProps = new Collection<ICommand>();
+        }
+        public void OnPropertyChangedAllStatusProps()
+        {
+            foreach (SatusProp satusProp in SatusProps)
+            {
+                satusProp.ValueOnPropertyChanged();
+            }
         }
 
-     
+
     }
 }

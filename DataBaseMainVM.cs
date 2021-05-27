@@ -1,7 +1,9 @@
-﻿using DiplomaData.HelpInstrument.Filter;
+﻿using DiplomaData.HelpInstrument.Command;
+using DiplomaData.HelpInstrument.Filter;
 using DiplomaData.Model;
 using DiplomaData.Tabs.TabTable;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
@@ -26,9 +28,11 @@ namespace DiplomaData
         public IQueryable<Specialty_rus> Specialties => from s in DiplomaData.Specialty_rus select s;
         public IQueryable<Lecturer_rus> Lecturers => from l in DiplomaData.Lecturer_rus select l;
         public IQueryable<Thesis_rus> Theses => from t in DiplomaData.Thesis_rus select t;
-        public IQueryable<Thesis_rus> FreeTheses => from t in DiplomaData.Thesis_rus where !t.Занята__не_занята select t;
+        public IQueryable<Thesis_rus> FreeTheses => from t in DiplomaData.Thesis_rus where  t.Дата_выдачи <=DateTime.Today.AddYears(-5) || t.Дата_выдачи ==null select t;
 
         #endregion DiplomaData
+
+        
 
         private void initDataBase()
         {
@@ -51,7 +55,7 @@ namespace DiplomaData
             Report.AddSort("Дата:", d => d.Дата_сдачи);
             Report.AddSort("ФИО:", d => d.Student_rus.Фамилия + d.Student_rus.Имя + d.Student_rus.Отчество);
             Report.AddSort("Тема:", d => d.Thesis_rus.Название_темы);
-            
+
             ReportTabs.Add(Report);
             #endregion
 
@@ -95,14 +99,25 @@ namespace DiplomaData
                (q, e) => q.Where(w => (w.Название_темы + " " + w.Описание).Contains(e))
                , "Тема диплома"
                );
-            Thesis.AddFilterBool("Используемые:", b => t => t.Занята__не_занята == b);
+            Thesis.AddFilterBool("Используемые:", b => t => t.Дата_выдачи <= DateTime.Today.AddYears(-5) == b);
             Thesis.AddFilterDate("Дата создания:", d => t => d.Item1 < t.Дата_выдачи && t.Дата_выдачи < d.Item2);
             Thesis.AddSort("Дата создания:", t => t.Дата_выдачи);
-            Thesis.AddSort("Используется:", t => t.Занята__не_занята);
+            Thesis.AddSort("Используется:", t => t.Дата_выдачи <= DateTime.Today.AddYears(-5));
             Thesis.AddSort("Название:", t => t.Название_темы);
             //Thesis.Properties.Add(new Property("используются", () => Thesis.SelectData.Where(t => t.Занята__не_занята).Count()));
             //Thesis.Properties.Add(new Property("не используются", () => Thesis.SelectData.Where(t => !t.Занята__не_занята).Count()));
-          
+
+            RefreshLastDataThesis = new InstrumentProp
+                ("освободить выбранные темы"
+                , () =>
+                {
+                    foreach (var item in Thesis.SelectedItems.OfType<Thesis_rus>())
+                        DiplomaData.RefreshLastDataThesis(item.id);
+                }
+                 );
+
+            Thesis.InstrumentProps.Add(RefreshLastDataThesis);
+
             var group = DiplomaData.Group_rus.CreateTab
                 (
                 (q, e) => q.Where(w => (w.Номер_группы + " " + w.Lecturer_rus.Фамилия + " " + w.Lecturer_rus.Имя + " " + w.Lecturer_rus.Отчество).Contains(e))
@@ -110,6 +125,7 @@ namespace DiplomaData
                 );
             group.AddFilterList("Форма обучения:", DiplomaData.Form_of_education_rus, g => g.Form_of_education_rus);
             group.AddFilterList("Специальность:", Specialties,g => g.Specialty_rus);
+           
             group.AddSort("Номер:", g => g.Номер_группы);
             group.AddSort("Куратор:", g => g.Lecturer_rus.Фамилия + g.Lecturer_rus.Имя + g.Lecturer_rus.Отчество);
             group.AddSort("Специальность", g => g.Specialty_rus.Специальность);
@@ -120,6 +136,8 @@ namespace DiplomaData
             Tables.Add(Thesis);
             Tables.Add(group);
             #endregion AddTabs
+
+            
 
             AddEmptyDiploma = new lamdaCommand<Student_rus>
                 (
