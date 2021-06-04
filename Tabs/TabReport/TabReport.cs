@@ -29,7 +29,7 @@ namespace DiplomaData.Tabs.TabReport
         }
 
         public ICommand CreateReport { get; }
-        public ICommand CreateAllReport { get; }
+        public ICommand CreateAllReport { get; } 
 
         public TabReport(
             Func<IQueryable<Diplom_rus>, string, IQueryable<Diplom_rus>> tFilt
