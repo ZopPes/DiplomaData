@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using WPFMVVMHelper;
@@ -10,7 +9,7 @@ namespace DiplomaData.Tabs
 {
     public interface IBasket
     {
-        string Name { get; set; }
+        string Name { get; }
 
         ICommand Recovery { get; }
         ICommand Delete { get; }
@@ -27,7 +26,7 @@ namespace DiplomaData.Tabs
         public ICommand Recovery { get; }
         public ICommand Delete { get; }
 
-        public string Name { get; set; }
+        public string Name { get; }
 
         public BasketItem(Func<IEnumerable<T>> dateFunc, Action<T> recovery, Action<T> delete, string name)
         {
@@ -50,14 +49,12 @@ namespace DiplomaData.Tabs
                         delete?.Invoke(item);
                 }
                 catch (Exception e)
-                {
-                    MessageBox.Show(e.Message);
-                }
+                    {MessageBox.Show(e.Message);}
                 OnPropertyChanged(nameof(Data));
             });
         }
 
-        public void Clear() => 
+        public void Clear() =>
             Delete.Execute(Data);
     }
 }

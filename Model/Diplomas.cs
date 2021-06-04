@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-
 namespace DiplomaData.Model
 {
-   public interface New<out T>
+    public interface New<out T>
     {
-         T New { get; }
+        T New { get; }
     }
 
     partial class Commission_rus
@@ -15,29 +12,30 @@ namespace DiplomaData.Model
     public partial class Student_rus : New<Student_rus>
     {
         public Student_rus New { get { id = GetHashCode(); return this; } }
+
         public override string ToString() => $"{_Фамилия} {_Имя} {_Отчество}";
 
-        public Student_rus(object newid) : this() => id =(int) newid;
-
+        public Student_rus(object newid) : this() => id = (int)newid;
     }
 
     partial class Diplom_rus : New<Diplom_rus>
     {
         public bool IsError =>
             this.Thesis_rus == null || this.Lecturer_rus == null || Оценка == '0';
+
         public string MyProperty { get; set; }
 
-        public Diplom_rus New { get { id = GetHashCode();return this; } }
+        public Diplom_rus New { get { id = GetHashCode(); return this; } }
 
         public override string ToString()
         {
-            return this.Тема.ToString();
+            return Тема.ToString();
         }
     }
 
-    partial class Lecturer_rus :New<Lecturer_rus>
+    partial class Lecturer_rus : New<Lecturer_rus>
     {
-        public Lecturer_rus New { get { id = GetHashCode();return this; } }
+        public Lecturer_rus New { get { id = GetHashCode(); return this; } }
 
         public override string ToString()
         {
@@ -67,7 +65,7 @@ namespace DiplomaData.Model
 
     partial class Thesis_rus : New<Thesis_rus>
     {
-        public Thesis_rus New { get { id = GetHashCode();return this; } }
+        public Thesis_rus New { get { id = GetHashCode(); return this; } }
 
         public override string ToString()
         {

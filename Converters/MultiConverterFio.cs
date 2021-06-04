@@ -15,7 +15,7 @@ namespace DiplomaData.Converters
         {
             var rez = Regex.Replace(value.ToString().Trim(), @"\s+", " ");
             var countrez = rez.Count(c => c == ' ');
-            
+
             if (countrez == 1) return (rez + " ").Split(' ');
             if (countrez == 2) return rez.Split(' ');
             return null;

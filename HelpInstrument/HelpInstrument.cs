@@ -3,24 +3,14 @@ using System.ComponentModel;
 
 namespace DiplomaData.HelpInstrument
 {
-    public interface IHelpInstrument
-    {
-        string Name { get; }
-    }
+    public interface IHelpInstrument{string Name { get; }}
 
-    public interface IHelpInstrumentArg
-    {
+    public interface IHelpInstrumentArg{}
 
-    }
-
-    public delegate void EventFilter<Tout,TEventArgs>(Tout sender, TEventArgs e);
+    public delegate void EventFilter<Tout, TEventArgs>(Tout sender, TEventArgs e);
 
     public interface IHelpInstrumentFilter : IHelpInstrumentArg
-    {
-
-        event EventFilter<object,object> SelectedChenget;
-    }
-   
+        {event EventFilter<object, object> SelectedChenget;}
 
     public enum SortStatus
     {
@@ -39,10 +29,5 @@ namespace DiplomaData.HelpInstrument
         SortStatus Status { get; set; }
 
         event EventHandler<SortStatus> StatusChenget;
-    }
-
-    public interface IStatus : IHelpInstrument
-    {
-        object Value { get; }
     }
 }

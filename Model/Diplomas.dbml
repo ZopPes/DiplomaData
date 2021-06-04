@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Diplomas" Class="DiplomasDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Diplomas;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="DiplomaData.Properties.Settings" SettingsPropertyName="DiplomasConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Commission_rus" Member="Commission_rus">
-    <Type Name="Commission_rus" Id="ID4">
+    <Type Name="Commission_rus" Id="ID3">
       <Column Name="id" AutoSync="Always" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Фамилия" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Имя" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
@@ -23,12 +23,11 @@
     </DeleteFunction>
   </Table>
   <Table Name="dbo.Diplom_rus" Member="Diplom_rus">
-    <Type Name="Diplom_rus" Id="ID1">
+    <Type Name="Diplom_rus" Id="ID7">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Тема" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="true" />
       <Column Name="[Дата сдачи]" Member="Дата_сдачи" AutoSync="Always" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="Руководитель" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="true" />
-      <Column Name="Файлы" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="true" />
       <Column Name="[Пояснительная записка]" Member="Пояснительная_записка" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="true" />
       <Column Name="Оценка" AutoSync="Always" Type="System.Char" DbType="char(1)" CanBeNull="false" />
       <Association Name="Diplom_rus_Student_rus" Member="Student_rus" ThisKey="id" OtherKey="id" Type="Student_rus" Cardinality="One" />
@@ -41,7 +40,6 @@
       <Argument Parameter="tema" Member="Тема" />
       <Argument Parameter="date" Member="Дата_сдачи" />
       <Argument Parameter="rucovod" Member="Руководитель" />
-      <Argument Parameter="data" Member="Файлы" />
       <Argument Parameter="ocen" Member="Оценка" />
       <Argument Parameter="poyasn_zapis" Member="Пояснительная_записка" />
     </InsertFunction>
@@ -50,7 +48,6 @@
       <Argument Parameter="tema" Member="Тема" />
       <Argument Parameter="date" Member="Дата_сдачи" />
       <Argument Parameter="rucovod" Member="Руководитель" />
-      <Argument Parameter="data" Member="Файлы" />
       <Argument Parameter="ocen" Member="Оценка" />
       <Argument Parameter="poyasn_zapis" Member="Пояснительная_записка" />
     </UpdateFunction>
@@ -66,7 +63,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Group_rus" Member="Group_rus">
-    <Type Name="Group_rus" Id="ID2">
+    <Type Name="Group_rus" Id="ID1">
       <Column Name="[Номер группы]" Member="Номер_группы" Type="System.String" DbType="Char(4) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Специальность" Type="System.String" DbType="Char(6) NOT NULL" CanBeNull="false" />
       <Column Name="Куратор" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -93,7 +90,7 @@
     </DeleteFunction>
   </Table>
   <Table Name="dbo.Lecturer_rus" Member="Lecturer_rus">
-    <Type Name="Lecturer_rus" Id="ID3">
+    <Type Name="Lecturer_rus" Id="ID2">
       <Column Name="id" AutoSync="Always" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Фамилия" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Имя" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
@@ -135,7 +132,7 @@
     </DeleteFunction>
   </Table>
   <Table Name="dbo.Specialty_rus" Member="Specialty_rus">
-    <Type Name="Specialty_rus" Id="ID5">
+    <Type Name="Specialty_rus" Id="ID4">
       <Column Name="[Шифр специальности]" Member="Шифр_специальности" Type="System.String" DbType="Char(6) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Специальность" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
       <Association Name="Specialty_rus_Group_rus" Member="Group_rus" ThisKey="Шифр_специальности" OtherKey="Специальность" Type="Group_rus" />
@@ -149,11 +146,11 @@
     </DeleteFunction>
   </Table>
   <Table Name="dbo.Thesis_rus" Member="Thesis_rus">
-    <Type Name="Thesis_rus" Id="ID7">
+    <Type Name="Thesis_rus" Id="ID6">
       <Column Name="id" AutoSync="Always" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="[Название темы]" Member="Название_темы" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
       <Column Name="Описание" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="[Дата выдачи]" Member="Дата_выдачи" AutoSync="Always" Type="System.DateTime" DbType="Date" IsReadOnly="true" CanBeNull="true" UpdateCheck="Always" />
+      <Column Name="[Дата выдачи]" Member="Дата_выдачи" AutoSync="Always" Type="System.DateTime" DbType="Date" IsReadOnly="true" CanBeNull="true" />
       <Association Name="Thesis_rus_Diplom_rus" Member="Diplom_rus" ThisKey="id" OtherKey="Тема" Type="Diplom_rus" />
     </Type>
     <InsertFunction FunctionId="FunctionId17">
@@ -170,7 +167,7 @@
     </DeleteFunction>
   </Table>
   <Table Name="dbo.Student_rus" Member="Student_rus">
-    <Type Name="Student_rus" Id="ID6">
+    <Type Name="Student_rus" Id="ID5">
       <Column Name="id" AutoSync="Always" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Фамилия" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Имя" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
@@ -305,34 +302,20 @@
     <Parameter Name="name" Type="System.String" DbType="NVarChar(150)" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Id="FunctionId4" Name="dbo.Add_Diploma" Method="Add_Diploma">
-    <Parameter Name="id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="tema" Type="System.Int32" DbType="Int" />
-    <Parameter Name="date" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="rucovod" Type="System.Int32" DbType="Int" />
-    <Parameter Name="data" Type="System.Int32" DbType="Int" />
-    <Parameter Name="ocen" Type="System.Char" DbType="Char(1)" />
-    <Parameter Name="poyasn_zapis" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.Add_Empty_Diploma" Method="Add_Empty_Diploma">
-    <Parameter Name="Student" Parameter="student" Type="System.Int32" DbType="Int" />
+  <Function Name="dbo.remotely_Group" Method="remotely_Group">
     <ElementType IdRef="ID1" />
   </Function>
-  <Function Name="dbo.remotely_Group" Method="remotely_Group">
+  <Function Name="dbo.remotely_Lecturer" Method="remotely_Lecturer">
     <ElementType IdRef="ID2" />
   </Function>
-  <Function Name="dbo.remotely_Lecturer" Method="remotely_Lecturer">
+  <Function Name="dbo.remotely_Commission" Method="remotely_Commission">
     <ElementType IdRef="ID3" />
   </Function>
-  <Function Name="dbo.remotely_Commission" Method="remotely_Commission">
+  <Function Name="dbo.remotely_Specialty" Method="remotely_Specialty">
     <ElementType IdRef="ID4" />
   </Function>
-  <Function Name="dbo.remotely_Specialty" Method="remotely_Specialty">
-    <ElementType IdRef="ID5" />
-  </Function>
   <Function Name="dbo.remotely_Student" Method="remotely_Student">
-    <ElementType IdRef="ID6" />
+    <ElementType IdRef="ID5" />
   </Function>
   <Function Name="dbo.Recovery_commission" Method="Recovery_commission">
     <Parameter Name="id" Type="System.Int32" DbType="Int" />
@@ -362,16 +345,6 @@
     <Parameter Name="shif" Type="System.String" DbType="Char(6)" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Id="FunctionId5" Name="dbo.Update_Diploma" Method="Update_Diploma">
-    <Parameter Name="id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="tema" Type="System.Int32" DbType="Int" />
-    <Parameter Name="date" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="rucovod" Type="System.Int32" DbType="Int" />
-    <Parameter Name="data" Type="System.Int32" DbType="Int" />
-    <Parameter Name="ocen" Type="System.Char" DbType="Char(1)" />
-    <Parameter Name="poyasn_zapis" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Id="FunctionId17" Name="dbo.Add_Thesis" Method="Add_Thesis">
     <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="opisanie" Type="System.String" DbType="NVarChar(MAX)" />
@@ -392,10 +365,32 @@
     <Return Type="System.Int32" />
   </Function>
   <Function Name="dbo.remotely_Thesis" Method="remotely_Thesis">
-    <ElementType IdRef="ID7" />
+    <ElementType IdRef="ID6" />
   </Function>
   <Function Name="dbo.RefreshLastDataThesis" Method="RefreshLastDataThesis">
     <Parameter Name="id" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId4" Name="dbo.Add_Diploma" Method="Add_Diploma">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="tema" Type="System.Int32" DbType="Int" />
+    <Parameter Name="date" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="rucovod" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ocen" Type="System.Char" DbType="Char(1)" />
+    <Parameter Name="poyasn_zapis" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId5" Name="dbo.Update_Diploma" Method="Update_Diploma">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="tema" Type="System.Int32" DbType="Int" />
+    <Parameter Name="date" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="rucovod" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ocen" Type="System.Char" DbType="Char(1)" />
+    <Parameter Name="poyasn_zapis" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Add_Empty_Diploma" Method="Add_Empty_Diploma">
+    <Parameter Name="Student" Parameter="student" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID7" />
   </Function>
 </Database>

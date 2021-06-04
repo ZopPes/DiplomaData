@@ -4,7 +4,6 @@ using DiplomaData.Tabs.TabReport;
 using DiplomaData.Tabs.TabTable;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Linq;
 using System.Diagnostics;
@@ -20,20 +19,11 @@ namespace DiplomaData
     /// </summary>
     public static class Extension
     {
-        public static bool SetAdd<T>(this ObservableCollection<T> ts, T item)
-        {
-            if (ts.Contains(item)) return false;
-            ts.Add(item);
-            return true;
-        }
-
         public static TabTable<T> CreateTab<T>
             (this Table<T> table, Func<IQueryable<T>, string, IQueryable<T>> func
-            , string name) where T : class,New<T>, new() =>
+            , string name) where T : class, New<T>, new() =>
             new TabTable<T>(table, func, name);
     }
-
-   
 
     /// <summary>
     /// главный VM класс
@@ -44,6 +34,7 @@ namespace DiplomaData
         /// имя папки с отчётами
         /// </summary>
         public const string reportPath = "Отчёты";
+
         public const string diplomaFilePath = "файлы Диплома";
 
         #region Tabs
@@ -82,20 +73,21 @@ namespace DiplomaData
 
         #region ICommands
 
-
         /// <summary>
         /// обновляет список отчётов
         /// </summary>
         public ICommand UpdateReports { get; set; }
+
         public ICommand CopyFileDiploma { get; set; }
         public ICommand OpenFileDiploma { get; set; }
-        
+
         /// <summary>
         /// Добавление пустого диплома
         /// </summary>
         public ICommand AddEmptyDiploma { get; set; }
 
         public ICommand RefreshLastDataThesis { get; set; }
+
         #endregion ICommands
 
         private void initViewModel()
@@ -107,7 +99,6 @@ namespace DiplomaData
                 Directory.CreateDirectory(diplomaFilePath);
 
             OnUpdateReports();
-
 
             #region Корзина
 
@@ -155,9 +146,8 @@ namespace DiplomaData
                     , t => DiplomaData.Delete_remotelt_Thesis(t.id)
                     , "Тема"
                     ));
-            #endregion Корзина
 
-            
+            #endregion Корзина
 
             #region InitCommand
 
@@ -165,10 +155,9 @@ namespace DiplomaData
 
             CopyFileDiploma = new lamdaCommand<Diplom_rus>(OnCopyFileDiploma);
             OpenFileDiploma = new lamdaCommand<Diplom_rus>(OnOpenFileDiploma);
+
             #endregion InitCommand
         }
-
-       
 
         /// <summary>
         /// главный VM класс
@@ -221,7 +210,5 @@ namespace DiplomaData
             Tables.Clear();
             ReportTabs.Clear();
         }
-
-
     }
 }

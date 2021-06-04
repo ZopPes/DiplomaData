@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WPFMVVMHelper;
 
 namespace DiplomaData.HelpInstrument.Status
@@ -19,7 +15,7 @@ namespace DiplomaData.HelpInstrument.Status
         /// <summary>
         /// значение
         /// </summary>
-        public object Value => Func?.Invoke(); 
+        public object Value => Func?.Invoke();
 
         /// <summary>
         /// Функция для получения значения

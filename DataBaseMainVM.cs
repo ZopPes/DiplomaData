@@ -1,26 +1,14 @@
 ﻿using DiplomaData.HelpInstrument.Command;
-using DiplomaData.HelpInstrument.Filter;
 using DiplomaData.Model;
-using DiplomaData.Tabs.TabTable;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.Linq;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Input;
 using WPFMVVMHelper;
 
 namespace DiplomaData
 {
-
     public partial class MainVM
     {
         #region DiplomaData
-
-         
         /// <summary>Подключение к базе данных</summary>
         public DiplomasDataContext DiplomaData { get; } = new DiplomasDataContext();
 
@@ -28,24 +16,20 @@ namespace DiplomaData
         public IQueryable<Specialty_rus> Specialties => from s in DiplomaData.Specialty_rus select s;
         public IQueryable<Lecturer_rus> Lecturers => from l in DiplomaData.Lecturer_rus select l;
         public IQueryable<Thesis_rus> Theses => from t in DiplomaData.Thesis_rus select t;
-        public IQueryable<Thesis_rus> FreeTheses => from t in DiplomaData.Thesis_rus where  t.Дата_выдачи <=DateTime.Today.AddYears(-5) || t.Дата_выдачи ==null select t;
-
+        public IQueryable<Thesis_rus> FreeTheses => from t in DiplomaData.Thesis_rus where t.Дата_выдачи <= DateTime.Today.AddYears(-5) || t.Дата_выдачи == null select t;
         #endregion DiplomaData
-
-        
 
         private void initDataBase()
         {
             #region InitReport
+
             Report = new Tabs.TabReport.TabReport
                 ((q, e) => q.Where(w => (w.Student_rus.Имя + " " + w.Student_rus.Отчество + " " + w.Student_rus.Фамилия + " " + w.Thesis_rus.Название_темы).Contains(e))
-                ,DiplomaData.Diplom_rus
+                , DiplomaData.Diplom_rus
                 , "Протокол защиты дипломного проекта"
                 );
 
-            
-
-            Report.AddFilterList("Группа:", Groups, d=>d.Student_rus.Group_rus);
+            Report.AddFilterList("Группа:", Groups, d => d.Student_rus.Group_rus);
             Report.AddFilterList("Руководитель:", Lecturers, d => d.Lecturer_rus);
             Report.AddFilterText("Оценка:", m => d => d.Оценка == m);
             Report.AddFilterDate("Дата сдачи:", d => s => d.date1 < s.Дата_сдачи && s.Дата_сдачи < d.date2);
@@ -57,9 +41,11 @@ namespace DiplomaData
             Report.AddSort("Тема:", d => d.Thesis_rus.Название_темы);
 
             ReportTabs.Add(Report);
-            #endregion
+
+            #endregion InitReport
 
             #region AddTabs
+
             var student = DiplomaData.Student_rus.CreateTab
                 (
                     (q, e) => q.Where(w => (w.Имя + " " + w.Отчество + " " + w.Фамилия).Contains(e))
@@ -70,7 +56,7 @@ namespace DiplomaData
             student.AddFilterList("Руководитель:", Lecturers, s => s.Diplom_rus.Lecturer_rus);
             student.AddFilterText("Оценка:", m => s => s.Diplom_rus.Оценка == m);
             student.AddFilterDate("Дата сдачи:", d => s => d.date1 < s.Diplom_rus.Дата_сдачи && s.Diplom_rus.Дата_сдачи < d.date2);
-           
+
             student.AddSort("Группа:", s => s.Group_rus.Номер_группы);
             student.AddSort("Руководитель:", s => s.Diplom_rus.Lecturer_rus.Фамилия + s.Diplom_rus.Lecturer_rus.Имя + s.Diplom_rus.Lecturer_rus.Отчество);
             student.AddSort("Оценка:", s => s.Diplom_rus.Оценка);
@@ -84,7 +70,6 @@ namespace DiplomaData
                 , "Преподаватель"
                 );
             Lecturer.AddSort("ФИО:", l => l.Фамилия + l.Имя + l.Отчество);
-
 
             var Specialty = DiplomaData.Specialty_rus.CreateTab
                 (
@@ -108,10 +93,10 @@ namespace DiplomaData
             //Thesis.Properties.Add(new Property("не используются", () => Thesis.SelectData.Where(t => !t.Занята__не_занята).Count()));
 
             RefreshLastDataThesis = new InstrumentProp
-                ("освободить выбранные темы"
+                ("Освободить выбранные темы"
                 , () =>
                 {
-                    foreach (var item in Thesis.SelectedItems.OfType<Thesis_rus>())
+                    foreach (Thesis_rus item in Thesis.SelectedItems)
                         DiplomaData.RefreshLastDataThesis(item.id);
                 }
                  );
@@ -124,8 +109,8 @@ namespace DiplomaData
                 , "Группа"
                 );
             group.AddFilterList("Форма обучения:", DiplomaData.Form_of_education_rus, g => g.Form_of_education_rus);
-            group.AddFilterList("Специальность:", Specialties,g => g.Specialty_rus);
-           
+            group.AddFilterList("Специальность:", Specialties, g => g.Specialty_rus);
+
             group.AddSort("Номер:", g => g.Номер_группы);
             group.AddSort("Куратор:", g => g.Lecturer_rus.Фамилия + g.Lecturer_rus.Имя + g.Lecturer_rus.Отчество);
             group.AddSort("Специальность", g => g.Specialty_rus.Специальность);
@@ -135,9 +120,8 @@ namespace DiplomaData
             Tables.Add(Specialty);
             Tables.Add(Thesis);
             Tables.Add(group);
-            #endregion AddTabs
 
-            
+            #endregion AddTabs
 
             AddEmptyDiploma = new lamdaCommand<Student_rus>
                 (
@@ -147,7 +131,6 @@ namespace DiplomaData
                         s.Diplom_rus = diplom;
                 }
                 );
-
         }
     }
 }

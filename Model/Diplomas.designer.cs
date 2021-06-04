@@ -168,12 +168,12 @@ namespace DiplomaData.Model
 		
 		private void InsertDiplom_rus(Diplom_rus obj)
 		{
-			this.Add_Diploma(((System.Nullable<int>)(obj.id)), ((System.Nullable<int>)(obj.Тема)), ((System.Nullable<System.DateTime>)(obj.Дата_сдачи)), ((System.Nullable<int>)(obj.Руководитель)), ((System.Nullable<int>)(obj.Файлы)), ((System.Nullable<char>)(obj.Оценка)), ((System.Nullable<int>)(obj.Пояснительная_записка)));
+			this.Add_Diploma(((System.Nullable<int>)(obj.id)), ((System.Nullable<int>)(obj.Тема)), ((System.Nullable<System.DateTime>)(obj.Дата_сдачи)), ((System.Nullable<int>)(obj.Руководитель)), ((System.Nullable<char>)(obj.Оценка)), ((System.Nullable<int>)(obj.Пояснительная_записка)));
 		}
 		
 		private void UpdateDiplom_rus(Diplom_rus obj)
 		{
-			this.Update_Diploma(((System.Nullable<int>)(obj.id)), ((System.Nullable<int>)(obj.Тема)), ((System.Nullable<System.DateTime>)(obj.Дата_сдачи)), ((System.Nullable<int>)(obj.Руководитель)), ((System.Nullable<int>)(obj.Файлы)), ((System.Nullable<char>)(obj.Оценка)), ((System.Nullable<int>)(obj.Пояснительная_записка)));
+			this.Update_Diploma(((System.Nullable<int>)(obj.id)), ((System.Nullable<int>)(obj.Тема)), ((System.Nullable<System.DateTime>)(obj.Дата_сдачи)), ((System.Nullable<int>)(obj.Руководитель)), ((System.Nullable<char>)(obj.Оценка)), ((System.Nullable<int>)(obj.Пояснительная_записка)));
 		}
 		
 		private void DeleteDiplom_rus(Diplom_rus obj)
@@ -391,20 +391,6 @@ namespace DiplomaData.Model
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Diploma")]
-		public int Add_Diploma([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> tema, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> date, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> rucovod, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> data, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(1)")] System.Nullable<char> ocen, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> poyasn_zapis)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, tema, date, rucovod, data, ocen, poyasn_zapis);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Empty_Diploma")]
-		public ISingleResult<Diplom_rus> Add_Empty_Diploma([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Student", DbType="Int")] System.Nullable<int> student)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), student);
-			return ((ISingleResult<Diplom_rus>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.remotely_Group")]
 		public ISingleResult<Group_rus> remotely_Group()
 		{
@@ -489,13 +475,6 @@ namespace DiplomaData.Model
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Update_Diploma")]
-		public int Update_Diploma([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> tema, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> date, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> rucovod, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> data, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(1)")] System.Nullable<char> ocen, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> poyasn_zapis)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, tema, date, rucovod, data, ocen, poyasn_zapis);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Thesis")]
 		public int Add_Thesis([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(MAX)")] string opisanie)
 		{
@@ -536,6 +515,27 @@ namespace DiplomaData.Model
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
 			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Diploma")]
+		public int Add_Diploma([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> tema, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> date, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> rucovod, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(1)")] System.Nullable<char> ocen, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> poyasn_zapis)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, tema, date, rucovod, ocen, poyasn_zapis);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Update_Diploma")]
+		public int Update_Diploma([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> tema, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> date, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> rucovod, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(1)")] System.Nullable<char> ocen, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> poyasn_zapis)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, tema, date, rucovod, ocen, poyasn_zapis);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Add_Empty_Diploma")]
+		public ISingleResult<Diplom_rus> Add_Empty_Diploma([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Student", DbType="Int")] System.Nullable<int> student)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), student);
+			return ((ISingleResult<Diplom_rus>)(result.ReturnValue));
 		}
 	}
 	
@@ -687,8 +687,6 @@ namespace DiplomaData.Model
 		
 		private System.Nullable<int> _Руководитель;
 		
-		private System.Nullable<int> _Файлы;
-		
 		private System.Nullable<int> _Пояснительная_записка;
 		
 		private char _Оценка;
@@ -713,8 +711,6 @@ namespace DiplomaData.Model
     partial void OnДата_сдачиChanged();
     partial void OnРуководительChanging(System.Nullable<int> value);
     partial void OnРуководительChanged();
-    partial void OnФайлыChanging(System.Nullable<int> value);
-    partial void OnФайлыChanged();
     partial void OnПояснительная_запискаChanging(System.Nullable<int> value);
     partial void OnПояснительная_запискаChanged();
     partial void OnОценкаChanging(char value);
@@ -814,26 +810,6 @@ namespace DiplomaData.Model
 					this._Руководитель = value;
 					this.SendPropertyChanged("Руководитель");
 					this.OnРуководительChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Файлы", DbType="Int NOT NULL")]
-		public System.Nullable<int> Файлы
-		{
-			get
-			{
-				return this._Файлы;
-			}
-			set
-			{
-				if ((this._Файлы != value))
-				{
-					this.OnФайлыChanging(value);
-					this.SendPropertyChanging();
-					this._Файлы = value;
-					this.SendPropertyChanged("Файлы");
-					this.OnФайлыChanged();
 				}
 			}
 		}

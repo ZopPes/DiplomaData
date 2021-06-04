@@ -22,41 +22,25 @@ namespace DiplomaData.Tabs.TabTable
     /// <typeparam name="T">тип для таблицы</typeparam>
     public class TabTable<T> : TabTable where T : class, New<T>, new()
     {
-        
-
         #region InsertItem
-
         private T insertItem;
-
         /// <summary>Переменная для добавления</summary>
-        public  T InsertItem { get => insertItem; set => Set(ref insertItem, value); }
-
+        public T InsertItem { get => insertItem; set => Set(ref insertItem, value); }
         #endregion InsertItem
 
         #region SelectData
-
         private IQueryable<T> selectData;
-
         /// <summary>данные для вывода</summary>
         public IQueryable<T> SelectData
         {
             get => selectData;
-            set
-            {
-                if (Set(ref selectData, value)) OnPropertyChangedAllStatusProps();
-            }
+            set {if (Set(ref selectData, value)) OnPropertyChangedAllStatusProps();}
         }
-
         #endregion SelectData
-
 
         public ICommand InsertTable { get; }
         public ICommand RemoveTable { get; }
-
         public ICommand RefreshData { get; }
-
-
-
 
         public IQueryable<T> TableT => Table.OfType<T>();
 
@@ -71,7 +55,7 @@ namespace DiplomaData.Tabs.TabTable
             ) : base(table, name: name)
         {
             SelectData = TableT;
-            InsertTable = new lamdaCommand(NewMethod);
+            InsertTable = new lamdaCommand(OnInsert);
             RemoveTable = new lamdaCommand<T>(Remove);
             RefreshData = new lamdaCommand(
                 () =>
@@ -83,10 +67,8 @@ namespace DiplomaData.Tabs.TabTable
             SatusProps.Add(new SatusProp("Количество строк", () => SelectData.Count()));
             InsertItem = new T();
 
-            FilterChanged += (sender,e) => SelectData = tFilt?.Invoke(TableT, e);
-
+            FilterChanged += (sender, e) => SelectData = tFilt?.Invoke(TableT, e);
         }
-
 
         public void AddFilterList<TFilter>(string name, IQueryable<TFilter> queryable
             , Expression<Func<T, TFilter>> ex) => FilterParams.Add
@@ -101,7 +83,6 @@ namespace DiplomaData.Tabs.TabTable
                     )
                 );
 
-
         public void AddFilterBool(string name, Func<bool, Expression<Func<T, bool>>> expression)
         {
             var filterList = new FilterBool(name
@@ -111,6 +92,7 @@ namespace DiplomaData.Tabs.TabTable
                 filterList
                 );
         }
+
         public void AddFilterText(string name, Func<char, Expression<Func<T, bool>>> expression)
         {
             var filterList = new FilterMarcChar(name);
@@ -122,7 +104,7 @@ namespace DiplomaData.Tabs.TabTable
                 );
         }
 
-        public void AddFilterDate(string name, Func<(DateTime date1,DateTime date2),Expression<Func<T,bool>>> expression)
+        public void AddFilterDate(string name, Func<(DateTime date1, DateTime date2), Expression<Func<T, bool>>> expression)
         {
             var filterList = new FilterDate(name
                 , d => SelectData = TableT.Where(expression?.Invoke(d)));
@@ -132,9 +114,6 @@ namespace DiplomaData.Tabs.TabTable
                 filterList
                 );
         }
-
-
-        
 
         internal void AddSort<TKey>(string name, Expression<Func<T, TKey>> expression)
         {
@@ -162,8 +141,7 @@ namespace DiplomaData.Tabs.TabTable
             SortParams.Add(sort);
         }
 
-
-        private void NewMethod()
+        private void OnInsert()
         {
             try
             {
@@ -171,13 +149,13 @@ namespace DiplomaData.Tabs.TabTable
                 Context.SubmitChanges();
                 Context.Refresh(RefreshMode.KeepCurrentValues, Table);
                 Filter = Filter;
-               
             }
             catch (SqlException ex)
             {
-                MessageBox.Show(ex.Message + "\r\n П ерепроверьте данные", ex.Number.ToString());
+                MessageBox.Show(ex.Message + "\r\n Перепроверьте данные"
+                    , ex.Number.ToString());
             }
-            InsertItem =new T().New;
+            InsertItem = new T().New;
         }
 
         public void Remove(T value)
@@ -190,17 +168,12 @@ namespace DiplomaData.Tabs.TabTable
                 Filter = Filter;
             }
             catch (Exception e)
-            {
-                
-                MessageBox.Show(e.Message, "Ошибка");
-            }
+                {MessageBox.Show(e.Message, "Ошибка");}
         }
-
     }
 
     public class TabTable : Tab
     {
-
         #region SelectedItems
         private IEnumerable selectedItems;
         /// <summary>Выбранные дипломы</summary>
@@ -209,26 +182,22 @@ namespace DiplomaData.Tabs.TabTable
             get => selectedItems;
             set => Set(ref selectedItems, value);
         }
-        #endregion
-
-        #region Context
+        #endregion SelectedItems
 
         /// <summary>Контекст данных</summary>
         public DataContext Context { get; }
 
-        #endregion Context
-
         public ICommand UpdateTable { get; }
         public ICommand RemoveSelectItems { get; }
-
-
+        
         public ITable Table { get; }
+
         public TabTable(ITable table, string name = "") : base(name)
         {
             Table = table;
             Context = table.Context;
             UpdateTable = new InstrumentProp("записать все данные", Update);
-            RemoveSelectItems = new InstrumentProp("удалить выделеное", OnRemoveSelectItems);
+            RemoveSelectItems = new InstrumentProp("удалить выделенное", OnRemoveSelectItems);
             InstrumentProps.Add(UpdateTable);
             InstrumentProps.Add(RemoveSelectItems);
         }
@@ -249,9 +218,7 @@ namespace DiplomaData.Tabs.TabTable
                 Context.Refresh(RefreshMode.OverwriteCurrentValues, Table);
             }
             catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Ошибка");
-            }
+                {MessageBox.Show(e.Message, "Ошибка");}
         }
     }
 }

@@ -1,30 +1,27 @@
 ﻿using DiplomaData.HelpInstrument;
+using DiplomaData.HelpInstrument.Status;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using WPFMVVMHelper;
-using DiplomaData.HelpInstrument.Status;
-using DiplomaData.HelpInstrument.Command;
 using System.Windows.Input;
+using WPFMVVMHelper;
 
 namespace DiplomaData
 {
-    
     /// <summary>
     /// вкладка
     /// </summary>
     public class Tab : peremlog
     {
         #region isVisible
-
         private Visibility visibility = Visibility.Collapsed;
-
         /// <summary>Отображение элемента</summary>
-        public Visibility IsVisible { get => visibility; set => Set(ref visibility, value); }
-
+        public Visibility IsVisible
+        {
+            get => visibility;
+            set => Set(ref visibility, value);
+        }
         #endregion isVisible
-
-
 
         /// <summary>
         /// название вкладки
@@ -36,9 +33,7 @@ namespace DiplomaData
         /// </summary>
 
         #region Filter
-
         private string filter;
-
         /// <summary>Фильтер</summary>
         public string Filter
         {
@@ -49,7 +44,6 @@ namespace DiplomaData
                 FilterChanged?.Invoke(this, value ?? "");
             }
         }
-
         #endregion Filter
 
         public Collection<IHelpInstrumentArg> FilterParams { get; }
@@ -71,14 +65,11 @@ namespace DiplomaData
             SatusProps = new Collection<SatusProp>();
             InstrumentProps = new Collection<ICommand>();
         }
+
         public void OnPropertyChangedAllStatusProps()
         {
             foreach (SatusProp satusProp in SatusProps)
-            {
                 satusProp.ValueOnPropertyChanged();
-            }
         }
-
-
     }
 }

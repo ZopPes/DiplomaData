@@ -4,7 +4,6 @@
     {
         public string Name { get; }
 
-
         public FilterProp(string name) => Name = name;
     }
 }

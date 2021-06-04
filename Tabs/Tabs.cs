@@ -13,9 +13,7 @@ namespace DiplomaData.Tabs
     public class Tabs : ObservableCollection<Tab>
     {
         #region SelectedItem
-
         private Tab selectedTab;
-
         /// <summary>Выбранная вкладка</summary>
         public Tab SelectedItem
         {
@@ -25,11 +23,9 @@ namespace DiplomaData.Tabs
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedItem)));
             }
         }
-
         #endregion SelectedItem
 
         public ICommand Visible { get; }
-
         public ICommand Collapsed { get; }
 
         /// <summary>
@@ -50,9 +46,7 @@ namespace DiplomaData.Tabs
         public new void Add(Tab tab)
         {
             if (!Contains(tab))
-            {
                 base.Add(tab);
-            }
             SelectedItem = tab;
         }
     }
